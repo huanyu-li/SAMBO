@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.nlm.nih.gov/mesh_ABDEGH.go#"
+    xml:base="http://www.nlm.nih.gov/mesh_ABDEGH.go#">
+        <owl:Ontology rdf:about=""/>
+        <owl:Class rdf:ID="MESH_A.09.371.060.217.271">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.060.217"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">lamina_elastica_posterior</rdfs:label>
+                <rdfs:label xml:lang="sn">descemets_membrane</rdfs:label>
+                <rdfs:label xml:lang="sn">descemet_membrane</rdfs:label>
+                <rdfs:label xml:lang="sn">descemet's_membrane</rdfs:label>
+                <rdfs:label xml:lang="en">descemet's_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.650.670.100">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.08.663.650.650.670"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">cone_photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="sn">cone_(retina)</rdfs:label>
+                <rdfs:label xml:lang="en">cones_(retina)</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.067">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.060"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">anterior_chamber</rdfs:label>
+                <rdfs:label xml:lang="en">anterior_chamber</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.509">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">eye_len</rdfs:label>
+                <rdfs:label xml:lang="sn">crystalline_len</rdfs:label>
+                <rdfs:label xml:lang="en">crystalline_len</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.509.225">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.509"/>
+                <rdfs:label xml:lang="sn">crystalline_lens_cortex</rdfs:label>
+                <rdfs:label xml:lang="en">crystalline_lens_cortex</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.729.522.436">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.729.522"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">fovea_centralis</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.729.522">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.729"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">macula_lutea</rdfs:label>
+                <rdfs:label xml:lang="en">macula_lutea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.217.325">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.371.060.217"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">corneal_epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.784">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">sclera</rdfs:label>
+                <rdfs:label xml:lang="en">sclera</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.894.223">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.894"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">choroid</rdfs:label>
+                <rdfs:label xml:lang="en">choroid</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.729.313">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.371.729"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">fundus_oculi</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.08.663.650.650.670">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.08.663.650.650"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">vertebrate_photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="sn">cones_and_rod</rdfs:label>
+                <rdfs:label xml:lang="en">vertebrate_photoreceptor</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.894.223.250">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.894.223"/>
+                <rdfs:label xml:lang="sn">bruchs_membrane</rdfs:label>
+                <rdfs:label xml:lang="sn">bruch_membrane</rdfs:label>
+                <rdfs:label xml:lang="sn">bruch's_membrane</rdfs:label>
+                <rdfs:label xml:lang="en">bruch_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.337.614">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.01.456.505.420.504"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">tarsal_gland</rdfs:label>
+                <rdfs:label xml:lang="sn">meibomian_gland</rdfs:label>
+                <rdfs:label xml:lang="en">meibomian_gland</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.650.670.650">
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.650.670"/>
+                <rdfs:label xml:lang="sn">rod_photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="sn">rod_(retina)</rdfs:label>
+                <rdfs:label xml:lang="en">rods_(retina)</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.650.650">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.08.663.650.650"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">invertebrate_photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="en">invertebrate_photoreceptor</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.01.456.505.420.504.421">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420.504"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">eyelash</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.358.050">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.371.729"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">amacrine_cell</rdfs:label>
+                <rdfs:label xml:lang="en">amacrine_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.08.663.650.650">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.371.729"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">retinal_photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="sn">photoreceptor</rdfs:label>
+                <rdfs:label xml:lang="en">photoreceptor</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.633.567.700">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">oculomotor_muscle</rdfs:label>
+                <rdfs:label xml:lang="en">oculomotor_muscle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.894.513.780">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.371.894.513"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">pupil</rdfs:label>
+                <rdfs:label xml:lang="en">pupil</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.060">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">anterior_eye_segment</rdfs:label>
+                <rdfs:label xml:lang="en">anterior_eye_segment</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.650.835">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.371.729"/>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.650.670"/>
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.650"/>
+                <rdfs:label xml:lang="sn">retinal_ganglion_cell</rdfs:label>
+                <rdfs:label xml:lang="en">retinal_ganglion_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.509.670">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.509"/>
+                <rdfs:label xml:lang="sn">crystalline_lens_nucleu</rdfs:label>
+                <rdfs:label xml:lang="en">crystalline_lens_nucleu</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.01.456.505.420.338">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">eyebrow</rdfs:label>
+                <rdfs:label xml:lang="en">eyebrow</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.894">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">uvea</rdfs:label>
+                <rdfs:label xml:lang="en">uvea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.894.280">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.894"/>
+                <rdfs:label xml:lang="sn">ciliary_body</rdfs:label>
+                <rdfs:label xml:lang="en">ciliary_body</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.894.513">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.894"/>
+                <rdfs:label xml:lang="en">iris</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.670">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">retinal_pigment_epithelium</rdfs:label>
+                <rdfs:label xml:lang="sn">eye_pigment_epithelium</rdfs:label>
+                <rdfs:label xml:lang="en">pigment_epithelium_of_eye</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.729">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">retinal_effect</rdfs:label>
+                <rdfs:label xml:lang="sn">retina</rdfs:label>
+                <rdfs:label xml:lang="en">retina</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.067.070">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060.067"/>
+                <rdfs:label xml:lang="sn">intraocular_fluid</rdfs:label>
+                <rdfs:label xml:lang="sn">aqueous_humor</rdfs:label>
+                <rdfs:label xml:lang="sn">aqueous_flare</rdfs:label>
+                <rdfs:label xml:lang="en">aqueous_humor</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.463">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">lacrimal_gland</rdfs:label>
+                <rdfs:label xml:lang="sn">lacrimal_apparatus</rdfs:label>
+                <rdfs:label xml:lang="en">lacrimal_apparatus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.943">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">vitreous_body</rdfs:label>
+                <rdfs:label xml:lang="en">vitreous_body</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.650.670.650.650">
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.650.670.650"/>
+                <rdfs:label xml:lang="sn">rod_outer_segment</rdfs:label>
+                <rdfs:label xml:lang="en">rod_outer_segment</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.192">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.420"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">conjunctiva</rdfs:label>
+                <rdfs:label xml:lang="en">conjunctiva</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.371.060.217">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060"/>
+                <rdfs:label xml:lang="sn">cornea</rdfs:label>
+                <rdfs:label xml:lang="en">cornea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.463.640">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.463"/>
+                <rdfs:label xml:lang="sn">nasolacrimal_duct</rdfs:label>
+                <rdfs:label xml:lang="en">nasolacrimal_duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.01.456.505.420">
+                <rdfs:label xml:lang="sn">ophthalmological_effect</rdfs:label>
+                <rdfs:label xml:lang="sn">ophthalmologic_effect</rdfs:label>
+                <rdfs:label xml:lang="sn">eye</rdfs:label>
+                <rdfs:label xml:lang="en">eye</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.067.318">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060.217"/>
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060.067"/>
+                <rdfs:label xml:lang="sn">anterior_chamber_endothelium</rdfs:label>
+                <rdfs:label xml:lang="en">corneal_endothelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.217.659">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060.217"/>
+                <rdfs:label xml:lang="sn">sclerocorneal_limbus</rdfs:label>
+                <rdfs:label xml:lang="sn">corneoscleral_junction</rdfs:label>
+                <rdfs:label xml:lang="sn">corneal_limbus</rdfs:label>
+                <rdfs:label xml:lang="en">limbus_corneae</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.509.155">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.509"/>
+                <rdfs:label xml:lang="sn">crystalline_lens_capsule</rdfs:label>
+                <rdfs:label xml:lang="en">crystalline_lens_capsule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.932">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060"/>
+                <rdfs:label xml:lang="sn">trabecular_meshwork</rdfs:label>
+                <rdfs:label xml:lang="en">trabecular_meshwork</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.371.060.217.228">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.060.217"/>
+                <rdfs:label xml:lang="sn">corneal_stroma</rdfs:label>
+                <rdfs:label xml:lang="en">corneal_stroma</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.01.456.505.420.504">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.420"/>
+                <rdfs:label xml:lang="sn">eyelid</rdfs:label>
+                <rdfs:label xml:lang="en">eyelid</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.800.800.120.680.660">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.371.729"/>
+                <rdfs:label xml:lang="sn">optic_papilla</rdfs:label>
+                <rdfs:label xml:lang="sn">optic_nerve_head</rdfs:label>
+                <rdfs:label xml:lang="sn">optic_disk</rdfs:label>
+                <rdfs:label xml:lang="sn">blind_spot</rdfs:label>
+                <rdfs:label xml:lang="en">optic_disk</rdfs:label>
+        </owl:Class>
+        <owl:ObjectProperty rdf:ID="part_of">
+                <rdfs:label xml:lang="en">Part of</rdfs:label>
+        </owl:ObjectProperty>
+</rdf:RDF>

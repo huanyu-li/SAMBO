@@ -1,0 +1,116 @@
+body {  
+    color: #000000; 
+    background-color: #105dad; 
+    font-family: Verdana;    
+    font-size: 10pt;
+    font-style: normal; 
+}
+
+div.tableContainer {
+	width: 95%;		/* table width will be 99% of this*/
+	height: 500px; 	/* must be greater than tbody*/
+        width: 450px;
+	overflow: auto;     
+	}
+
+.tree_table {
+	width: 99%;		/*100% of container produces horiz. scroll in Mozilla*/
+	border-width: 0px;
+        font-size: 10pt;  
+	}
+
+.tree_td	{
+	text-align: left;
+	}
+
+table { 
+    background-color: #eeeeee; 
+    border-width: 0px; 
+    font-style: normal; 
+    color: #000000
+}
+
+.light_table {  
+    border-style: none; 
+    border-width: 0px; 
+    background-color: #ffffff
+}
+
+
+.border_table {  
+    background-color: #eeeeee; 
+    border: #dddddd; 
+    border-style: solid; 
+    border-width: thin; 
+    color: #000000
+}
+
+.classname {  
+    font-weight: bold
+}
+
+
+
+.menulink
+{
+    cursor: pointer;
+    cursor: hand;
+    text-decoration: none;
+    color: #444444; 
+    font-family: Verdana; 
+    font-weight: bold; 
+}
+
+.menulink:hover
+{
+    color: #999999;
+}
+
+.treelink
+{
+    text-decoration: none;
+    color: #444444; 
+    font-weight: bold; 
+}
+
+
+.helplink
+{
+    text-decoration: none;
+    color: #105dad; 
+    font-family: Verdana;
+}
+
+.helplink:hover
+{
+    color: #999999;
+}
+
+
+H4,H5,em{
+    color: #105dad; 
+}
+
+
+
+.blue{
+    color: #105dad; 
+ }
+
+.warn{
+   font-size: 8pt;
+   font-weight: bold;
+}
+
+.part{
+   color: #FF6699;
+   font-size: 6pt;
+   font-weight: bold; 
+}
+
+.isa{
+   color: #33CC55;
+   font-size: 6pt;
+   font-weight: bold; 
+}
+

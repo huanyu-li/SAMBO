@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : log4j.xml
+    Author     : hetan
+    Description: Configuration.
+-->
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        
+  <!-- For example, if the File option is set to /logs/sambo.log and the DatePattern set to '.'yyyy-MM-dd, 
+       on 2001-02-16 at midnight, the logging file /logs/sambo.log will be copied to /foo/bar.log.2001-02-16 
+       and logging for 2001-02-17 will continue in /logs/sambo.log until it rolls over the next day. 
+  -->
+  <appender name="FileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${log.home}/server.log.log"/>
+    <param name="DatePattern" value="'.'yyyy-MM-dd" /> 
+    <param name="Append" value="false"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d%n %p : %m%n"/>
+    </layout>
+  </appender>
+  
+	
+  <appender name="OutAppender" class="org.apache.log4j.ConsoleAppender">
+     <layout class="org.apache.log4j.PatternLayout">
+        <!-- <param name="ConversionPattern"  value="%p : (%F:%L) - %m%n"/> -->
+        <param name="ConversionPattern"  value="%d %p : - %m%n"/>
+     </layout>	    
+  </appender>
+    
+ 
+  <logger name="server" additivity="false">
+     <level value="INFO"/>  <!-- note lowercase! -->
+     <appender-ref ref="FileAppender"/>
+  </logger>
+    
+    
+   <!-- Configure the root appender -->
+   <root>
+     <!-- Set your root logging level: debug, info, warn, error or fatal -->
+    <level value="INFO"/>
+    <appender-ref ref="OutAppender"/>
+   </root>
+   
+</log4j:configuration>
+    
+

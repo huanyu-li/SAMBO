@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Created by He Tan -->
+
+<!-- The creator of this merging project and the last modified time -->
+<ontology_merge creator="He Tan" date="2003-12-01">
+      <!-- the information about this ontology merge -->
+      <properties>
+           <!-- resources are in URL format -->
+           <ontology_1   name="Defense" 
+                         color="#990000" 
+                         language="1"
+                         resource="http://130.236.177.91:8080/sambo/ontologies/DAML+OIL/defense.daml"/>
+           <ontology_2   name="Signal Behavior" 
+                         color="#000066" 
+                         language="1"
+                         resource="file:///home/hetan/sambo/ontologies/daml/signal_defense.daml"/>
+           <new_ontology name="New Ontolgoy"/>
+           <!-- integer, see STEP_SLOT STEP_CLASS STEP_RELATION in Contants -->
+           <step value="3"/>
+           <!-- char, see Constants for matcher -->
+           <matcher value="P"/>
+      </properties>
+
+      <!-- The suggestions list for the step to recover -->
+      <suggestion>
+           <pair object1="immune response"
+                 object2="Immune Response"/>
+           <pair object1="complement activation"
+                 object2="Complement Signaling"/>
+           <pair object1="B-cell activation"
+                 object2="B Cell Activation"/>
+           <pair object1="T-cell activation"
+                 object2="T Cell Activation"/> 
+     </suggestion>   
+
+     <!-- A list of terms to be merged or included is-a relationship in previous steps-->  
+     <history>
+         <merge_slot  type="daml:DatatypeProperty"
+                      name="synonym"
+                      slot1="synonym"
+                      slot2="synonym"/> 
+         <!--
+         <copy_slot_name num="1"
+                         name="part_of"
+                         slot1="part_of"
+                         slot2="part_of"/>
+         -->
+         <merge_class name="immune_response"
+                      class1="immune_response"
+                      class2="Immune_Response"/> 
+         <!--
+         <copy_class_name num="2"
+                          name="Administive_Assistant"
+                          class1="Assistant"
+                          class2="Assistant"/>
+         <isa_class num="1"
+                    class1="antigen_presentation"
+                    class2="Antigen_Processing_and_Presentation"/>
+         -->
+     </history>
+     <!-- A list of terms to be merged or included is-a relationship in the step terminated-->
+     <current-history>
+         <merge_class name ="immune_response"
+                      class1="immune_response"
+                      class2="Immune_Response"
+         <!--
+         <isa_class num="1"
+                    class1="antigen presentation"
+                    class2="Antigen Processing and Presentation"/>
+         -->
+     </current-history>
+</ontology_merge >

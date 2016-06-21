@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.nlm.nih.gov/mesh_ABDEGH.go#"
+    xml:base="http://www.nlm.nih.gov/mesh_ABDEGH.go#">
+        <owl:Ontology rdf:about=""/>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.930">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">spiral_lamina</rdfs:label>
+                <rdfs:label xml:lang="en">spiral_lamina</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.125">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">basilar_membrane</rdfs:label>
+                <rdfs:label xml:lang="en">basilar_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.250.315">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.08.663.650.250"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">outer_hair_cell</rdfs:label>
+                <rdfs:label xml:lang="en">outer_hair_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.397.873">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.397"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">tympanic_membrane</rdfs:label>
+                <rdfs:label xml:lang="en">tympanic_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.814">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">round_window</rdfs:label>
+                <rdfs:label xml:lang="en">round_window</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.340.390.800">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">spiral_ganglion</rdfs:label>
+                <rdfs:label xml:lang="sn">spiral_ganglia</rdfs:label>
+                <rdfs:label xml:lang="en">spiral_ganglion</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.397.247.362">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.397.247"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">incus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.397.369">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.397"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">eustachian_tube</rdfs:label>
+                <rdfs:label xml:lang="sn">auditory_tube</rdfs:label>
+                <rdfs:label xml:lang="en">eustachian_tube</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.01.456.313"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">labyrinth</rdfs:label>
+                <rdfs:label xml:lang="sn">internal_ear</rdfs:label>
+                <rdfs:label xml:lang="en">labyrinth</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.633.567.975">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.397"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">tensor_tympanus</rdfs:label>
+                <rdfs:label xml:lang="sn">tensor_tympani</rdfs:label>
+                <rdfs:label xml:lang="en">tensor_tympani</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.909.625.125.680">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.909.625.125"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">statoconia</rdfs:label>
+                <rdfs:label xml:lang="sn">otolithic_membrane</rdfs:label>
+                <rdfs:label xml:lang="sn">otolith</rdfs:label>
+                <rdfs:label xml:lang="sn">otoconia</rdfs:label>
+                <rdfs:label xml:lang="en">otolithic_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.08.663.650.250">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.246.577"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">hair_cell</rdfs:label>
+                <rdfs:label xml:lang="en">hair_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.848">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">scala_tympanus</rdfs:label>
+                <rdfs:label xml:lang="sn">scala_tympani</rdfs:label>
+                <rdfs:label xml:lang="en">scala_tympani</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.909.957.360">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.909.957"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">endolymphatic_duct</rdfs:label>
+                <rdfs:label xml:lang="en">endolymphatic_duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.397.247">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.397"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">ear_ossicle</rdfs:label>
+                <rdfs:label xml:lang="sn">auditory_ossicle</rdfs:label>
+                <rdfs:label xml:lang="en">ear_ossicle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.397.247.806">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.397.247"/>
+                <rdfs:label xml:lang="en">stape</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.909.625.125">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.909.625"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">acoustic_macula</rdfs:label>
+                <rdfs:label xml:lang="en">acoustic_maculae</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.909.625">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.909"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">utricle_and_saccule</rdfs:label>
+                <rdfs:label xml:lang="sn">utricle</rdfs:label>
+                <rdfs:label xml:lang="sn">saccule</rdfs:label>
+                <rdfs:label xml:lang="en">saccule_and_utricle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.292.876">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.09.246.631.246.292"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">stria_vascularis</rdfs:label>
+                <rdfs:label xml:lang="en">stria_vascularis</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.397.247.524">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.397.247"/>
+                <rdfs:label xml:lang="en">malleu</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.272">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.313"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">external_ear</rdfs:label>
+                <rdfs:label xml:lang="en">external_ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.246.292">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">scala_media</rdfs:label>
+                <rdfs:label xml:lang="sn">ductus_cochlearis</rdfs:label>
+                <rdfs:label xml:lang="sn">cochlear_duct</rdfs:label>
+                <rdfs:label xml:lang="en">cochlear_duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.909.551">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.909"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">oval_window</rdfs:label>
+                <rdfs:label xml:lang="en">oval_window</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.246.577">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">spiral_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">cortis_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">corti_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">corti's_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">basilar_papilla</rdfs:label>
+                <rdfs:label xml:lang="en">organ_of_corti</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.663">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631"/>
+                <rdfs:label xml:lang="sn">semicircular_canal</rdfs:label>
+                <rdfs:label xml:lang="en">semicircular_canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.909">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631"/>
+                <rdfs:label xml:lang="sn">vestibule</rdfs:label>
+                <rdfs:label xml:lang="sn">vestibular_apparatus</rdfs:label>
+                <rdfs:label xml:lang="en">vestibule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.280">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.631.246"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">perilymphatic_duct</rdfs:label>
+                <rdfs:label xml:lang="sn">cochlear_aqueduct</rdfs:label>
+                <rdfs:label xml:lang="en">cochlear_aqueduct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.292.906">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.246.292"/>
+                <rdfs:label xml:lang="sn">tectorial_membrane</rdfs:label>
+                <rdfs:label xml:lang="en">tectorial_membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.165.207">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.272"/>
+                <rdfs:label xml:lang="sn">ear_cartilage</rdfs:label>
+                <rdfs:label xml:lang="en">ear_cartilage</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.246">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631"/>
+                <rdfs:label xml:lang="sn">cochlea</rdfs:label>
+                <rdfs:label xml:lang="en">cochlea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.633.567.950">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.09.246.397"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">stapedius</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.631.909.957">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.909"/>
+                <rdfs:label xml:lang="sn">vestibular_aqueduct</rdfs:label>
+                <rdfs:label xml:lang="en">vestibular_aqueduct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.01.456.313">
+                <rdfs:label xml:lang="sn">ear</rdfs:label>
+                <rdfs:label xml:lang="en">ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.909.957.360.701">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.909.957.360"/>
+                <rdfs:label xml:lang="sn">endolymphatic_sac</rdfs:label>
+                <rdfs:label xml:lang="en">endolymphatic_sac</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.272.396">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.272"/>
+                <rdfs:label xml:lang="sn">external_auditory_canal</rdfs:label>
+                <rdfs:label xml:lang="sn">ear_canal</rdfs:label>
+                <rdfs:label xml:lang="en">ear_canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.09.246.397">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.313"/>
+                <rdfs:label xml:lang="sn">tympanum</rdfs:label>
+                <rdfs:label xml:lang="sn">tympanic_cavity</rdfs:label>
+                <rdfs:label xml:lang="sn">middle_ear</rdfs:label>
+                <rdfs:label xml:lang="en">middle_ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.09.246.631.246.577.543">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.246.577"/>
+                <rdfs:label xml:lang="sn">labyrinth_supporting_cell</rdfs:label>
+                <rdfs:label xml:lang="en">labyrinth_supporting_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.250.380">
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.909.625.125"/>
+                <rdfs:subClassOf rdf:resource="#MESH_A.09.246.631.663"/>
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.250"/>
+                <rdfs:label xml:lang="sn">vestibular_hair_cell</rdfs:label>
+                <rdfs:label xml:lang="en">vestibular_hair_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.08.663.650.250.250">
+                <rdfs:subClassOf rdf:resource="#MESH_A.08.663.650.250"/>
+                <rdfs:label xml:lang="sn">inner_hair_cell</rdfs:label>
+                <rdfs:label xml:lang="en">inner_hair_cell</rdfs:label>
+        </owl:Class>
+        <owl:ObjectProperty rdf:ID="part_of">
+                <rdfs:label xml:lang="en">Part of</rdfs:label>
+        </owl:ObjectProperty>
+</rdf:RDF>

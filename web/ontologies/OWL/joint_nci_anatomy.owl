@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:oboRel="http://www.obofoundry.org/ro/ro.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns="http://human.owl#"
+  xml:base="http://human.owl">
+  <owl:Ontology rdf:about="">
+    <oboInOwl:savedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >terryh</oboInOwl:savedBy>
+    <oboInOwl:hasDefaultNamespace rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >NCI</oboInOwl:hasDefaultNamespace>
+    <oboInOwl:hasDate rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2006-02-13T09:33:00</oboInOwl:hasDate>
+  </owl:Ontology>
+  <owl:Class rdf:ID="NCI_C12219">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Anatomic_Structure_System_or_Substance</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C34076">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C33904"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C25769"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33108">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C32889"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Metatarsophalangeal_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32888">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Jaw_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32402">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cricothyroid_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32868">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Interphalangeal_Joint_of_the_Hand</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33617">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Sternocostal_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33789">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Toe_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32078">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ankle_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33425">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Public_Symphisis</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C32890"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C25769">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C32221"/>
+    </rdfs:subClassOf>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Musculoskeletal_System_Part</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C33904">
+    <rdfs:subClassOf rdf:resource="#NCI_C12219"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Other_Anatomic_Concept</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33506">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Sacrococcygeal_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32158">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Atlanto-occipital_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32061">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Amphiarthrosis</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="NCI_C13044"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32264">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Carpal_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32394">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Costovertebral_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32742">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Hip_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33615">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Sternoclavicular_Joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32889"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C32889">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Joint_By_Site</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C13044"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C13044">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C25769"/>
+    <rdfs:subClassOf rdf:resource="#NCI_C34076"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32461">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Diarthrosis</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C13044"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33894">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Wrist_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C49577">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Vertebral_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33653">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Subtalar_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32042">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NCI_C32890"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Acetabulum</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32047">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Acromioclavicular_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32157">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Atlanto-axial_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33716">
+    <rdfs:subClassOf rdf:resource="#NCI_C13044"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Synarthrosis</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32497">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Elbow_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32392">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Costochondral_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32898">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Knee_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C32221">
+    <rdfs:subClassOf rdf:resource="#NCI_C12219"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Body_Part</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33106">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Metacarpophalangeal_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32397">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cricoarytenoid_Joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C49575">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Joint_of_the_Rib</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33735">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Tarsal_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:about="#NCI_C32890">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Joint_of_the_Pelvic_Girdle</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32265">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Carpometacarpal_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32867">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Interphalangeal_Joint_of_the_Foot</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33507">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Sacroiliac_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C32577">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Facet_Joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NCI_C33548">
+    <rdfs:subClassOf rdf:resource="#NCI_C32889"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Shoulder_Joint</rdfs:label>
+  </owl:Class>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->

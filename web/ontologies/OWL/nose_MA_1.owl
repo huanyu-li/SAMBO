@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns    ="http://www.informatics.jax.org/adult_mouse_anatomy_060906.gxd#"
+    xml:base="http://www.informatics.jax.org/adult_mouse_anatomy_060906.gxd#">
+        <owl:Ontology rdf:about=""/>
+        <owl:Class rdf:ID="MA_0000285">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000281"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:ID="part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">nasal septum</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000284">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000281"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">nasal cavity</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001323">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MA_0000282"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">internal naris</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000281">
+                <rdfs:label xml:lang="en">nose</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001322">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0001320"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">primary choana</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001326">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MA_0001324"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">nasal cavity respiratory epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001321">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0001320"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">external naris epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000288">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">olfactory nerves</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000282">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">naris</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000287">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">olfactory gland of bowman</rdfs:label>
+                <rdfs:label xml:lang="en">olfactory gland</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001325">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MA_0001324"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">olfactory mucosa</rdfs:label>
+                <rdfs:label xml:lang="en">nasal cavity olfactory epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000283">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">nasal capsule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0001320">
+                <rdfs:subClassOf rdf:resource="#MA_0000282"/>
+                <rdfs:label xml:lang="en">external naris</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000286">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">nasal turbinate</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001327">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000285"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">organ of masera</rdfs:label>
+                <rdfs:label xml:lang="en">septal olfactory organ</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000289">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000281"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">organ of jacobsen</rdfs:label>
+                <rdfs:label xml:lang="en">vomeronasal organ</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001328">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000289"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">vomeronasal organ sensory epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0001324">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000284"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">nasal mucosa</rdfs:label>
+                <rdfs:label xml:lang="en">nasal cavity epithelium</rdfs:label>
+        </owl:Class>
+        <owl:ObjectProperty rdf:about="#part_of">
+                <rdfs:label xml:lang="en">Part of</rdfs:label>
+        </owl:ObjectProperty>
+</rdf:RDF>

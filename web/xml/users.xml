@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Author     : hetan
+    Description: storing user information.
+-->
+<userlist>
+<user addr="127.0.0.1" email="tester" pwd="tester" times="1" />
+</userlist>
+
+

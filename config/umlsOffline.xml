@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mysql_properties>
+
+<mysql_username>root</mysql_username>
+<mysql_password>mysqlroot</mysql_password>
+<mysql_serverUrl>//localhost:3306/dbsambo</mysql_serverUrl>
+<umls_DBName>umls_2012aa</umls_DBName>
+<umls_exact>mrconso</umls_exact>
+<umls_normString>mrxns_eng</umls_normString>
+<umls_normWord>mrxnw_eng</umls_normWord>
+<umls_relation>mrrel</umls_relation>
+	
+</mysql_properties>

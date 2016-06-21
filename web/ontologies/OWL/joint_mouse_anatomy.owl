@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:oboRel="http://www.obofoundry.org/ro/ro.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns="http://mouse.owl#"
+  xml:base="http://mouse.owl">
+  <owl:Ontology rdf:about="">
+    <oboInOwl:hasDate rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2007-01-18T12:17:00</oboInOwl:hasDate>
+    <oboInOwl:hasDefaultNamespace rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >adult_mouse_anatomy.gxd</oboInOwl:hasDefaultNamespace>
+    <oboInOwl:savedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >terryh</oboInOwl:savedBy>
+  </owl:Ontology>
+  <owl:Class rdf:ID="MA_0001512">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sternocostal joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0001508"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001507">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sternoclavicular joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0001505"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000319">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001503">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0001501"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >postcranial synchondrosis</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001506">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MA_0001505"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sacroiliac joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000470">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >hip joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0000662"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001513">
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >joint of vertebral arch</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000459">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >shoulder joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0000614"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001510">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >costovertebral joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MA_0001508"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001500">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0000320"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >syndesmosis</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0001501">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0000321"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >synchondrosis</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000462">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >radio-ulnar joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MA_0000460"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000452">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >hand joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MA_0000614"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0001508">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >joint of rib</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001514">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >joint of vertebral body</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0000321">
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >fibrous joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000691">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >limb joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001499">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >gomphosis</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MA_0000320"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0000614">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >forelimb joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000691"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0000460">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >wrist joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000614"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000463">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >ankle joint</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MA_0000662"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000451">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >elbow joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000614"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0000662">
+    <rdfs:subClassOf rdf:resource="#MA_0000691"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >hindlimb joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000461">
+    <rdfs:subClassOf rdf:resource="#MA_0000460"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >radio-carpal joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001504">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >symphysis</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000321"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0000320">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >cartilaginous joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000471">
+    <rdfs:subClassOf rdf:resource="#MA_0000662"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >knee joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001509">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >costochondral joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0001508"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000453">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >metacarpo-phalangeal joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0000452"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MA_0001505">
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >joint of girdle</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001511">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >interchondral joint</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#MA_0001508"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0001502">
+    <rdfs:subClassOf rdf:resource="#MA_0001501"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >cranial synchondrosis</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000464">
+    <rdfs:subClassOf rdf:resource="#MA_0000662"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >foot joint</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="MA_0000322">
+    <rdfs:subClassOf rdf:resource="#MA_0000319"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >synovial joint</rdfs:label>
+  </owl:Class>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->

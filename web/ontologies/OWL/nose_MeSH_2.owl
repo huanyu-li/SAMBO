@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.nlm.nih.gov/mesh_ABDEGH.go#"
+    xml:base="http://www.nlm.nih.gov/mesh_ABDEGH.go#">
+        <owl:Ontology rdf:about=""/>
+        <owl:Class rdf:ID="MESH_A.04.531.449">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.01.456.505.733"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">nasal_cavity</rdfs:label>
+                <rdfs:label xml:lang="en">nasal_cavity</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.591.940">
+                <rdfs:label xml:lang="sn">jacobsons_organ</rdfs:label>
+                <rdfs:label xml:lang="en">vomeronasal_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">vomeronasal_organ</rdfs:label>
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.02.165.639"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">jacobson's_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">jacobson_organ</rdfs:label>
+                <rdfs:label xml:lang="sn">vomeronasal_nerve</rdfs:label>
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.01.456.505.733"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">organum_vomeronasale</rdfs:label>
+                <rdfs:label xml:lang="sn">vomeronasal_system</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.621.827">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.04.531.621"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">sphenoid_sinus</rdfs:label>
+                <rdfs:label xml:lang="en">sphenoid_sinus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.01.456.505.733">
+                <rdfs:label xml:lang="sn">nose</rdfs:label>
+                <rdfs:label xml:lang="en">nose</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.04.531.621">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">paranasal_sinus</rdfs:label>
+                <rdfs:label xml:lang="sn">nasal_sinus</rdfs:label>
+                <rdfs:label xml:lang="en">paranasal_sinus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.621.578">
+                <rdfs:subClassOf rdf:resource="#MESH_A.04.531.621"/>
+                <rdfs:label xml:lang="sn">maxillary_sinus</rdfs:label>
+                <rdfs:label xml:lang="sn">maxillary_antrum</rdfs:label>
+                <rdfs:label xml:lang="sn">highmore_antrum</rdfs:label>
+                <rdfs:label xml:lang="en">maxillary_sinus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.835.232.781.324.948">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">turbinate</rdfs:label>
+                <rdfs:label xml:lang="sn">conchae_nasale</rdfs:label>
+                <rdfs:label xml:lang="en">turbinate</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.520.573">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MESH_A.04.531.520"/>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">olfactory_mucosa</rdfs:label>
+                <rdfs:label xml:lang="sn">olfactory_epithelium</rdfs:label>
+                <rdfs:label xml:lang="en">olfactory_mucosa</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.520.573.580">
+                <rdfs:subClassOf rdf:resource="#MESH_A.04.531.520.573"/>
+                <rdfs:label xml:lang="sn">olfactory_receptor_neuron</rdfs:label>
+                <rdfs:label xml:lang="en">olfactory_receptor_neuron</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.621.387">
+                <rdfs:subClassOf rdf:resource="#MESH_A.04.531.621"/>
+                <rdfs:label xml:lang="sn">frontal_sinus</rdfs:label>
+                <rdfs:label xml:lang="en">frontal_sinus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.03.492.411.369.320">
+                <rdfs:subClassOf rdf:resource="#MESH_A.04.531.520.573"/>
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MESH_A.04.531.520"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">goblet_cell</rdfs:label>
+                <rdfs:label xml:lang="en">goblet_cell</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.02.835.232.781.324.665">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">nasal_bone</rdfs:label>
+                <rdfs:label xml:lang="en">nasal_bone</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.04.531.520">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">nasal_mucosa</rdfs:label>
+                <rdfs:label xml:lang="sn">nasal_epithelium</rdfs:label>
+                <rdfs:label xml:lang="en">nasal_mucosa</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MESH_A.02.165.639">
+                <rdfs:subClassOf rdf:resource="#MESH_A.01.456.505.733"/>
+                <rdfs:label xml:lang="sn">vomer</rdfs:label>
+                <rdfs:label xml:lang="sn">nasal_septum</rdfs:label>
+                <rdfs:label xml:lang="en">nasal_septum</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MESH_A.04.531.621.267">
+                <rdfs:subClassOf rdf:resource="#MESH_A.04.531.621"/>
+                <rdfs:label xml:lang="sn">ethmoid_sinus</rdfs:label>
+                <rdfs:label xml:lang="en">ethmoid_sinus</rdfs:label>
+        </owl:Class>
+</rdf:RDF>

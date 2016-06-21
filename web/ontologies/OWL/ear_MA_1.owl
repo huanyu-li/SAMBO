@@ -1,0 +1,939 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.informatics.jax.org/adult_mouse_anatomy_060906.gxd#"
+    xml:base="http://www.informatics.jax.org/adult_mouse_anatomy_060906.gxd#">
+        <owl:Ontology rdf:about=""/>
+        <owl:Class rdf:ID="MA_0001182">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000239"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:ID="part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">modiolus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001219">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic cavity blood vessel</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001206">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000248"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">scala vestibuli</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001191">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000243"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">limbus lamina spiralis</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001209">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MA_0000250"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">posterior semicircular canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001218">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tubotympanic recess</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001190">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000243"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">basilar membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001220">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MA_0000256"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">stapedius</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001189">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">inner ear epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001225">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic ring</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001204">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000247"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">utricle epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001214">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:ID="MA_0000251"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">posterior semicircular duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001227">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000259"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">auricular cartilage</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001201">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000246"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">saccular maculs</rdfs:label>
+                <rdfs:label xml:lang="en">macula of saccule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000260">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000258"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">external auditory meatus</rdfs:label>
+                <rdfs:label xml:lang="en">external acoustic meatus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001194">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0001193"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">reticular membrane</rdfs:label>
+                <rdfs:label xml:lang="en">reticular lamina</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000257">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000248">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">perilymphatic space</rdfs:label>
+                <rdfs:label xml:lang="en">perilymphatic channel</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000249">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">semicircular canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001205">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000248"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">scala tympani</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000236">
+                <rdfs:label xml:lang="sn">auditory/vestibular system</rdfs:label>
+                <rdfs:label xml:lang="en">ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001195">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000243"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">spiral sulcus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001228">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000259"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">auricular ligament</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001234">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000260"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">external acoustic meatus cartilaginous part</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001233">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000259"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">ear skin</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000240">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">cochlea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001208">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MA_0000250"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">lateral semicircular canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000245">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000242"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">vestibular apparatus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001231">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0001229"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">intrinsic auricular muscle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000254">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">ear bone</rdfs:label>
+                <rdfs:label xml:lang="sn">auditory ossicle</rdfs:label>
+                <rdfs:label xml:lang="en">auditory bone</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0001229">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000259"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">auricular muscle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000256">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic cavity muscle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001200">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000243"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">reissner's membrane</rdfs:label>
+                <rdfs:label xml:lang="en">vestibular membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000259">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000258"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">pinna</rdfs:label>
+                <rdfs:label xml:lang="en">auricle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001221">
+                <rdfs:subClassOf rdf:resource="#MA_0000256"/>
+                <rdfs:label xml:lang="en">tensor tympani</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001199">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000243"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tectorial membrane</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001224">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000257"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001183">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000239"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">osseus cochlear canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000243">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000242"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000240"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">cochlear duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001213">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MA_0000251"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">lateral semicircular duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000250">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000249"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0000238"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">osseus semicircular canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0001193">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000243"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">organ of corti</rdfs:label>
+                <rdfs:label xml:lang="en">spiral organ</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001198">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000243"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">stria vascularis</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001223">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000257"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic endothelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000238">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">osseus labyrinth</rdfs:label>
+                <rdfs:label xml:lang="en">bony labyrinth</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000258">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000236"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">external ear</rdfs:label>
+                <rdfs:label xml:lang="en">outer ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000241">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">endolymphatic duct/sac</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001192">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000243"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">spiral ligament</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001188">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000241"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">endolymphatic sac</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000252">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">periotic capsule</rdfs:label>
+                <rdfs:label xml:lang="en">otic capsule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001211">
+                <rdfs:subClassOf>
+                        <owl:Class rdf:about="#MA_0000251"/>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">anterior semicircular duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000244">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000242"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">ductus reuniens</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001207">
+                <rdfs:subClassOf rdf:resource="#MA_0000250"/>
+                <rdfs:label xml:lang="en">anterior semicircular canal</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001222">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">tympanic cavity nerves</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000247">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000245"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">utricle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001210">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000251"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000250"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">crus commune</rdfs:label>
+                <rdfs:label xml:lang="en">crus commune</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001186">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:ID="MA_0001185"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">vestibular aqueduct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001202">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000246"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">saccule epithelium</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000242">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000237"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">membranous labyrinth</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000239">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000240"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000238"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">osseus cochlea</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001187">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000241"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">endolymphatic duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000251">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000249"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000245"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">membranous semicircular canal</rdfs:label>
+                <rdfs:label xml:lang="en">semicircular duct</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001215">
+                <rdfs:subClassOf rdf:resource="#MA_0000254"/>
+                <rdfs:label xml:lang="en">incus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0000255">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom>
+                                        <owl:Class rdf:about="#MA_0000253"/>
+                                </owl:someValuesFrom>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">pharyngotympanic tube</rdfs:label>
+                <rdfs:label xml:lang="sn">eustachian tube</rdfs:label>
+                <rdfs:label xml:lang="en">auditory tube</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001230">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0001229"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">extrinsic auricular muscle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001196">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0001195"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">external spiral sulcus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0001185">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000238"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">osseus labyrinth vestibule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000246">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000245"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">saccule</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001217">
+                <rdfs:subClassOf rdf:resource="#MA_0000254"/>
+                <rdfs:label xml:lang="en">stapes</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000237">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000236"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">labyrinth</rdfs:label>
+                <rdfs:label xml:lang="en">inner ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001203">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000247"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">utricular macula</rdfs:label>
+                <rdfs:label xml:lang="en">macula of utricle</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001216">
+                <rdfs:subClassOf rdf:resource="#MA_0000254"/>
+                <rdfs:label xml:lang="en">malleus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001184">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000239"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">osseus spiral lamina</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001197">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0001195"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">internal spiral sulcus</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:about="#MA_0000253">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000236"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="sn">tympanic cavity</rdfs:label>
+                <rdfs:label xml:lang="en">middle ear</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001226">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000259"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">auricular blood vessel</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001235">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000260"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">external acoustic meatus osseus part</rdfs:label>
+        </owl:Class>
+        <owl:Class rdf:ID="MA_0001232">
+                <rdfs:subClassOf>
+                        <owl:Restriction>
+                                <owl:someValuesFrom rdf:resource="#MA_0000259"/>
+                                <owl:onProperty>
+                                        <owl:ObjectProperty rdf:about="#part_of"/>
+                                </owl:onProperty>
+                        </owl:Restriction>
+                </rdfs:subClassOf>
+                <rdfs:label xml:lang="en">auricular nerve</rdfs:label>
+        </owl:Class>
+        <owl:ObjectProperty rdf:about="#part_of">
+                <rdfs:label xml:lang="en">Part of</rdfs:label>
+        </owl:ObjectProperty>
+</rdf:RDF>
