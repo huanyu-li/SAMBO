@@ -17,12 +17,9 @@ import se.liu.ida.sambo.MModel.util.NameProcessor;
 public class testMClass implements testMElement {
     private String uri;
     private String name;
-    private String prettyname;
     private String alignComment;
     private String alignName;
     private testMElement alignElement;
-    private HashSet<String> synonyms;
-    private HashSet<String> prettysyn;
     private HashMap<Integer, testMClass> supers;
     private HashMap<Integer, testMClass> subs;
     private HashMap<Integer, testMClass> equiv;
@@ -30,8 +27,6 @@ public class testMClass implements testMElement {
     public testMClass(String uri){
         this.uri = uri;
         this.name = getLocalName();
-        synonyms = new HashSet<String>();
-        prettysyn = new HashSet<String>();
         supers = new HashMap<Integer,testMClass>();
         subs = new HashMap<Integer,testMClass>();
         equiv = new HashMap<Integer,testMClass>();
@@ -43,17 +38,6 @@ public class testMClass implements testMElement {
         this.subs.put(index, tmc);
     }
     public void addEquiv(testMClass tmc){
-    }
-    public HashSet<String> getSynonyms(){
-        return this.synonyms;
-    }
-    public void addSynonym(String s){
-        synonyms.add(s);
-        prettysyn.add(NameProcessor.getInstance().advCleanName(s));
-    }
-    public String getPrettyName()
-    {
-        return prettyname;
     }
     public String getAlignComment()
     {
@@ -88,16 +72,11 @@ public class testMClass implements testMElement {
     public testMElement getAlignElement(){
         return alignElement;
     }
-    public HashSet<String> getPrettySyn(){
-        return prettysyn;
-    }
+
     public boolean isMClass() {
         return true;
     }
     public boolean isMProperty() {
         return false;
-    }
-    public void setPrettyname(String s){
-        this.prettyname = s;
     }
 }

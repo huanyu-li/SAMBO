@@ -16,7 +16,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,6 +42,7 @@ import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.algos.matching.algos.EditDistance;
 import se.liu.ida.sambo.algos.matching.testMatchingAlgos;
 import se.liu.ida.sambo.util.testPair;
+import se.liu.ida.sambo.algos.matching.Matcher;
 /**
  *
  * @author huali50
@@ -90,7 +90,9 @@ public class testMergerManager {
         mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
         //mm.init();
         //long t1 = System.currentTimeMillis();
-        mm.match();
+        Matcher[] matcher_list;
+        
+        mm.match(matcher_list);
         //long t2 = System.currentTimeMillis();
         //System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
         Integer step = new Integer(Constants.STEP_CLASS);
@@ -105,7 +107,7 @@ public class testMergerManager {
       
 
     }
-    public void match(){
+    public void match(Matcher[] matcher_list){
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
@@ -123,7 +125,7 @@ public class testMergerManager {
                 //System.out.println(edfinalvalue);
                 if(count < 1000)
                 {
-                    tasklist.add(new Task(sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                    tasklist.add(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j),matcher_list));
                     mappingcount++;
                     count++;
                 }

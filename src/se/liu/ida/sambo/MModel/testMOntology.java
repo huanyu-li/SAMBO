@@ -174,14 +174,6 @@ public class testMOntology {
                         OWLLiteral annotation_value = (OWLLiteral) a.getValue();
                         String name = annotation_value.getLiteral();
                         String language = annotation_value.getLang();
-                        if(language == "en")
-                            tmc.setPrettyname(name);
-                        else
-                        {
-                            if(tmc.getPrettyName() == null)
-                                tmc.setPrettyname(name);
-                        }
-                        tmc.addSynonym(name);
                         tl = new testLexicon("label", language, NameProcessor.getInstance().advCleanName(name));
                         //already get the lexical data. Next step is to store them.
                         tlset.add(tl);

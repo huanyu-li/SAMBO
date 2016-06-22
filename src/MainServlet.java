@@ -193,7 +193,7 @@ public class MainServlet extends HttpServlet {
                     out.close();
                 }
             }
-        } else if(req.getParameter("finish") != null) {
+        } else if(req.getParameter("finish-1") != null) {
             // Delete files code goes here
             File userFile=new File(Commons.DATA_PATH + Commons.USER_NAME+".xml");
             userFile.delete();
@@ -236,12 +236,14 @@ public class MainServlet extends HttpServlet {
             out.println(PageHandler.createFinished(alignfile, mergefile, 
                     Constants.OWL));
 	    out.println(PageHandler.createFooter());
+           /*
             try {
                 this.RemoveUserSessionFromDb();
             } catch (UserSessionsDaoException ex) {
                 Logger.getLogger(MainServlet.class.getName()).
                         log(Level.SEVERE, null, ex);
             }
+            */
         }
     }
     

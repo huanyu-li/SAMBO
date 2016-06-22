@@ -76,14 +76,12 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 
 //In a session
-        } /*else
-
-            if (request.getSession(true).getAttribute("email") != null) {
+        } else if (request.getSession(true).getAttribute("email") != null) {
 
             //Go to Align and Merge
             out.println(FormHandler.createFileUploadForm(Constants.UNK, Constants.UNK));
 
-        } */ else {
+        }  else {
             out.println(loginForm("Please login || register first <br><br> For registering, please input an email address at User Account, and a password will be sent."));
 
         }
@@ -272,7 +270,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <%!
     synchronized String LoadSession(String email, String filePath, HttpServletRequest req){
-        /*String str = new String();
+        String str = new String();
         String mName = new String();
         String mValue = new String();
         String isFinalized = new String();
@@ -402,7 +400,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }catch (Exception e){
             System.out.println(e);
         }
-        return str;*/
+        return str;
+        /*
         int count = 0;
         String str = new String();
         String strTable = new String();;
@@ -478,9 +477,9 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                      
                 }
 
-                /*str = "<FORM METHOD='POST' ACTION='LoadSession' ENCTYPE='multipart/form-data'>"
+                str = "<FORM METHOD='POST' ACTION='LoadSession' ENCTYPE='multipart/form-data'>"
                     + strTable 
-                    + "</form><br />";*/
+                    + "</form><br />";
                 str    = strTable;
                  
 
@@ -488,7 +487,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         catch (Exception _e) {
                 _e.printStackTrace();
         }
-        return str;
+        return str;*/
     }
 
     /**

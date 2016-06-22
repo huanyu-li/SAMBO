@@ -1151,19 +1151,25 @@ startform +="<td><input type=\"checkbox\" name=\"enable_interrupt\" value=\"true
         
         //Added By Rajaram
         if(step == Constants.STEP_SLOT){
-        startform += "<td>&nbsp;&nbsp;" + makeButton("start", "start", "submit", "Start");
-        startform += "</table></TABLE> </FORM>";  
+            startform += "<td>&nbsp;&nbsp;" + makeButton("start", "start", "submit", "Start");
+            startform += "</table></TABLE> </FORM>";  
+        }
+        else if(step == Constants.STEP_CLASS){
+            startform += "<td>&nbsp;&nbsp;" + makeButton("finish-1", "finish", "submit", "Finish");
+            startform += "</table></TABLE> </FORM>"; 
         }
         else
             startform += "</table></FORM>";  
+        /*
+        if(step == Constants.STEP_CLASS)
+        {
+            startform += "<br><br>&nbsp;&nbsp;" + makeButton("finish-1", "finish", "submit", "Finish");
+            startform += "<br><br>&nbsp;&nbsp;<span class=\"menulink\" onClick=\"openwindow('Interrupt.jsp', 'blank');\">"
+                    +" <font color='red'>Interrupt Computation </font>" + "</span>&nbsp;";
+        }
+        */
+
         
-//        if(step == Constants.STEP_CLASS)
-//        {
-//            startform += "<br><br>&nbsp;&nbsp;" + makeButton("finish", "finish", "submit", "Finish");
-//            startform += "<br><br>&nbsp;&nbsp;<span class=\"menulink\" onClick=\"openwindow('Interrupt.jsp', 'blank');\">"
-//                    +" <font color='red'>Interrupt Computation </font>" + "</span>&nbsp;";
-//        }
-        //
         
         
         

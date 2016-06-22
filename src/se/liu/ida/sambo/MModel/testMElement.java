@@ -14,7 +14,6 @@ import java.util.Set;
 public interface testMElement {
     public String getURI();
     public String getLocalName();
-    public String getPrettyName();
     public String getAlignComment();
     public String getAlignName();
     public testMElement getAlignElement();

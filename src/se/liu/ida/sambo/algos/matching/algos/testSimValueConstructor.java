@@ -869,9 +869,9 @@ public final class testSimValueConstructor {
      * A linguistic matcher calculate similarity.
      */ 
     private void perform(int matcher, Matcher matcher_single) {        
-        Matcher[] matcher_list = {matcher_single};
+        //Matcher[] matcher_list = {matcher_single};
         double[] weight = {1.0};   
-        perform(matcher, matcher_list, weight);        
+        perform(matcher, matcher_single, weight);        
     }
 
     
@@ -884,12 +884,12 @@ public final class testSimValueConstructor {
      *                      will use more than one matcher(matching algorithm).
      * @param weight        Used for the matcher's like wordnet and wordlist. 
      */
-    private void perform(int matcher, Matcher[] matcherList, double[] weight) {
+    private void perform(int matcher, Matcher matcher_single, double[] weight) {
         
         
         long startTime = System.currentTimeMillis();
         
-        singleThreadPerform(matcher, matcherList, weight);
+        singleThreadPerform(matcher, matcher_single, weight);
         
 //        if (matchingStep.equalsIgnoreCase("Init class")) {
 //            multiThreadPerform(matcher, matcherList, weight);
@@ -978,7 +978,7 @@ public final class testSimValueConstructor {
      * @param matcherList
      * @param weight 
      */
-    private void singleThreadPerform(int matcher, Matcher[] matcherList, double[] weight) {
+    private void singleThreadPerform(int matcher, Matcher matcherList, double[] weight) {
         int computationCounter = 0;
         // To store multiple sql statement
         ArrayList<String> updateStatement = new ArrayList<String>();
@@ -1027,6 +1027,8 @@ public final class testSimValueConstructor {
         }   
         concept1 = "";
         concept2 = "";
+        
+        
         for(Integer i : source_content)
         {
             concept1 = source_ontology.getURITable().getURI(i);
