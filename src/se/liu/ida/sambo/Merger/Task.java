@@ -19,30 +19,29 @@ public class Task {
     private Integer target_id;
     private HashSet<testLexicon> sourcelexicon;
     private HashSet<testLexicon> targetlexicon;
-    private Matcher[] matcher_list;
-    private double[] values;
-    public Task(Integer sid, Integer tid, HashSet<testLexicon> sourcelexicon, HashSet<testLexicon> targetlexicon, Matcher[] matcherlist){
+    private Matcher matcher;
+    private double value;
+    public Task(Integer sid, Integer tid, HashSet<testLexicon> sourcelexicon, HashSet<testLexicon> targetlexicon, Matcher matcher){
         this.source_id = sid;
         this.target_id = tid;
         this.sourcelexicon = sourcelexicon;
         this.targetlexicon = targetlexicon;
-        this.matcher_list = matcherlist;
+        this.matcher = matcher;
     }
     public void compute_sim(){
         double max_sim = 0;
-        for (int i = 0; i < matcher_list.length; i++) {
             for(testLexicon stl : sourcelexicon){
                 for(testLexicon ttl : targetlexicon){
-                    double similarity = matcher_list[i].getSimValue(stl.getname(),ttl.getname());
+                    double similarity = matcher.getSimValue(stl.getname(),ttl.getname());
                     if(similarity > max_sim)
                         max_sim = similarity;
                 }
             }
-            values[i] = max_sim;
-        }
+            value = max_sim;
+        
     }
-    public double[] getsimilarity(){
-        return values;
+    public double getsimilarity(){
+        return value;
     }
     public HashSet<testLexicon> getsource(){
         return this.sourcelexicon;

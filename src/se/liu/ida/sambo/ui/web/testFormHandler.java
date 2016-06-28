@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package se.liu.ida.sambo.ui.web;
 
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -26,13 +31,11 @@ import se.liu.ida.sambo.util.Pair;
 import se.liu.ida.sambo.util.Suggestion;
 
 /**
- * Creates various forms for the Request-Response interaction
+ *
+ * @author huali50
  */
-
-public class FormHandler{
-    
-    
-//
+public class testFormHandler {
+    //
 //            UPLOAD FILE
 //
 //    
@@ -993,7 +996,7 @@ public class FormHandler{
         
         String startform = Constants.JavaScript_OpenWindow; // Added by Rajaram
                 
-                startform += "<FORM method=GET action=\"Main\">" ;
+                startform += "<FORM method=GET action=\"testMain\">" ;
                 
                 //
         if(step == Constants.STEP_SLOT)
@@ -1248,7 +1251,7 @@ startform +="<td><input type=\"checkbox\" name=\"enable_interrupt\" value=\"true
      * @return a string containing the HTML representation of the form
      */
     public static String createRecommendationForm(SettingsInfo settings, int step) {
-        String startform = "<FORM method=GET action=\"Main\">" ;
+        String startform = "<FORM method=GET action=\"testMain\">" ;
 
         startform += "<TABLE width=\"80%\" border=\"0\" class=\"border_table\" align=\"center\">";
 
@@ -1317,7 +1320,7 @@ startform +="<td><input type=\"checkbox\" name=\"enable_interrupt\" value=\"true
         return startform;
     }
 public static String testcreateRecommendationForm(SettingsInfo settings, int step) {
-        String startform = "<FORM method=GET action=\"Main\">" ;
+        String startform = "<FORM method=GET action=\"testMain\">" ;
 
         startform += "<TABLE width=\"80%\" border=\"0\" class=\"border_table\" align=\"center\">";
 
@@ -1686,5 +1689,4 @@ public static String testcreateRecommendationForm(SettingsInfo settings, int ste
         
         return formStr;
     }
-
 }

@@ -884,12 +884,12 @@ public final class testSimValueConstructor {
      *                      will use more than one matcher(matching algorithm).
      * @param weight        Used for the matcher's like wordnet and wordlist. 
      */
-    private void perform(int matcher, Matcher matcher_single, double[] weight) {
+    private void perform(int matcher, Matcher[] matcherlist, double[] weight) {
         
         
         long startTime = System.currentTimeMillis();
         
-        singleThreadPerform(matcher, matcher_single, weight);
+        singleThreadPerform(matcher, matcherlist, weight);
         
 //        if (matchingStep.equalsIgnoreCase("Init class")) {
 //            multiThreadPerform(matcher, matcherList, weight);
@@ -978,7 +978,7 @@ public final class testSimValueConstructor {
      * @param matcherList
      * @param weight 
      */
-    private void singleThreadPerform(int matcher, Matcher matcherList, double[] weight) {
+    private void singleThreadPerform(int matcher, Matcher[] matcherList, double[] weight) {
         int computationCounter = 0;
         // To store multiple sql statement
         ArrayList<String> updateStatement = new ArrayList<String>();

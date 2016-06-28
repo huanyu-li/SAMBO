@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -82,6 +83,7 @@ public class testMergerManager {
     Vector tempSuggestionVector;
     private final boolean ToDo = true, UnDo = false;
     NameProcessor labelClean=new NameProcessor();
+    private HashSet<Integer> matcher_list = new HashSet<Integer>();
     private ArrayList<Task> tasklist = new ArrayList<Task>();
 
     public static void main(String args[]) throws OWLOntologyCreationException {
@@ -90,9 +92,8 @@ public class testMergerManager {
         mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
         //mm.init();
         //long t1 = System.currentTimeMillis();
-        Matcher[] matcher_list;
-        
-        mm.match(matcher_list);
+        Matcher matcher = new EditDistance();
+        mm.match(matcher);
         //long t2 = System.currentTimeMillis();
         //System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
         Integer step = new Integer(Constants.STEP_CLASS);
@@ -107,7 +108,7 @@ public class testMergerManager {
       
 
     }
-    public void match(Matcher[] matcher_list){
+    public void match(Matcher matcher_list){
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
@@ -125,7 +126,7 @@ public class testMergerManager {
                 //System.out.println(edfinalvalue);
                 if(count < 1000)
                 {
-                    tasklist.add(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j),matcher_list));
+                    tasklist.add(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j),matcher));
                     mappingcount++;
                     count++;
                 }
@@ -239,6 +240,9 @@ public class testMergerManager {
      **@param url2 the url of the ontology-2
      */
     public void loadOntologies(String uri1, String uri2) throws OWLOntologyCreationException {
+        testOntManager.loadOntologies(uri1, uri2);
+    }
+    public void loadOntologies(URI uri1, URI uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
     }
         /** Loads the ontologies
@@ -645,6 +649,9 @@ public class testMergerManager {
         ComputeTask task =new ComputeTask(0,tasksize);
         task.settasklist(tasklist);
         task.compute();
+    }
+    public HashSet getMatcherList(){
+        return this.matcher_list;
     }
 }
     
