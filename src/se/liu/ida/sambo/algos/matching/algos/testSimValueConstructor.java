@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -23,13 +25,15 @@ import se.liu.ida.PRAalg.testdtfPRA;
 import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
 import se.liu.ida.sambo.Merger.Constants;
+import se.liu.ida.sambo.Merger.Task;
+import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.Merger.testOntManager;
 import se.liu.ida.sambo.Recommendation.RecommendationConstants;
 import se.liu.ida.sambo.algos.matching.Matcher;
 import se.liu.ida.sambo.jdbc.ResourceManager;
 import se.liu.ida.sambo.session.Commons;
 import se.liu.ida.sambo.jdbc.simvalue.ResultsForCombinationAccessDB;
-import se.liu.ida.sambo.jdbc.simvalue.SimValueGenerateQuery;
+import se.liu.ida.sambo.jdbc.simvalue.testSimValueGenerateQuery;
 import se.liu.ida.sambo.util.testPair;
 /**
  *
@@ -83,7 +87,7 @@ public final class testSimValueConstructor {
     /**
      * For querying the computation results of the matchers.
      */
-    private SimValueGenerateQuery simValueTable;
+    private testSimValueGenerateQuery testsimValueTable;
     /**
      * For querying the computation results availability table.
      */
@@ -136,7 +140,7 @@ public final class testSimValueConstructor {
         //ontologiesName = AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1).concat(AlgoConstants.SEPERATOR).concat(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2));
         // To query sim value table
         ontologiesName = "";
-        simValueTable = new SimValueGenerateQuery(ontologiesName, sqlConn);
+        testsimValueTable = new testSimValueGenerateQuery(ontologiesName, sqlConn);
         matcherResultTable = new ResultsForCombinationAccessDB(sqlConn);
 
         // Checking availiablity of the computation results of all matchers.
@@ -182,9 +186,8 @@ public final class testSimValueConstructor {
             Connection selectConn) {
 
         // Getting concept's IDs.
-        String concept1 = pair.getSource();
-        String concept2 = pair.getTarget();
-        
+        int source_concept_id = pair.getsourceid();
+        int target_concept_id = pair.gettargetid();
         
         
         double[] value = new double[weight.length];
@@ -192,15 +195,13 @@ public final class testSimValueConstructor {
        for (int i = 0; i < weight.length; i++) {
            // weight will be 0 if the matcher is not selected.
            if (weight[i] != 0) {
-               value[i] = simValueTable.getSimValue(concept1, concept2,
-                       ("matcher" + i));
+               value[i] = testsimValueTable.getSimValue(source_concept_id, target_concept_id,i);
                /**
                 * SimValue for the matcher is not found, then the compute the
                 * SimValue for this particular concept pair.
                 */
                if (value[i] == -1) {
-                   value[i] = singleComp.calculateSimilarityValue(i, pair,
-                           ontologiesName, sqlConn);
+                   //value[i] = singleComp.calculateSimilarityValue(i, pair,ontologiesName, sqlConn);
                }
            } else {
                value[i] = 0;
@@ -405,11 +406,10 @@ public final class testSimValueConstructor {
             hierarchyMatcherON=true;                
         }
         if (combination.equalsIgnoreCase("maximum")) {
-            queryResult = simValueTable.getSuggestionsMaximumBased(
+            queryResult = testsimValueTable.getSuggestionsMaximumBased(
                     weight, threshold);                
         } else {
-            queryResult = simValueTable.getSuggestionsWeightedBased(
-                    weight, threshold);                
+            queryResult = testsimValueTable.getSuggestionsWeightedBased(weight, threshold,-1);                
         }
         /**
          * The above query will return results in the form of array list,
@@ -689,160 +689,17 @@ public final class testSimValueConstructor {
      * 
      * @param matcher   Matcher whose sim value computation should be start. 
      */
-    public void calculateSimilarityValue(int matcher) {
-               
-        switch(matcher){
-            case AlgoConstants.EDIT_DISTANCE:
-                if(!matchersCompResult[AlgoConstants.EDIT_DISTANCE]) {
-                    getEditDistanceValues();
-                }
-                break;
-            case AlgoConstants.NGRAM:
-                if(!matchersCompResult[AlgoConstants.NGRAM]) {
-                    getNGramValues();
-                }
-                break;
-            case AlgoConstants.LIN_COMBINATION:
-                if(!matchersCompResult[AlgoConstants.LIN_COMBINATION]) {
-                    getLinValues(false);
-                }
-                break;
-            case AlgoConstants.LIN_COMBINATION_PLUS:
-                if(!matchersCompResult[AlgoConstants.LIN_COMBINATION_PLUS]) {
-                    getLinValues(true);
-                }
-                break;
-            case AlgoConstants.TERM_BASIC:
-                if(!matchersCompResult[AlgoConstants.TERM_BASIC]) {
-                    getTermWNValues(false);
-                }
-                break;
-            case AlgoConstants.TERM_WN:
-                if(!matchersCompResult[AlgoConstants.TERM_WN]) {
-                    getTermWNValues(true);
-                }
-                break;
-            case AlgoConstants.UMLS:
-                if(!matchersCompResult[AlgoConstants.UMLS]) {
-                    getUMLSValue();
-                }        
-                break;
-            case AlgoConstants.HIERARCHY:
-                    getStrValue();
-                break;
-            case AlgoConstants.LEARNING:
-                if(!matchersCompResult[AlgoConstants.LEARNING]) {
-                    getLearningValue();
-                }
-                break;
-        }
-    }
+    
 
-    private void getEditDistanceValues() {
-        
-        matchers[AlgoConstants.EDIT_DISTANCE] =  new EditDistance();
-        perform(AlgoConstants.EDIT_DISTANCE, 
-                matchers[AlgoConstants.EDIT_DISTANCE]);
-                
-        if(!AlgoConstants.SET_INTERRUPT_ON && 
-                !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            matchersCompResult[AlgoConstants.EDIT_DISTANCE] = true;
-        }
-
-    }
-
-    private void getNGramValues() { 
-        
-        matchers[AlgoConstants.NGRAM] =  new NGram(3);
-        perform(AlgoConstants.NGRAM,matchers[AlgoConstants.NGRAM]);
-        
-        
-        if(!AlgoConstants.SET_INTERRUPT_ON &&
-                !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            matchersCompResult[AlgoConstants.NGRAM] = true;
-        }
-
-    }
+   
     /** 
      * calculate the linguistic Sim Value using Porter, 
      * Ngram and EditDistance individually.
      */ 
-    private void getLinValues(boolean WordNet_ON){  
-        
-        linsMatchers[AlgoConstants.PORTER_WORDNET] =  
-                new Porter_WordNet(WordNet_ON);
-        linsMatchers[AlgoConstants.EDIT_DISTANCE] =  new EditDistance();
-        linsMatchers[AlgoConstants.NGRAM] = new NGram(AlgoConstants.NGRAM_SIZE);       
-        
-        if (WordNet_ON) {             
-            perform(AlgoConstants.LIN_COMBINATION_PLUS,
-                    linsMatchers, AlgoConstants.WEIGHT_LIN);
-            if(!AlgoConstants.SET_INTERRUPT_ON &&
-                    !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-                matchersCompResult[AlgoConstants.LIN_COMBINATION_PLUS] = true;
-            }            
-        } else {  
-            perform(AlgoConstants.LIN_COMBINATION, linsMatchers,
-                    AlgoConstants.WEIGHT_LIN); 
-            if(!AlgoConstants.SET_INTERRUPT_ON &&
-                    !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-                matchersCompResult[AlgoConstants.LIN_COMBINATION] = true;
-            }
-        }
-    }    
-    /**
-     * calculate the linguistic SimValue using Porter,
-     * Ngram and EditDistance individually.
-     */    
-    private void getTermWNValues(boolean WordNet_ON) {
-        
-        linsMatchers[AlgoConstants.PORTER_WORDNET] =  
-                new Porter_WordNet(WordNet_ON);
-        linsMatchers[AlgoConstants.EDIT_DISTANCE] =  new EditDistance();
-        linsMatchers[AlgoConstants.NGRAM] = new NGram(AlgoConstants.NGRAM_SIZE); 
-
-        if (WordNet_ON) {
-            perform(AlgoConstants.TERM_WN, linsMatchers,
-                    AlgoConstants.WEIGHT_LIN);            
-            if(!AlgoConstants.SET_INTERRUPT_ON &&
-                    !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-                matchersCompResult[AlgoConstants.TERM_WN] = true;
-            }
-        } else {
-            perform(AlgoConstants.TERM_BASIC, linsMatchers,
-                    AlgoConstants.WEIGHT_LIN);            
-            if(!AlgoConstants.SET_INTERRUPT_ON &&
-                    !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-                matchersCompResult[AlgoConstants.TERM_BASIC] = true;
-            }
-        }
-    }
-        
-    /**
-     * calculate similarity value with help of some dictionary, 
-     * e.x. a specific biological dictionary UMLS
-     */ 
-    private void getUMLSValue() {        
-        matchers[AlgoConstants.UMLS] = new UMLSKSearch_V6();  
-        perform(AlgoConstants.UMLS, matchers[AlgoConstants.UMLS]);
-        
-        if(!AlgoConstants.SET_INTERRUPT_ON &&
-                !AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            matchersCompResult[AlgoConstants.UMLS] = true;
-        }
-    }
+   
     
-    /**
-     * calculate similarity value based a structural propagation 
-     * algorithms.
-     */ 
-    private void getStrValue() {
-       /*
-        HierarchySearch Struct=new HierarchySearch(ontogy1Content,
-                onto2Content);
-        Struct.propogateSimValue();
-        */
-    }    
+        
+   
     
     
     private void getLearningValue() { 
@@ -871,7 +728,7 @@ public final class testSimValueConstructor {
     private void perform(int matcher, Matcher matcher_single) {        
         //Matcher[] matcher_list = {matcher_single};
         double[] weight = {1.0};   
-        perform(matcher, matcher_single, weight);        
+        //perform(matcher, matcher_single, weight);        
     }
 
     
@@ -884,59 +741,7 @@ public final class testSimValueConstructor {
      *                      will use more than one matcher(matching algorithm).
      * @param weight        Used for the matcher's like wordnet and wordlist. 
      */
-    private void perform(int matcher, Matcher[] matcherlist, double[] weight) {
-        
-        
-        long startTime = System.currentTimeMillis();
-        
-        singleThreadPerform(matcher, matcherlist, weight);
-        
-//        if (matchingStep.equalsIgnoreCase("Init class")) {
-//            multiThreadPerform(matcher, matcherList, weight);
-//        } else {
-//            singleThreadPerform(matcher, matcherList, weight);
-//        }
-        
-        long endTime = System.currentTimeMillis();            
-        System.out.println("COMPUTATION DONE----------------------------");
-        System.out.println( "Time Taken to do computation " +
-                (endTime-startTime) + " ms" );
-        
-        /**
-         * To avoid creating column in the matcher database during the 
-         * recommendation and slot matching process.
-         */
-        if(!AlgoConstants.ISRECOMMENDATION_PROCESS &&
-                (!matchingStep.equalsIgnoreCase("Init slot")) ) {
-            String colName="matcher"+matcher;
-            String combination="M"+matcher;
-            /**
-             * result[0]- Is column for the user selected matcher is 
-             * available in the savesimvalues table.
-             * 
-             * result[1]- Is complete computation results for the user 
-             * selected matcher is available.
-             * (i.e) previous CS is done without any interrupt.
-             */
-            boolean result[] = matcherResultTable.getMatcherInfo(ontologiesName,
-                    colName, sqlConn);      
-        
-            if(!result[0]) {
-                // create new row in the resultsforcombination table 
-                matcherResultTable.insertNewRow(ontologiesName,
-                        combination, colName);
-            }
-            /**
-             * If no interrupt and not a recommendation process then set
-             * matcher's computation result is available.
-             */ 
-            if(!AlgoConstants.SET_INTERRUPT_ON &&
-                    !AlgoConstants.ISRECOMMENDATION_PROCESS && !result[1]) {
-                matcherResultTable.setResultIsAvailable(ontologiesName,
-                        colName);          
-            }
-        }
-    }
+    
     
     /**
      * This method use multi thread technique to calculate the similarity 
@@ -948,15 +753,16 @@ public final class testSimValueConstructor {
      * @param matcherList
      * @param weight 
      */
+    /*
     private void multiThreadPerform(int matcher, Matcher[] matcherList, 
             double[] weight) {
         
         String matcherColumnName = "matcher"+matcher;
-        boolean isColumnAvailable = simValueTable.isColumnAvailable(
+        boolean isColumnAvailable = testsimValueTable.isColumnAvailable(
                 matcherColumnName);
         // create new column in the savesimvalue table    
         if (!isColumnAvailable) {            
-            simValueTable.createColumn(matcherColumnName);
+            testsimValueTable.createColumn(matcherColumnName);
         }
         
         
@@ -966,11 +772,8 @@ public final class testSimValueConstructor {
         par.runTask(4);
         
     }
-    private void test_singleThreadPerform(int matcher, Matcher[] matcherList, 
-            double[] weight)
-    {
-        
-    }
+    */
+
     /**
      * This method use only one thread to calculate the similarity values.
      * 
@@ -978,203 +781,7 @@ public final class testSimValueConstructor {
      * @param matcherList
      * @param weight 
      */
-    private void singleThreadPerform(int matcher, Matcher[] matcherList, double[] weight) {
-        int computationCounter = 0;
-        // To store multiple sql statement
-        ArrayList<String> updateStatement = new ArrayList<String>();
-        ArrayList<String> insertStatement = new ArrayList<String>();
-        Connection updateConn = null;
-        Connection selectConn = null;
-        String matcherColumnName;
-        boolean isColumnAvailable;
-        
-        String concept1;
-        String concept2;
-        testPair pair;                
-        double[] values;                
-        boolean simValueFound, isPairFound;                
-        //Final similarity value
-        double finalSimValues;                
-        //pretty name
-        String concept1Name;
-        String concept2Name;               
-        //conceptID
-        String concept1ID;
-        String concept2ID;                
-        /**
-         * Single SQL connection is used for the entire recommendation process.
-         * 
-         * Separate SQL connection will increases the performance, but the
-         * segment pairs recommendation process will create an instance
-         * of this class for each segment pair, so creating separate SQL
-         * connection during the recommendation process will lead to the SQL 
-         * exceptions.
-         */
-        if (AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            updateConn = sqlConn;
-            selectConn = sqlConn;                   
-        } else {
-            updateConn = makeConnection();
-            selectConn = makeConnection();                    
-        }
-        
-        matcherColumnName = "matcher"+matcher;
-        isColumnAvailable = simValueTable.isColumnAvailable(
-                matcherColumnName);
-        // create new column in the savesimvalue table    
-        if (!isColumnAvailable) {            
-            simValueTable.createColumn(matcherColumnName);
-        }   
-        concept1 = "";
-        concept2 = "";
-        
-        
-        for(Integer i : source_content)
-        {
-            concept1 = source_ontology.getURITable().getURI(i);
-            concept1ID = source_ontology.getElement(concept1).getLocalName();
-            if (AlgoConstants.STOPMATACHING_PROCESS) {
-                //Reseting this variable 
-                AlgoConstants.STOPMATACHING_PROCESS = false;
-                break;
-            }
-            for(Integer j : target_content)
-            {
-                
-                concept2 = target_ontology.getURITable().getURI(j);
-                concept2ID = target_ontology.getElement(concept2).getLocalName();
-                pair = new testPair(concept1,concept2);
-// To interrupt at particular concept pair                
-                if (AlgoConstants.SET_INTERRUPT_ON &&
-                        AlgoConstants.STOP_COMPUTATION_AT == 
-                        computationCounter) {                    
-                    AlgoConstants.STOPMATACHING_PROCESS = true;
-                    break;                    
-                }       
-                // To interrupt anytime user want
-                if (AlgoConstants.STOPMATACHING_PROCESS) {
-                    /**
-                     * To apply interrupt to other matchers if the alignment 
-                     * strategy has more than one matcher.
-                     */ 
-                    AlgoConstants.SET_INTERRUPT_ON = true;
-                    AlgoConstants.STOP_COMPUTATION_AT = computationCounter;   
-                    break;
-                }
-                computationCounter++;
-                
-                /**
-                 * To remember at which concept pair user interrupted the
-                 * computation.
-                 */ 
-                AlgoConstants.USER_INTERRUPT_AT = computationCounter;
-                values = new double[weight.length];
-                
-                //concept ID
-                simValueFound=false; 
-                isPairFound=false;                
-                /**
-                 * Accessing DB to find the sim value for the concept pair.
-                 * 
-                 * result[0]- Is the concept pair available in the DB.
-                 * result[1]- Is sim value for the concept pair available. 
-                 */                
-                boolean[] resultFromDB = simValueTable.getPairParams(concept1ID,
-                        concept2ID, matcherColumnName, selectConn);
-                
-                isPairFound = resultFromDB[0];
-                simValueFound = resultFromDB[1];                
-                
-                if (!simValueFound) {
-                    // Calculating sim value with pretty name.                 
-                    //calculate(matcherList, values, concept1Name, concept2Name);                
-                    //Calculating sim value with pretty synonyms
-                    if(source_ontology.getElement(concept1).isMClass() && target_ontology.getElement(concept2).isMClass()){
-                        concept1Name = source_ontology.getMClass(concept1).getPrettyName();
-                        concept2Name = target_ontology.getMClass(concept2).getPrettyName();
-                        for(String symn1 : source_ontology.getMClass(concept1).getPrettySyn())
-                        {
-                            calculate(matcherList, values, symn1, concept2Name);
-                            for(String symn2 : target_ontology.getMClass(concept2).getPrettySyn())
-                            {
-                                calculate(matcherList, values, symn1,symn2);
-                            }
-                        }
-                        for(String symn2 : target_ontology.getMClass(concept2).getPrettySyn())
-                        {
-                            calculate(matcherList, values, concept1Name,symn2);
-                        }
-                    }
-                    finalSimValues = Comb.weight(values, weight);    
-                    /**
-                     * Creating new row in the database if the concept pair
-                     * is not found in the DB.
-                     */ 
-                    if (!isPairFound) {
-                        String statement = simValueTable.generateInsertStatement
-                                (concept1ID, concept2ID, matcher, 
-                                finalSimValues);
-                        insertStatement.add(statement);                
-                    } 
-                    /**
-                     * If the concept pair is found in the DB then update 
-                     * its matcher value in the database.
-                     */ 
-                    else if (isPairFound) {
-                        String statement = simValueTable.
-                                generateUpdateStatement(concept1ID, concept2ID,
-                                matcher, finalSimValues);
-                        updateStatement.add(statement);                       
-                    }                    
-                }
-                
-                if (insertStatement.size() > 100000) {
-                    simValueTable.executeStatements(insertStatement,
-                            updateConn);                
-                    /**
-                     * Computation of matchers like EditDistance and NGram are
-                     * faster so delay will make sure that the sim values are 
-                     * stored in the DB.
-                     */ 
-                    if(matcherList.length<3) {
-                        delayLine(50);
-                    }
-                    insertStatement.clear();
-                }
-                if (updateStatement.size() > 100000) {
-                    simValueTable.executeStatements(updateStatement,
-                            updateConn);
-                    if(matcherList.length<3) {
-                        delayLine(50);
-                    }
-                    updateStatement.clear();            
-                }          
-            }
-        }
-        
-        
-        
-        //If we have atleast one insert statement.
-        if (insertStatement.size() > 0) {
-            simValueTable.executeStatements(insertStatement, 
-                    updateConn);
-            if (matcherList.length < 3) {
-                delayLine(50);
-            }            
-        }           
-        //If we have atleast one update statement.
-        if (updateStatement.size() > 0) {
-            simValueTable.executeStatements(updateStatement,
-                    updateConn);
-            if( matcherList.length < 3) {
-                delayLine(50);
-            }            
-        }
-        if (!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            ResourceManager.close(updateConn);          
-            ResourceManager.close(selectConn);
-        } 
-    }
+    
     
     private void calculate(Matcher[] matcher_list, double[] values,
             String str1, String str2) {
@@ -1274,5 +881,126 @@ public final class testSimValueConstructor {
        
         return Alignment;
     }
+    public void calculate_sim(HashSet<Integer> matcherlist,testMergerManager merge){
+        HashMap<Integer,Matcher> matcher_list = new HashMap<Integer,Matcher>();
+        double[] weight = {};
+        int computationCounter = 0;
+        Connection updateConn = null;
+        Connection selectConn = null;
+        ArrayList<String> updateStatement = new ArrayList<String>();
+        ArrayList<String> insertStatement = new ArrayList<String>();
+        boolean simValueFound, isPairFound;     
+        for(Integer i : matcherlist){
+            switch(i){
+                case AlgoConstants.EDIT_DISTANCE:
+                    matcher_list.put(i, new EditDistance());
+                    break;
+                case AlgoConstants.NGRAM:
+                    matcher_list.put(i, new NGram());
+                    break;
+                default:
+                    break;
+            }  
+        }
+        if (AlgoConstants.ISRECOMMENDATION_PROCESS) {
+            updateConn = sqlConn;
+            selectConn = sqlConn;                   
+        } else {
+            updateConn = makeConnection();
+            selectConn = makeConnection();                    
+        }
+        for(Task task : merge.getTasklist().values())
+        {
+            if (AlgoConstants.STOPMATACHING_PROCESS) {
+                //Reseting this variable 
+                AlgoConstants.STOPMATACHING_PROCESS = false;
+                break;
+            }
+            for(Integer i : matcher_list.keySet())
+            {
+                if (AlgoConstants.SET_INTERRUPT_ON &&
+                        AlgoConstants.STOP_COMPUTATION_AT == 
+                        computationCounter) {                    
+                    AlgoConstants.STOPMATACHING_PROCESS = true;
+                    break;                    
+                }       
+                // To interrupt anytime user want
+                if (AlgoConstants.STOPMATACHING_PROCESS) {
+                    /**
+                     * To apply interrupt to other matchers if the alignment 
+                     * strategy has more than one matcher.
+                     */ 
+                    AlgoConstants.SET_INTERRUPT_ON = true;
+                    AlgoConstants.STOP_COMPUTATION_AT = computationCounter;   
+                    break;
+                }
+                computationCounter++;
+                
+                /**
+                 * To remember at which concept pair user interrupted the
+                 * computation.
+                 */ 
+                AlgoConstants.USER_INTERRUPT_AT = computationCounter;
+                
+                
+                boolean[] resultFromDB = testsimValueTable.getPairParams(task.getsourceid(),task.gettargetid(),selectConn,i);
+                isPairFound = resultFromDB[0];
+                simValueFound = resultFromDB[1];    
+                if(!simValueFound){
+                    task.compute_sim(matcher_list.get(i));
+                    if(!isPairFound){
+                        String statement = testsimValueTable.generateInsertStatement(task.getsourceid(), task.gettargetid(), i, task.getsimilarity());
+                        insertStatement.add(statement);  
+                    }
+                    else if(isPairFound){
+                        String statement = testsimValueTable.generateUpdateStatement(task.getsourceid(), task.gettargetid(), i, task.getsimilarity());
+                        updateStatement.add(statement);     
+                    }
+                }
+                if (insertStatement.size() > 100000) {
+                    testsimValueTable.executeStatements(insertStatement,
+                            updateConn);                
+                    /**
+                     * Computation of matchers like EditDistance and NGram are
+                     * faster so delay will make sure that the sim values are 
+                     * stored in the DB.
+                     */ 
+                    if(matcher_list.size()<3) {
+                        delayLine(50);
+                    }
+                    insertStatement.clear();
+                }
+                if (updateStatement.size() > 100000) {
+                    testsimValueTable.executeStatements(updateStatement,updateConn);
+                    if(matcher_list.size()<3) {
+                        delayLine(50);
+                    }
+                    updateStatement.clear();            
+                }   
+            }
+            
+        }
+        //If we have atleast one insert statement.
+        if (insertStatement.size() > 0) {
+            testsimValueTable.executeStatements(insertStatement, 
+                    updateConn);
+            if (matcher_list.size()<3) {
+                delayLine(50);
+            }            
+        }           
+        //If we have atleast one update statement.
+        if (updateStatement.size() > 0) {
+            testsimValueTable.executeStatements(updateStatement,
+                    updateConn);
+            if( matcher_list.size()<3) {
+                delayLine(50);
+            }            
+        }
+        if (!AlgoConstants.ISRECOMMENDATION_PROCESS) {
+            ResourceManager.close(updateConn);          
+            ResourceManager.close(selectConn);
+        } 
+    }
+    
 }
 

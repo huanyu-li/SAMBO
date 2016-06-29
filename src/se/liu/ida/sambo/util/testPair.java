@@ -14,6 +14,8 @@ public class testPair {
 
     private String sourceURI;
     private String targetURI;
+    private Integer sid;
+    private Integer tid;
     private double sim=0;
     /**
      * To store subset similarity value.
@@ -224,5 +226,11 @@ public class testPair {
      */
     public boolean getSameLabelInfo() {
         return hasSameLabel;
+    }
+    public int getsourceid(){
+        return this.sid;
+    }
+    public int gettargetid(){
+        return this.tid;
     }
 }

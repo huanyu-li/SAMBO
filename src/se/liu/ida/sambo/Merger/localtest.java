@@ -26,7 +26,7 @@ public class localtest {
         AlgoConstants.ISRECOMMENDATION_PROCESS = false;
         
         double[] weight = new double[Constants.singleMatchers.length];
-        mm.matching(4, 0);
+        //mm.matching(4, 0);
         weight[Constants.EditDistance] = Double.parseDouble("0.6" + Constants.EditDistance);
         
         mm.getSuggestions(Constants.STEP_CLASS, weight, 0.6, "");

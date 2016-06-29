@@ -107,7 +107,7 @@ public class testSimValueConstructorParallel implements Runnable{
     @Override
     public void run() {
         
-        perform();
+        //perform();
     }    
     
     
@@ -130,109 +130,8 @@ public class testSimValueConstructorParallel implements Runnable{
     /**
      * Calculate similarity value for the two given ontology.
      */
-    private void perform() {
-        
-         
-        //To store multiple update statement
-        ArrayList<String> updateStatements = new ArrayList<String>();
-        //To store multiple insert statement
-        ArrayList<String> insertStatements = new ArrayList<String>();
-        String matcherColumnName = "matcher" + matcher;
-        String concept1, concept2;
-        testPair pair;
-        double[] values;
-        boolean simValueFound, isPairFound;
-        //Final sim Value
-        double simValues;
-        //pretty name
-        String name1 , name2;
-        //conceptID
-        String concept1ID , concept2ID;                
-        //Synms for concept1
-        String synm1;
-        testMOntology source_ontology = ontmanager.getontology(Constants.ONTOLOGY_1);
-        testMOntology target_ontology = ontmanager.getontology(Constants.ONTOLOGY_2);
-        for(Integer i : source_content)
-        {
-            for(Integer j : target_content)
-            {
-                concept1 = source_ontology.getURITable().getURI(i);
-                concept2 = target_ontology.getURITable().getURI(j);
-                pair = new testPair(concept1,concept2);   
-                name1 = source_ontology.getElement(concept1).getPrettyName();
-                name2 = target_ontology.getElement(concept2).getPrettyName();
-                concept1ID = source_ontology.getElement(concept1).getLocalName();
-                concept2ID = source_ontology.getElement(concept2).getLocalName();
-                values = new double[weight.length];                
-                
-                simValueFound = false; 
-                isPairFound = false;
-                /**
-                 * Accessing DB to find the sim value for the concept pair.
-                 * 
-                 * result[0]- Is the concept pair available in the DB.
-                 * result[1]- Is sim value for the conceptPair available. 
-                 */  
-                boolean[] resultFromDB = simValueTable.getPairParams(concept1ID,
-                        concept2ID, matcherColumnName, selectConn);
-                isPairFound = resultFromDB[0];
-                simValueFound = resultFromDB[1];
-                if (!simValueFound) {
-                    calculate(matcherList, values, name1, name2);
-                    
-                    //pretty synonyms
-                    if(source_ontology.getElement(concept1).isMClass() && target_ontology.getElement(concept2).isMClass()){
-                        for(String symn1 : source_ontology.getMClass(concept1).getPrettySyn())
-                        {
-                            calculate(matcherList, values, symn1, name2);
-                            for(String symn2 : target_ontology.getMClass(concept2).getPrettySyn())
-                            {
-                                calculate(matcherList, values, symn1, symn2);
-                            }
-                            for(String symn2 : target_ontology.getMClass(concept2).getPrettySyn())
-                            {
-                                calculate(matcherList, values, name1, symn2);
-                            }
-                        }
-                    }
-                    simValues = Comb.weight(values, weight);
-                     /**
-                       * Creating new row in the data base if the concept pair
-                       * was not found in the DB.
-                       */
-                    if(!isPairFound) {
-                        String statement = simValueTable.generateInsertStatement
-                                (concept1ID, concept2ID, matcher, simValues);
-                        insertStatements.add(statement);
-                    }
-                    /**
-                     * If the concept pair is found in the DB then update 
-                     * its matcher value in the data base.
-                     */
-                    else if (isPairFound) {
-                        String statement = simValueTable.generateUpdateStatement
-                                (concept1ID, concept2ID, matcher, simValues);
-                        updateStatements.add(statement);
-                    }
-                }
-            }
-        }
-
-        //If we have atleast one insert statement.
-        if (insertStatements.size() > 0) {
-            simValueTable.executeStatements(insertStatements, insertConn);
-            if(matcherList.length < 3) {
-                delayLine(50);
-            }
-        }
-        //If we have atleast one update statement.
-        if (updateStatements.size() > 0) {
-            simValueTable.executeStatements(updateStatements, updateConn);
-            if (matcherList.length < 3) {
-                delayLine(50);
-            }
-        }
-    }
+    
+   
     
     private void calculate(Matcher[] matcher_list, double[] values,
             String str1, String str2) {

@@ -5,9 +5,11 @@
  */
 package se.liu.ida.sambo.algos.matching;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Vector;
 import se.liu.ida.sambo.MModel.MElement;
 import se.liu.ida.sambo.Merger.Constants;
+import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.Merger.testOntManager;
 import se.liu.ida.sambo.Recommendation.RecommendationConstants;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
@@ -30,11 +32,13 @@ public class testMatchingAlgos {
      * To access computation class when mappable groups are chosen.
      */
     private testSimValueConstructorMappableGrp classSimValuesMGrp; 
+    private testMergerManager merge;
     
     /** 
      * Create new MatchingAlgos. 
      */
-    public testMatchingAlgos(testOntManager ontManager) {
+    public testMatchingAlgos(testOntManager ontManager,testMergerManager merge) {
+        this.merge = merge;
         
         // Initailize sim value list for slots
         System.out.println("Init slot");         
@@ -85,8 +89,8 @@ public class testMatchingAlgos {
      * 
      * @param matcher   Name of the matcher. 
      */
-    public void calculateSlotSimValue(int matcher){
-        slotSimValues.calculateSimilarityValue(matcher);
+    public void calculateSlotSimValue(HashSet<Integer> matcherlist){
+        slotSimValues.calculate_sim(matcherlist,merge);
     }
     
     /**
@@ -94,10 +98,13 @@ public class testMatchingAlgos {
      * 
      * @param matcher   Name of the matcher. 
      */
-    public void calculateClassSimValue(int matcher){
-        classSimValues.calculateSimilarityValue(matcher);
+    public void calculateClassSimValue(HashSet<Integer> matcherlist){
+        classSimValues.calculate_sim(matcherlist,merge);
     }
-    
+    public void calculateclasssim(HashSet<Integer> matcher,testMergerManager merge)
+    {
+        classSimValues.calculate_sim(matcher,merge);
+    }
     /**
      * To start computation for the class matching, this process use only 
      * mappable groups.
@@ -105,7 +112,7 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateClassSimValueMGrp(int matcher){
-        classSimValuesMGrp.calculateSimilarityValue(matcher);
+        //classSimValuesMGrp.calculateSimilarityValue(matcher);
     }
     
     /**

@@ -321,42 +321,42 @@ public class testMainServlet extends HttpServlet {
             
             if (req.getParameter(Constants.singleMatchers
                     [Constants.EditDistance]) != null){
-                merge.matching(step, Constants.EditDistance);
+                //merge.matching(step, Constants.EditDistance);
                 weight[Constants.EditDistance] = Double.parseDouble(
                         req.getParameter("weight" + Constants.EditDistance));
             }
 
             if(req.getParameter(Constants.singleMatchers
                     [Constants.NGram]) != null){
-                merge.matching(step, Constants.NGram);
+                //merge.matching(step, Constants.NGram);
                 weight[Constants.NGram] = Double.parseDouble(
                         req.getParameter("weight" + Constants.NGram));
             }
 
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WL]) != null){
-                merge.matching(step, Constants.WL);
+                //merge.matching(step, Constants.WL);
                 weight[Constants.WL] = Double.parseDouble(
                         req.getParameter("weight" + Constants.WL));
             }
 
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WN]) != null){
-                merge.matching(step, Constants.WN);
+                //merge.matching(step, Constants.WN);
                 weight[Constants.WN] = Double.parseDouble(
                         req.getParameter("weight" + Constants.WN));
             }
 
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Terminology]) != null){
-                merge.matching(step, Constants.Terminology);
+                //merge.matching(step, Constants.Terminology);
                 weight[Constants.Terminology] = Double.parseDouble(
                         req.getParameter("weight" + Constants.Terminology));
             }
             
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WordNet_Plus]) != null){
-                merge.matching(step, Constants.WordNet_Plus);
+                //merge.matching(step, Constants.WordNet_Plus);
                 weight[Constants.WordNet_Plus] = (new Double(
                         req.getParameter("weight" + Constants.WordNet_Plus))).
                         doubleValue();                
@@ -364,7 +364,7 @@ public class testMainServlet extends HttpServlet {
             
             if(req.getParameter(Constants.singleMatchers
                     [Constants.UMLS]) != null){
-                merge.matching(step, Constants.UMLS);
+                //merge.matching(step, Constants.UMLS);
                 weight[Constants.UMLS] = (new Double(
                         req.getParameter("weight" + Constants.UMLS))).
                         doubleValue();
@@ -372,7 +372,7 @@ public class testMainServlet extends HttpServlet {
             
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Bayes]) != null){
-                merge.matching(step, Constants.Bayes);
+                //merge.matching(step, Constants.Bayes);
                 weight[Constants.Bayes] = (new Double(
                         req.getParameter("weight" + Constants.Bayes))).
                         doubleValue();
@@ -380,7 +380,7 @@ public class testMainServlet extends HttpServlet {
             
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Hierarchy]) != null){
-                merge.matching(step, Constants.Hierarchy);
+                //merge.matching(step, Constants.Hierarchy);
                 /** 
                  * Right now weight for Hierarchy is disabled so this line 
                  * wont work.
@@ -400,7 +400,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.EditDistance]) != null){
                 merge.getMatcherList().add(Constants.EditDistance);
-                merge.matching(Constants.EditDistance);
+                //merge.matching(Constants.EditDistance);
                 weight[Constants.EditDistance] = Double.parseDouble(
                         req.getParameter("weight" + Constants.EditDistance));
             }
@@ -408,7 +408,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.NGram]) != null){
                 merge.getMatcherList().add(Constants.NGram);
-                merge.matching(Constants.NGram);
+                //merge.matching(Constants.NGram);
                 weight[Constants.NGram] = Double.parseDouble(
                         req.getParameter("weight" + Constants.NGram));
             }
@@ -416,7 +416,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WL]) != null){
                 merge.getMatcherList().add(Constants.WL);
-                merge.matching(Constants.WL);
+                //merge.matching(Constants.WL);
                 weight[Constants.WL] = Double.parseDouble(
                         req.getParameter("weight" + Constants.WL));
             }
@@ -424,7 +424,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WN]) != null){
                 merge.getMatcherList().add(Constants.WN);
-                merge.matching(Constants.WN);
+                //merge.matching(Constants.WN);
                 weight[Constants.WN] = Double.parseDouble(
                         req.getParameter("weight" + Constants.WN));
             }
@@ -432,7 +432,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Terminology]) != null){
                 merge.getMatcherList().add(Constants.Terminology);
-                merge.matching(Constants.Terminology);
+                //merge.matching(Constants.Terminology);
                 weight[Constants.Terminology] = Double.parseDouble(
                         req.getParameter("weight" + Constants.Terminology));
             }
@@ -440,7 +440,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.WordNet_Plus]) != null){
                 merge.getMatcherList().add(Constants.WordNet_Plus);
-                merge.matching(Constants.WordNet_Plus);
+                //merge.matching(Constants.WordNet_Plus);
                 weight[Constants.WordNet_Plus] = (new Double(
                         req.getParameter("weight" + Constants.WordNet_Plus))).
                         doubleValue();                
@@ -449,7 +449,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.UMLS]) != null){
                 merge.getMatcherList().add(Constants.UMLS);
-                merge.matching(Constants.UMLS);
+                //merge.matching(Constants.UMLS);
                 weight[Constants.UMLS] = (new Double(
                         req.getParameter("weight" + Constants.UMLS))).
                         doubleValue();
@@ -458,7 +458,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Bayes]) != null){
                 merge.getMatcherList().add(Constants.Bayes);
-                merge.matching(Constants.Bayes);
+                //merge.matching(Constants.Bayes);
                 weight[Constants.Bayes] = (new Double(
                         req.getParameter("weight" + Constants.Bayes))).
                         doubleValue();
@@ -467,7 +467,7 @@ public class testMainServlet extends HttpServlet {
             if(req.getParameter(Constants.singleMatchers
                     [Constants.Hierarchy]) != null){
                 merge.getMatcherList().add(Constants.Hierarchy);
-                merge.matching(Constants.Hierarchy);
+                //merge.matching(Constants.Hierarchy);
                 
                 
                 /**

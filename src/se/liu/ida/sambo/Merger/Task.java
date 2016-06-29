@@ -5,7 +5,9 @@
  */
 package se.liu.ida.sambo.Merger;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import se.liu.ida.sambo.MModel.testLexicon;
 import se.liu.ida.sambo.algos.matching.Matcher;
 import se.liu.ida.sambo.algos.matching.algos.EditDistance;
@@ -19,17 +21,16 @@ public class Task {
     private Integer target_id;
     private HashSet<testLexicon> sourcelexicon;
     private HashSet<testLexicon> targetlexicon;
-    private Matcher matcher;
     private double value;
-    public Task(Integer sid, Integer tid, HashSet<testLexicon> sourcelexicon, HashSet<testLexicon> targetlexicon, Matcher matcher){
+    public Task(Integer sid, Integer tid, HashSet<testLexicon> sourcelexicon, HashSet<testLexicon> targetlexicon){
         this.source_id = sid;
         this.target_id = tid;
         this.sourcelexicon = sourcelexicon;
         this.targetlexicon = targetlexicon;
-        this.matcher = matcher;
     }
-    public void compute_sim(){
+    public void compute_sim(Matcher matcher){
         double max_sim = 0;
+        
             for(testLexicon stl : sourcelexicon){
                 for(testLexicon ttl : targetlexicon){
                     double similarity = matcher.getSimValue(stl.getname(),ttl.getname());
@@ -37,8 +38,8 @@ public class Task {
                         max_sim = similarity;
                 }
             }
+            
             value = max_sim;
-        
     }
     public double getsimilarity(){
         return value;
@@ -48,5 +49,11 @@ public class Task {
     }
     public HashSet<testLexicon> gettarget(){
         return this.targetlexicon;
+    }
+    public Integer getsourceid(){
+        return this.source_id;
+    }
+    public Integer gettargetid(){
+        return this.target_id;
     }
 }

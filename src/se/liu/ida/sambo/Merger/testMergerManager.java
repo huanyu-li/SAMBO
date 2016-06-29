@@ -84,16 +84,21 @@ public class testMergerManager {
     private final boolean ToDo = true, UnDo = false;
     NameProcessor labelClean=new NameProcessor();
     private HashSet<Integer> matcher_list = new HashSet<Integer>();
-    private ArrayList<Task> tasklist = new ArrayList<Task>();
+    private HashMap<Integer,Task> tasklist = new HashMap<Integer,Task>();
 
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
-        //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl","C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
-        mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
-        //mm.init();
+        mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl","C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
+        mm.generate_tasklist();
+        //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
+        mm.init();
+        HashSet<Integer> matcherlist = new HashSet<Integer>();
+        matcherlist.add(AlgoConstants.EDIT_DISTANCE);
+        matcherlist.add(AlgoConstants.NGRAM);
+        mm.getmatchingalgos().calculateclasssim(matcherlist, mm);
         //long t1 = System.currentTimeMillis();
-        Matcher matcher = new EditDistance();
-        mm.match(matcher);
+        //Matcher matcher = new EditDistance();
+        //mm.match(matcher);
         //long t2 = System.currentTimeMillis();
         //System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
         Integer step = new Integer(Constants.STEP_CLASS);
@@ -126,7 +131,7 @@ public class testMergerManager {
                 //System.out.println(edfinalvalue);
                 if(count < 1000)
                 {
-                    tasklist.add(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j),matcher));
+                    //tasklist.put(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
                     mappingcount++;
                     count++;
                 }
@@ -134,7 +139,7 @@ public class testMergerManager {
                 {
                     //System.out.println("----------------------------------------------------------------------------");
                     //matchforkjoin(tasklist);
-                    matchexecutor(tasklist);
+                    //matchexecutor(tasklist);
                     count =0;
                     tasklist.clear();
                 }
@@ -265,7 +270,7 @@ public class testMergerManager {
 
         historyVector = new Vector();
 
-        matchingAlgos = new testMatchingAlgos(testOntManager);
+        matchingAlgos = new testMatchingAlgos(testOntManager,this);
 
         tempSuggestionVector = new Vector();
     }
@@ -291,6 +296,7 @@ public class testMergerManager {
      *
      * @return a list of suggestions
      */
+    /*
     public void matching(int step, int matcher) {
 
         switch (step) {
@@ -302,7 +308,17 @@ public class testMergerManager {
                 break;
         }
     }
-    
+    */
+    public void test_match(int step){
+         switch (step) {
+            case Constants.STEP_SLOT:
+                
+                break;
+            case Constants.STEP_CLASS:
+                
+                break;
+        }
+    }
     /**
      * Calls the matching algorithms to calculate similarity value for MappableGroup
      *
@@ -652,6 +668,29 @@ public class testMergerManager {
     }
     public HashSet getMatcherList(){
         return this.matcher_list;
+    }
+    public void generate_tasklist(){
+        testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
+        testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
+        Set<Integer> sourceclasses = sourceontology.getMClasses();
+        Set<Integer> targetclasses = targetontology.getMClasses();
+        Set<Integer> sourcelexicons = sourceontology.getLexicons();
+        Set<Integer> targetlexicons = targetontology.getLexicons();
+        int count = 1;
+        for(Integer i : sourcelexicons)
+        {
+            for(Integer j : targetlexicons)
+            {
+                tasklist.put(count,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                count++;
+            }
+        }
+    }
+    public HashMap<Integer,Task> getTasklist(){
+        return this.tasklist;
+    }
+    public testMatchingAlgos getmatchingalgos(){
+        return this.matchingAlgos;
     }
 }
     

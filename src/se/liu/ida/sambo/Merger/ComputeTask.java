@@ -35,7 +35,7 @@ public class ComputeTask extends RecursiveTask<Integer>  {
         if(cancompute){
             for(int i =start;i<end;i++)
             {
-                tasklist.get(i).compute_sim();
+                //tasklist.get(i).compute_sim();
             }
         }
         else{
