@@ -18,24 +18,7 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/testMatchingAlgos.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/testMergerManager.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/algos/testSinglePairComputation.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/util/testPair.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SaveSimValuesDBAccess.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/algos/testSimValueConstructor.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/Task.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/LoadFileServlet.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/MainServlet.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSaveSimValuesDBAccess.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/localtest.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/parallelProgramingtry/testSimValueConstructorParallel.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/algos/testSimValueConstructorMappableGrp.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/ResultsForCombinationAccessDB.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSimValueGenerateQuery.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/MModel/testMOntology.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/testMainServlet.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/ui/SettingsInfo.java</file>
         </group>
     </open-files>
 </project-private>

@@ -44,7 +44,7 @@ public class testOntManager {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }
-    public void loadOntologies(URI sourcepath,URI targetpath) throws OWLOntologyCreationException {
+    public void loadOntologies(URL sourcepath,URL targetpath) throws OWLOntologyCreationException {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }

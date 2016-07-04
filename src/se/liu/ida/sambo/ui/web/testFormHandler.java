@@ -468,7 +468,7 @@ public class testFormHandler {
                     + "<tr><td valign=\"top\">";
 
             //form and table
-            formStr += "<FORM method=POST action=\"Class\">"
+            formStr += "<FORM method=POST action=\"testClass\">"
                     + "<TABLE border=\"0\" width=\"100%\">"
                     + "<tr><td> <strong>s.no </strong></td><td><strong> matchers </strong> </td><td><strong> weights </strong></td><td><strong>threshold</strong></td></tr>";
 
@@ -590,7 +590,7 @@ public class testFormHandler {
                 + "<tr><td valign=\"top\">";
         
         //form and table
-        formStr += "<FORM method=POST action=\"Class\">"
+        formStr += "<FORM method=POST action=\"testClass\">"
                 + "<TABLE border=\"0\" width=\"100%\">";
         
         formStr += Constants.JavaScript_OpenWindow;
@@ -776,7 +776,7 @@ public class testFormHandler {
         formStr += "<br><TABLE  width=\"90%\" class =\"border_table\" align=\"center\">" +
                 "<tr><td valign=\"top\">";
         //form and table
-        formStr += "<FORM method=POST action=\"Class\">"
+        formStr += "<FORM method=POST action=\"testClass\">"
                 + "<TABLE width=\"100%\">";
         
         //There are two cells in each one row in the suggestion table.

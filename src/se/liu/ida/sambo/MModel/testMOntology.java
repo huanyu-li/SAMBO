@@ -28,6 +28,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import com.racersystems.racer.ReasonerFactory;
+import java.net.URL;
 import java.util.Collection;
 import org.semanticweb.owlapi.reasoner.ConsoleProgressMonitor;
 import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
@@ -93,26 +94,26 @@ public class testMOntology {
     /** Creates new MOntology
      *
      */
-    public void loadMOntology(URI uri) throws OWLOntologyCreationException {
+    public void loadMOntology(URL url) throws OWLOntologyCreationException {
         OWLOntology o;
-        int checkuri=checkURI(uri);
+        int checkuri=checkURL(url);
         if(checkuri==LOCAL_FILE)
         {
-            File file=new File(uri);
+            File file=new File(url.toString());
             o=manager.loadOntologyFromOntologyDocument(file);
         }
         else
         {
-            IRI iri=IRI.create(uri);
+            IRI iri=IRI.create(url.toString());
             o=manager.loadOntology(iri);
         }
         buildFromOWLOntology(o);
         manager.removeOntology(o);
         
     }
-    public int checkURI(URI uri)
+    public int checkURL(URL url)
     {
-        if(uri.toString().startsWith("file:"))
+        if(url.toString().startsWith("file:"))
         {
             return LOCAL_FILE;
         }

@@ -32,10 +32,15 @@ import se.liu.ida.sambo.ui.web.testPageHandler;
  */
 public class testLoadFileServlet extends HttpServlet {
 
-   
-   
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
-    throws ServletException, IOException{
+    /**
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         
         HttpSession session = req.getSession(false);
         Commons.currentPosition = 1;
@@ -76,11 +81,7 @@ public class testLoadFileServlet extends HttpServlet {
                 
                 testMergerManager merge = new testMergerManager();
                 out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
-                try {
-                    merge.loadOntologies(settings.getURL(Constants.ONTOLOGY_1).toURI(), settings.getURL(Constants.ONTOLOGY_2).toURI());
-                } catch (URISyntaxException ex) {
-                    Logger.getLogger(testLoadFileServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                merge.loadOntologies(settings.getURL(Constants.ONTOLOGY_1), settings.getURL(Constants.ONTOLOGY_2));
              
                 merge.init();
                

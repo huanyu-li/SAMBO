@@ -247,7 +247,7 @@ public class testMergerManager {
     public void loadOntologies(String uri1, String uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
     }
-    public void loadOntologies(URI uri1, URI uri2) throws OWLOntologyCreationException {
+    public void loadOntologies(URL uri1, URL uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
     }
         /** Loads the ontologies

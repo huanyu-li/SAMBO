@@ -46,7 +46,7 @@
             <param-value>JenaReasonServlet</param-value>
         </init-param>
     </servlet>
-        <servlet>
+    <servlet>
         <description>Test Load Ontology Files</description>
         <servlet-name>testLoadFileServlet</servlet-name>
         <servlet-class>testLoadFileServlet</servlet-class>
@@ -61,7 +61,7 @@
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>MainServlet</servlet-class>
     </servlet>
-        <servlet>
+    <servlet>
         <description>Test Handle a process</description>
         <servlet-name>testMainServlet</servlet-name>
         <servlet-class>testMainServlet</servlet-class>
@@ -111,11 +111,12 @@
         <servlet-name>LoadSessionServlet</servlet-name>
         <servlet-class>LoadSessionServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>LoadFileServlet</servlet-name>
         <url-pattern>/LoadFile</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>testLoadFileServlet</servlet-name>
         <url-pattern>/testLoadFile</url-pattern>
     </servlet-mapping>
@@ -123,7 +124,7 @@
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/Main</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>testMainServlet</servlet-name>
         <url-pattern>/testMain</url-pattern>
     </servlet-mapping>
@@ -167,6 +168,7 @@
         <servlet-name>LoadSessionServlet</servlet-name>
         <url-pattern>/LoadSession</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>300</session-timeout>
     </session-config>
