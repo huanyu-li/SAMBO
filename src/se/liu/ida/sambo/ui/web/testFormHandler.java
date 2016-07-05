@@ -248,7 +248,7 @@ public class testFormHandler {
                 + "<tr><td valign=\"top\" align=\"center\">";
         
         // Form table
-        formStr += "<FORM method=POST action=\"Slot?sid="+SessionId+"\">"
+        formStr += "<FORM method=POST action=\"testSlot?sid="+SessionId+"\">"
                 + "<TABLE width=\"80%\" align=\"center\">"
                 + "<tr><td width=\"100%\" valign=\"top\" align=\"center\">";
         
@@ -260,8 +260,9 @@ public class testFormHandler {
         Commons.OWL_2 = settings.getName(Constants.ONTOLOGY_2);
         
         // While there are suggestions left, print them out as a suggestions table.
-        if(!sug.getPair().isEmptyPair()){
-            
+        boolean is_empty = false;
+        //if(!sug.getPair().isEmptyPair()){
+        if(is_empty){    
             formStr += "<TABLE width=\"100%\" align=\"center\"> ";
             
             MProperty p1 = (MProperty) sug.getPair().getObject1();

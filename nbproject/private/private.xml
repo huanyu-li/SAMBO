@@ -18,7 +18,21 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/testMergerManager.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/MapConceptDBAccess.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/GoogleUrlTable.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/algos/SimValueConstructor.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SimilarityDBAccess.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SaveSimValuesDBAccess.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSaveSimValuesDBAccess.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/MapConceptGenerateQuery.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSimValueGenerateQuery.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/localtest.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/ui/SettingsInfo.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/MapOntologyGenerateQuery.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SimValueGenerateQuery.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/MapOntologyDBAccess.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SimilarityGenerateQuery.java</file>
         </group>
     </open-files>
 </project-private>

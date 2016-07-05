@@ -99,12 +99,29 @@ public class testMOntology {
         int checkuri=checkURL(url);
         if(checkuri==LOCAL_FILE)
         {
-            File file=new File(url.toString());
+            File file=new File(url.getPath());
             o=manager.loadOntologyFromOntologyDocument(file);
         }
         else
         {
             IRI iri=IRI.create(url.toString());
+            o=manager.loadOntology(iri);
+        }
+        buildFromOWLOntology(o);
+        manager.removeOntology(o);
+        
+    }
+        public void loadMOntology(URI uri) throws OWLOntologyCreationException {
+        OWLOntology o;
+
+        if(uri.toString().startsWith("file"))
+        {
+            File file=new File(uri);
+            o=manager.loadOntologyFromOntologyDocument(file);
+        }
+        else
+        {
+            IRI iri=IRI.create(uri);
             o=manager.loadOntology(iri);
         }
         buildFromOWLOntology(o);
@@ -365,6 +382,27 @@ public class testMOntology {
                 }
             }
         }
+    }
+    public void buildallrelationships(OWLOntology o, boolean useReasoner){
+        OWLReasoner reasoner = null;
+        if(useReasoner){
+            //Create an ELK reasoner
+            OWLReasonerFactory reasonerFactory = new ElkReasonerFactory();
+            reasoner = reasonerFactory.createReasoner(o);
+            Set<OWLClass> classes = o.getClassesInSignature(true);
+            for(OWLClass c : classes)
+            {
+                Set<OWLClass> parents = reasoner.getSuperClasses(c, true).getFlattened();
+                for(OWLClass parent : parents)
+                {
+                    int parentId = urit.getIndex(parent.getIRI().toString());
+                    if(parentId > -1){
+                    
+                    }
+                }
+            }
+        }
+        
     }
     /**
      * Get the annotation type based on the URI.

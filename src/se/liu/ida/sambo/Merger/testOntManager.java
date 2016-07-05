@@ -48,6 +48,10 @@ public class testOntManager {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }
+    public void loadOntologies(URI sourcepath,URI targetpath) throws OWLOntologyCreationException {
+        sourceontology.loadMOntology(sourcepath);
+        targetontology.loadMOntology(targetpath);
+    }
     public testMOntology getontology(int ontology){
         if(ontology == Constants.ONTOLOGY_1){
             return this.sourceontology;

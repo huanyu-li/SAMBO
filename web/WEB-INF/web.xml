@@ -111,7 +111,10 @@
         <servlet-name>LoadSessionServlet</servlet-name>
         <servlet-class>LoadSessionServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>testSlotServlet</servlet-name>
+        <servlet-class>testSlotServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadFileServlet</servlet-name>
         <url-pattern>/LoadFile</url-pattern>
@@ -168,7 +171,10 @@
         <servlet-name>LoadSessionServlet</servlet-name>
         <url-pattern>/LoadSession</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>testSlotServlet</servlet-name>
+        <url-pattern>/testSlotServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>
     </session-config>
