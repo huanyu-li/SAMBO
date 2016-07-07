@@ -90,7 +90,7 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateSlotSimValue(HashSet<Integer> matcherlist){
-        slotSimValues.calculate_sim(matcherlist,merge);
+        slotSimValues.calculate_property_sim();
     }
     
     /**
@@ -99,11 +99,11 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateClassSimValue(HashSet<Integer> matcherlist){
-        classSimValues.calculate_sim(matcherlist,merge);
+        classSimValues.calculate_concept_sim(matcherlist,merge);
     }
     public void calculateclasssim(HashSet<Integer> matcher,testMergerManager merge)
     {
-        classSimValues.calculate_sim(matcher,merge);
+        classSimValues.calculate_concept_sim(matcher,merge);
     }
     /**
      * To start computation for the class matching, this process use only 

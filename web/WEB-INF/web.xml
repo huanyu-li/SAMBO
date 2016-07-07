@@ -173,7 +173,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>testSlotServlet</servlet-name>
-        <url-pattern>/testSlotServlet</url-pattern>
+        <url-pattern>/testSlot</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>

@@ -24,7 +24,7 @@ import se.liu.ida.sambo.ui.web.Constants;
 import se.liu.ida.sambo.ui.web.testFormHandler;
 import se.liu.ida.sambo.ui.web.testPageHandler;
 import se.liu.ida.sambo.util.QueryStringHandler;
-import se.liu.ida.sambo.util.Suggestion;
+import se.liu.ida.sambo.util.testSuggestion;
 import se.liu.ida.sambo.util.testing.AutoValidation;
 import se.liu.ida.sambo.algos.matching.*;
 
@@ -117,6 +117,7 @@ public class testMainServlet extends HttpServlet {
             
             getAllParameters(req);            
             //Start to merge slots
+            //step = Constants.STEP_CLASS;
             if (step == Constants.STEP_SLOT){
                 
                 System.out.println("STEP_SLOT");
@@ -133,7 +134,7 @@ public class testMainServlet extends HttpServlet {
                     out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
                     String sid = QueryStringHandler.ParseSessionId(
                             req.getQueryString());
-                    out.println(testFormHandler.createSlotForm((Suggestion) 
+                    out.println(testFormHandler.createSlotForm((testSuggestion) 
                             session.getAttribute("sug"), settings, sid));
                     out.println(testPageHandler.createFooter());
 
@@ -201,7 +202,7 @@ public class testMainServlet extends HttpServlet {
                 try {
                     out.println(testPageHandler.createHeader(Constants.STEP_CLASS));
                     out.println(testFormHandler.createClassForm(settings, 
-                            (Suggestion) session.getAttribute("sug"), 
+                            (testSuggestion) session.getAttribute("sug"), 
                             Constants.UNIQUE));
                     out.println(testPageHandler.createFooter());
 
@@ -318,41 +319,49 @@ public class testMainServlet extends HttpServlet {
             
             if (req.getParameter(Constants.singleMatchers[Constants.EditDistance]) != null){
                 //merge.matching(step, Constants.EditDistance);
+                merge.getMatcherList().add(Constants.EditDistance);
                 weight[Constants.EditDistance] = Double.parseDouble(req.getParameter("weight" + Constants.EditDistance));
             }
 
             if(req.getParameter(Constants.singleMatchers[Constants.NGram]) != null){
                 //merge.matching(step, Constants.NGram);
+                merge.getMatcherList().add(Constants.NGram);
                 weight[Constants.NGram] = Double.parseDouble(req.getParameter("weight" + Constants.NGram));
             }
 
             if(req.getParameter(Constants.singleMatchers[Constants.WL]) != null){
                 //merge.matching(step, Constants.WL);
+                merge.getMatcherList().add(Constants.WL);
                 weight[Constants.WL] = Double.parseDouble(req.getParameter("weight" + Constants.WL));
             }
 
             if(req.getParameter(Constants.singleMatchers[Constants.WN]) != null){
                 //merge.matching(step, Constants.WN);
+                merge.getMatcherList().add(Constants.WN);
                 weight[Constants.WN] = Double.parseDouble(req.getParameter("weight" + Constants.WN));
             }
 
             if(req.getParameter(Constants.singleMatchers[Constants.Terminology]) != null){
                 //merge.matching(step, Constants.Terminology);
+                merge.getMatcherList().add(Constants.Terminology);
                 weight[Constants.Terminology] = Double.parseDouble(req.getParameter("weight" + Constants.Terminology));
             }
             
             if(req.getParameter(Constants.singleMatchers[Constants.WordNet_Plus]) != null){
                 //merge.matching(step, Constants.WordNet_Plus);
+                merge.getMatcherList().add(Constants.WordNet_Plus);
                 weight[Constants.WordNet_Plus] = (new Double(req.getParameter("weight" + Constants.WordNet_Plus))).doubleValue();                
             }
             
             if(req.getParameter(Constants.singleMatchers[Constants.UMLS]) != null){
                 //merge.matching(step, Constants.UMLS);
+                merge.getMatcherList().add(Constants.UMLS);
                 weight[Constants.UMLS] = (new Double(req.getParameter("weight" + Constants.UMLS))).doubleValue();
             }
             
             if(req.getParameter(Constants.singleMatchers[Constants.Bayes]) != null){
                 //merge.matching(step, Constants.Bayes);
+                merge.getMatcherList().add(Constants.Bayes);
                 weight[Constants.Bayes] = (new Double(req.getParameter("weight" + Constants.Bayes))).doubleValue();
             }
             
@@ -363,9 +372,17 @@ public class testMainServlet extends HttpServlet {
                  * wont work.
                  */ 
 //                weight[Constants.Hierarchy] = (new Double(req.getParameter("weight" + Constants.Hierarchy))).doubleValue();
-                
+                merge.getMatcherList().add(Constants.Hierarchy);
                 weight[Constants.Hierarchy] = 1.0;            
             }
+            merge.generate_tasklist();
+            if(step == Constants.STEP_CLASS){
+                merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
+            }else if(step == Constants.STEP_SLOT){
+                merge.getmatchingalgos().calculateSlotSimValue(merge.getMatcherList());
+            }
+            
+            
             return weight;
     }
     
@@ -435,6 +452,8 @@ public class testMainServlet extends HttpServlet {
                 
                 weight[Constants.Hierarchy] = 1.0;
             }
+            merge.generate_tasklist();
+            merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
             return weight;
     }   
     

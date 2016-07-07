@@ -881,7 +881,8 @@ public final class testSimValueConstructor {
        
         return Alignment;
     }
-    public void calculate_sim(HashSet<Integer> matcherlist,testMergerManager merge){
+    public void calculate_property_sim(){}
+    public void calculate_concept_sim(HashSet<Integer> matcherlist,testMergerManager merge){
         HashMap<Integer,Matcher> matcher_list = new HashMap<Integer,Matcher>();
         double[] weight = {};
         int computationCounter = 0;
@@ -889,15 +890,23 @@ public final class testSimValueConstructor {
         Connection selectConn = null;
         ArrayList<String> updateStatement = new ArrayList<String>();
         ArrayList<String> insertStatement = new ArrayList<String>();
-        boolean simValueFound, isPairFound;     
+        boolean simValueFound, isPairFound;  
+        int matcher_count = 0;
         for(Integer i : matcherlist){
             switch(i){
                 case AlgoConstants.EDIT_DISTANCE:
-                    matcher_list.put(i, new EditDistance());
+                    matcher_list.put(matcher_count, new EditDistance());
+                    matcher_count++;
                     break;
                 case AlgoConstants.NGRAM:
-                    matcher_list.put(i, new NGram());
+                    matcher_list.put(matcher_count, new NGram());
+                    matcher_count++;
                     break;
+                case AlgoConstants.TERM_BASIC:
+                    matcher_list.put(matcher_count, new EditDistance());
+                    matcher_count++;
+                    matcher_list.put(matcher_count, new NGram());
+                    matcher_count++;
                 default:
                     break;
             }  

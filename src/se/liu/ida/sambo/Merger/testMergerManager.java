@@ -7,6 +7,8 @@ package se.liu.ida.sambo.Merger;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +19,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,6 +48,10 @@ import se.liu.ida.sambo.algos.matching.algos.EditDistance;
 import se.liu.ida.sambo.algos.matching.testMatchingAlgos;
 import se.liu.ida.sambo.util.testPair;
 import se.liu.ida.sambo.algos.matching.Matcher;
+import se.liu.ida.sambo.algos.matching.algos.SimValueConstructor;
+import se.liu.ida.sambo.jdbc.ResourceManager;
+import se.liu.ida.sambo.jdbc.simvalue.MapOntologyGenerateQuery;
+import se.liu.ida.sambo.util.testHistory;
 /**
  *
  * @author huali50
@@ -85,7 +93,8 @@ public class testMergerManager {
     NameProcessor labelClean=new NameProcessor();
     private HashSet<Integer> matcher_list = new HashSet<Integer>();
     private HashMap<Integer,Task> tasklist = new HashMap<Integer,Task>();
-
+    private MapOntologyGenerateQuery mapontologyTable;
+    
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
         mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl","C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
@@ -249,6 +258,20 @@ public class testMergerManager {
     }
     public void loadOntologies(URL uri1, URL uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
+        
+        Connection sqlConn = null; 
+        try {
+            sqlConn = ResourceManager.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SimValueConstructor.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        mapontologyTable = new MapOntologyGenerateQuery(sqlConn);
+        if(mapontologyTable.getOPairId(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2)) < 0){
+            mapontologyTable.execute(mapontologyTable.generateInsertStatement(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2)));
+        }
+        
+        
     }
     public void loadOntologies(URI uri1, URI uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
@@ -695,5 +718,58 @@ public class testMergerManager {
     public testMatchingAlgos getmatchingalgos(){
         return this.matchingAlgos;
     }
+    public void processSlotSuggestion(testHistory history) {
+
+        generalSuggestionVector.remove(history.getPair());
+        historyStack.add(history);
+
+        //set merging information to the slot
+        setSlotInfo(
+                history, ToDo);
+
+
+    }
+    public void setSlotInfo(testHistory h, boolean set){
+        
+    }
+        public int suggestionsRemaining() {
+
+        return generalSuggestionVector.size() - 1;
+
+
+    }
+    public void undoSlotMerge() {
+
+        if (!historyStack.isEmpty()) {
+            //the previously processed pair of elements
+            testHistory history = (testHistory) historyStack.remove();
+            //insert this suggestion to the first element of the suggestion list
+            generalSuggestionVector.add(0, history.getPair());
+            setSlotInfo(history, UnDo);
+
+
+        }
+    }
+     public void undoClassMerge() {
+
+        if (!historyStack.empty()) {
+            //the previously processed list of suggestions
+            Vector previous = historyStack.removeMostRecent();
+
+            /*
+            for (Enumeration e = previous.elements(); e.hasMoreElements();) {
+
+                History history = (History) e.nextElement();
+                //insert this suggestion to the first element of the suggestion list
+                generalSuggestionVector.add(0, history.getPair());
+                setClassInfo(
+                        history, UnDo);
+
+
+            }
+            */
+        }
+    }
+
 }
     

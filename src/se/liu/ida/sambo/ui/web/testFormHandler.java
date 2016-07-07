@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import se.liu.ida.sambo.MModel.MClass;
 import se.liu.ida.sambo.MModel.MOntology;
 import se.liu.ida.sambo.MModel.MProperty;
+import se.liu.ida.sambo.MModel.testMOntology;
+import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.dao.PredefinedStrategiesDao;
 import se.liu.ida.sambo.dto.PredefinedStrategies;
@@ -27,8 +29,8 @@ import se.liu.ida.sambo.jdbc.ResourceManager;
 import se.liu.ida.sambo.session.Commons;
 import se.liu.ida.sambo.session.SessionManager;
 import se.liu.ida.sambo.ui.SettingsInfo;
-import se.liu.ida.sambo.util.Pair;
-import se.liu.ida.sambo.util.Suggestion;
+import se.liu.ida.sambo.util.testPair;
+import se.liu.ida.sambo.util.testSuggestion;
 
 /**
  *
@@ -235,7 +237,7 @@ public class testFormHandler {
      * @param sameSlotType indicate whether the pair of slots have the same type
      * @return a string containing the HTML representation of the form
      */
-    public static String createSlotForm( Suggestion sug, SettingsInfo settings, String SessionId){
+    public static String createSlotForm( testSuggestion sug, SettingsInfo settings, String SessionId){
         
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
@@ -263,6 +265,7 @@ public class testFormHandler {
         boolean is_empty = false;
         //if(!sug.getPair().isEmptyPair()){
         if(is_empty){    
+            /*
             formStr += "<TABLE width=\"100%\" align=\"center\"> ";
             
             MProperty p1 = (MProperty) sug.getPair().getObject1();
@@ -320,6 +323,7 @@ public class testFormHandler {
                     + sug.getRemainingSug() + " Remaining Suggestions, " +  "</span> &nbsp;&nbsp;&nbsp;&nbsp;";
             
             //If there are no suggestions, only show the finish button
+            */
         } else {
             formStr += "<p> No Remaining Suggestions </p> ";
             
@@ -354,8 +358,7 @@ public class testFormHandler {
      * @param typeStr the information of the pair of slot to be merge with different type
      * @return a string containing the HTML representation of the form
      */
-    public static String  createManualSlotForm(MOntology onto1, MOntology onto2,
-            Suggestion sug,  SettingsInfo settings,String session_id){
+    public static String  createManualSlotForm(testMergerManager merge, testSuggestion sug,  SettingsInfo settings,String session_id){
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
         String color2 = settings.getColor(Constants.ONTOLOGY_2);
@@ -366,7 +369,7 @@ public class testFormHandler {
                 +   "<tr><td width=\"100%\" valign=\"top\" align=\"center\">";
         
         //form and table
-        formStr += "<FORM method=POST action=\"Slot?sid="+session_id+"\">" +
+        formStr += "<FORM method=POST action=\"testSlot?sid="+session_id+"\">" +
                 "<TABLE width=\"90%\" align=\"center\">";
         
         //There are two cells in each one row in the suggestion table.
@@ -385,11 +388,12 @@ public class testFormHandler {
         
         
         //row2: print slot list
+        /*
         formStr += "<tr><td width=\"50%\" align=\"center\"  valign = \"top\">"
                 + createSlotList(onto1, Constants.ONTOLOGY_1, settings.getColor(Constants.ONTOLOGY_1)) + "</td>";
         formStr += "<td width=\"50%\" align=\"center\"  valign = \"top\">"
                 + createSlotList(onto2, Constants.ONTOLOGY_2, settings.getColor(Constants.ONTOLOGY_2))+ "</td></tr>";
-        
+        */
         
         //row3: different slot type
         if(sug.reset())
@@ -422,12 +426,12 @@ public class testFormHandler {
     }
     
     
-    private static String createSlotList(MOntology onto, int ontonum, String color){
+    private static String createSlotList(testMOntology onto, int ontonum, String color){
         
         String formStr = "<div class=\"tableContainer\">";
         //print the slot list
         formStr += "<TABLE class=\"tree_table\">" ;
-        
+        /*
         for(Enumeration e = onto.getProperties().elements(); e.hasMoreElements();){
             
             MProperty slot = (MProperty) e.nextElement();
@@ -446,7 +450,7 @@ public class testFormHandler {
             
             formStr += "</td></tr>";
         }
-        
+        */
         return formStr += "</TABLE>";
     }
 
@@ -579,7 +583,7 @@ public class testFormHandler {
      * @param ontonum the ontology where the new name already exists
      * @return a string containing the HTML representation of the form
      */
-    public static String createClassForm( SettingsInfo settings, Suggestion sug, int warning){
+    public static String createClassForm( SettingsInfo settings, testSuggestion sug, int warning){
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
         String color2 = settings.getColor(Constants.ONTOLOGY_2);
@@ -697,16 +701,17 @@ public class testFormHandler {
         
         
         for(int i=0; i < classNodes.size(); i++){
-            
+            /*
             infoStr += "<tr>";
             
             if(classNodes.size() >1)
                 infoStr +=  "<td width=\"4%\"><INPUT name=\"classPair\" type=\"radio\"" + "value=\"" + i + "\"></td>";
             
             infoStr += "<td width=\"" + width + "%\" valign=\"top\">"
-                    + createClassTable((MClass) ((Pair) classNodes.get(i)).getObject1(), color1) + "</td>"
+                    + createClassTable((MClass) ((testPair) classNodes.get(i)).getObject1(), color1) + "</td>"
                     +  "<td width=\"" + width + "%\" valign=\"top\">"
-                    + createClassTable((MClass) ((Pair) classNodes.get(i)).getObject2(), color2) + "</td></tr>";
+                    + createClassTable((MClass) ((testPair) classNodes.get(i)).getObject2(), color2) + "</td></tr>";
+            */
         }
         
         
@@ -1514,11 +1519,13 @@ public static String testcreateRecommendationForm(SettingsInfo settings, int ste
             formStr +="<td><Table>";
             
             for(Enumeration e = subsumption.elements(); e.hasMoreElements();){
+                /*
                 Pair p = (Pair) e.nextElement();
                 formStr += "<tr><td>&nbsp;&nbsp;"
                         + ((Resource) p.getObject2()).getURI() +  "<br> &nbsp;&nbsp;&nbsp;&nbsp; -> "
                         + ((Resource) p.getObject1()).getURI()
                         + "</td></tr>";
+            */
             }
             
             

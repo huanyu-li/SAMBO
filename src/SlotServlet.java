@@ -147,10 +147,6 @@ public class SlotServlet  extends HttpServlet{
                 } finally {
                     out.close();
                 }
-                
-            
-            
-            
         }
         
         

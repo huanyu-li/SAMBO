@@ -77,24 +77,30 @@ public class testLoadFileServlet extends HttpServlet {
             //and prepare for the alignment and merging task
             try
             {
-                long t1 = System.currentTimeMillis();
+                
                 
                 testMergerManager merge = new testMergerManager();
                 out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
+                long t1 = System.currentTimeMillis();
                 merge.loadOntologies(settings.getURL(Constants.ONTOLOGY_1), settings.getURL(Constants.ONTOLOGY_2));
-             
+                long t2 = System.currentTimeMillis();
+                System.out.println( "Time Taken to LOAD two FILEs " + (t2-t1) + " ms" );
                 merge.init();
-               
+
                 session.setAttribute(session.getId(), merge);
                 settings.setStep(Constants.STEP_SLOT);
-                out.println(testFormHandler.createStartForm(settings, Constants.STEP_SLOT));  // This displays form which has filters
-                out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_SLOT));
+                
+                out.println(testFormHandler.createStartForm(settings, Constants.STEP_CLASS));  // This displays form which has filters
+                out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_CLASS));
+                
+                //out.println(testFormHandler.createStartForm(settings, Constants.STEP_SLOT));  // This displays form which has filters
+                //out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_SLOT));
                 out.println(testPageHandler.createFooter());
                
             
-                long t2 = System.currentTimeMillis();
+                
                         
-                System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
+                
                 
                 
             }
