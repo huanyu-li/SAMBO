@@ -46,7 +46,7 @@ public class MapConceptGenerateQuery {
         
        return cpairId;
     }
-    public void executeStatements(ArrayList<String> statements,java.sql.Connection conn) {
-        mcdbDao.multipleUpdate(statements, conn);
+    public void executeStatements(ArrayList<String> statements) {
+        mcdbDao.multipleUpdate(statements, Conn);
     }
 }

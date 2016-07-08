@@ -50,7 +50,7 @@ import se.liu.ida.sambo.util.testPair;
 import se.liu.ida.sambo.algos.matching.Matcher;
 import se.liu.ida.sambo.algos.matching.algos.SimValueConstructor;
 import se.liu.ida.sambo.jdbc.ResourceManager;
-import se.liu.ida.sambo.jdbc.simvalue.MapOntologyGenerateQuery;
+import se.liu.ida.sambo.jdbc.simvalue.*;
 import se.liu.ida.sambo.util.testHistory;
 /**
  *
@@ -75,6 +75,7 @@ public class testMergerManager {
     //the model manager
     private testOntManager testOntManager;
     private int thread;
+    private int mappable_ontologies_id;
     //the matchingAlgos actually perform matchings
     private testMatchingAlgos matchingAlgos;
     private int ii=0;
@@ -94,6 +95,7 @@ public class testMergerManager {
     private HashSet<Integer> matcher_list = new HashSet<Integer>();
     private HashMap<Integer,Task> tasklist = new HashMap<Integer,Task>();
     private MapOntologyGenerateQuery mapontologyTable;
+    private MapConceptGenerateQuery mapconceptTable;
     
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
@@ -267,9 +269,12 @@ public class testMergerManager {
                     Level.SEVERE, null, ex);
         }
         mapontologyTable = new MapOntologyGenerateQuery(sqlConn);
-        if(mapontologyTable.getOPairId(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2)) < 0){
+        this.mappable_ontologies_id = mapontologyTable.getOPairId(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2));
+        if( mappable_ontologies_id < 0){
             mapontologyTable.execute(mapontologyTable.generateInsertStatement(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2)));
+            mappable_ontologies_id = mapontologyTable.getOPairId(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2));
         }
+        ResourceManager.close(sqlConn);
         
         
     }
@@ -703,14 +708,46 @@ public class testMergerManager {
         Set<Integer> sourcelexicons = sourceontology.getLexicons();
         Set<Integer> targetlexicons = targetontology.getLexicons();
         int count = 1;
-        for(Integer i : sourcelexicons)
+        ArrayList<String> insertStatement = new ArrayList<String>();
+        Connection sqlConn = null; 
+        try {
+            sqlConn = ResourceManager.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SimValueConstructor.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        mapconceptTable = new MapConceptGenerateQuery(sqlConn);
+        for(Integer sid : sourceclasses)
         {
-            for(Integer j : targetlexicons)
+            String sourceURI = getLocalName(getConceptURI(sid, Constants.ONTOLOGY_1));
+            for(Integer tid : targetclasses)
             {
-                tasklist.put(count,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                String targetURI = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
+                int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourceURI, targetURI);
+                if(conceptId < 0)
+                {
+                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourceURI, targetURI));
+                }
+                if (insertStatement.size() > 100000) {
+                    mapconceptTable.executeStatements(insertStatement);               
+                    insertStatement.clear();
+                }
                 count++;
             }
         }
+        if (insertStatement.size() > 0) {
+            mapconceptTable.executeStatements(insertStatement);           
+        }   
+        ResourceManager.close(sqlConn);
+        for(Integer i : sourcelexicons)
+        {
+            
+            for(Integer j : targetlexicons)
+            {
+                tasklist.put(count,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+            }
+        }
+       
     }
     public HashMap<Integer,Task> getTasklist(){
         return this.tasklist;
@@ -770,6 +807,24 @@ public class testMergerManager {
             */
         }
     }
-
+     public int get_mappableontologiesId(){
+         return this.mappable_ontologies_id;
+     }
+     public String getConceptURI(int Id, int ontology){
+         return this.testOntManager.getontology(ontology).getURITable().getURI(Id);
+     }
+     public String getLocalName(String uri){
+        if(uri==null){
+            return null;
+        }
+        else
+        {
+            int i = uri.indexOf("#") + 1;
+            if(i == 0){
+                i = uri.lastIndexOf("/") + 1;
+            }
+            return uri.substring(i);
+        }
+    }
 }
     

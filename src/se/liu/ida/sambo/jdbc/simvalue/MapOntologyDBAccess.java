@@ -37,7 +37,7 @@ public class MapOntologyDBAccess {
             _e.printStackTrace();		
         }
      }
-    public int getOPairId(String statement, String ontology1,String ontology2, Connection conn) {
+    public int getOPairId(String statement, Connection conn) {
                   
          Statement stmt = null;
 	 ResultSet queryResult = null;                

@@ -37,7 +37,7 @@ public class MapOntologyGenerateQuery {
                     " where sname='"+ ontology1 +"' and tname='"
                     + ontology2 +"'";            
                       
-       opairId = modbDao.getOPairId(statement, ontology1, ontology2, Conn);      
+       opairId = modbDao.getOPairId(statement, Conn);      
         
        return opairId;
     }

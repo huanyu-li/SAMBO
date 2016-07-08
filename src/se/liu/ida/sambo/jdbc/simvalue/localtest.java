@@ -31,8 +31,8 @@ public class localtest {
         //mapconceptTable.singleinsert(mapconceptTable.generateInsertStatement(moid, "o1_ear", "o2_ear"));
         int mcid = mapconceptTable.getCPairId(moid, "o1_ear", "o2_ear");
         System.out.println(mcid);
-        similarityTable.singleinsert(similarityTable.generateInsertStatement(mcid, 0.32, 0));
-        similarityTable.singleinsert(similarityTable.generateInsertStatement(mcid, 0.56, 1));
+        //similarityTable.singleinsert(similarityTable.generateInsertStatement(mcid, 0.32, 0));
+        //similarityTable.singleinsert(similarityTable.generateInsertStatement(mcid, 0.56, 1));
         
         //statement = mapontologyTable.generateInsertStatement("ontology1", "ontology2");
         //mapontologyTable.execute(statement);

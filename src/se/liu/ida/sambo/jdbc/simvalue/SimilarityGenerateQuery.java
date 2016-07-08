@@ -32,7 +32,7 @@ public class SimilarityGenerateQuery {
         }
         return tablename;
     }  
-    public String generateInsertStatement(int id, double simvalue,int matcher) {
+    public String generateInsertStatement(int id, int matcher,double simvalue) {
         
         String statement="";               
         statement="INSERT INTO "+ getTableName(matcher) +
@@ -59,10 +59,20 @@ public class SimilarityGenerateQuery {
         
         return statement;
     }
+    public int getSimvalueId(int id,int matcher){
+        int sId;                     
+        String statement;   
+            
+        statement = "select id from "+getTableName(matcher)+" where id='"+ id +"'";            
+                      
+       sId = simvalueDao.getSimvalueId(statement, Conn);      
+        
+       return sId;
+    }
     public void singleinsert(String statement){
         simvalueDao.singleinsert(statement, Conn);
     }
-    public void executeStatements(ArrayList<String> statements,java.sql.Connection conn) {
-        simvalueDao.multipleUpdate(statements, conn);
+    public void executeStatements(ArrayList<String> statements) {
+        simvalueDao.multipleUpdate(statements, Conn);
     }
 }

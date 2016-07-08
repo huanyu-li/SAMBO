@@ -57,4 +57,25 @@ public class SimilarityDBAccess {
             _e.printStackTrace();		
         }
      }
+     public int getSimvalueId(String statement,Connection conn) {
+                  
+         Statement stmt = null;
+	 ResultSet queryResult = null;                
+         int opairid=-1;
+		
+	 try {
+             stmt = conn.createStatement();
+	     queryResult = stmt.executeQuery(statement);             
+                        
+             while (queryResult.next()) {
+                 opairid = queryResult.getInt("moid");                        
+             }
+             stmt.close();
+             queryResult.close();
+         } catch (Exception _e) {
+             _e.printStackTrace();
+         }
+         
+         return opairid;
+     }
 }
