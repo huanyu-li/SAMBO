@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.io.File;
 
 import se.liu.ida.sambo.util.Pair;
+import se.liu.ida.sambo.util.testPair;
 
 /**The Constants involved in a merging process
  *
@@ -142,6 +143,17 @@ public class Constants extends se.liu.ida.sambo.MModel.util.OntConstants {
         for (Enumeration e = vector.elements(); e.hasMoreElements();) {
             Pair pair = (Pair)e.nextElement();
             if (pair.contains(object)) {
+                holdingList.add(pair);
+            }
+        }
+        return holdingList;
+    }  
+        public static Vector testgetHoldingPairs(testPair object, Vector vector) {
+        
+        Vector holdingList = new Vector();
+        for (Enumeration e = vector.elements(); e.hasMoreElements();) {
+            testPair pair = (testPair)e.nextElement();
+            if (pair.contains(object.getSource())) {
                 holdingList.add(pair);
             }
         }

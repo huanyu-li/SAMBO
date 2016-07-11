@@ -40,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.dao.UserSessionsDao;
 import se.liu.ida.sambo.dao.UsersDao;
 import se.liu.ida.sambo.dto.UserSessions;
@@ -542,7 +543,7 @@ public class LockSessionServlet extends HttpServlet {
         }
         return strXml;
     }
-
+    public void testgetHistoryXML(String filename, testMergerManager merge, SettingsInfo settings){}
     public void getHistoryXML(String filename, MergeManager merge, SettingsInfo settings){
         BufferedWriter bufferedWriter = null;
         //filename = "D:/appl/xml_files/users.xml";

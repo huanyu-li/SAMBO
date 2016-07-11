@@ -1253,9 +1253,6 @@ public class MergeManager {
         }
 
         return Constants.UNIQUE;
-
-
-
     }
 
     /*check name conflict

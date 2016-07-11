@@ -181,10 +181,10 @@ public class testMainServlet extends HttpServlet {
                 
                 merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME + 
                         "_SuggestionList.xml");        
-                /*
-                session.setAttribute("sug", new Suggestion(merge.
+                
+                session.setAttribute("sug", new testSuggestion(merge.
                         getNextSuggestionList(), merge.suggestionsRemaining()));
-                */
+                
                 session.setAttribute("threshold", threshold);              
                 //do not display the hierarchy when first visit "user" model
                 session.setAttribute("display1", Boolean.FALSE);

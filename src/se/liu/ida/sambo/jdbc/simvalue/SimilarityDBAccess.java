@@ -68,7 +68,7 @@ public class SimilarityDBAccess {
 	     queryResult = stmt.executeQuery(statement);             
                         
              while (queryResult.next()) {
-                 opairid = queryResult.getInt("moid");                        
+                 opairid = queryResult.getInt("id");                        
              }
              stmt.close();
              queryResult.close();

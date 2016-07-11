@@ -5,6 +5,7 @@
 package se.liu.ida.sambo.ui.web;
 
 import se.liu.ida.sambo.MModel.MClass;
+import se.liu.ida.sambo.MModel.testMClass;
 /**The constants involve in creating web-based user interface
  *
  * @author  He Tan
@@ -195,6 +196,24 @@ public class Constants extends se.liu.ida.sambo.Merger.Constants{
             if(c.getAlignName() != null)
                 str += "&nbsp;(" + c.getAlignName() + ")";            
             else  str += "&nbsp;(" + c.getAlignElement().getLabel() + ")";
+        }
+        
+        if(!c.getAlignSupers().isEmpty() || !c.getAlignSubs().isEmpty())
+            str += "&nbsp;<img src=\"img/icon_relation.jpg\" valign=\"top\" border=\"0\">";
+        
+        
+        return str;
+    }
+        public static String testsetNameWithIcon(testMClass c, String color){
+        
+        String str = fontify(c.getLabel() , color);
+        
+        //set icon to present the node status
+        if (c.getAlignElement() != null){
+            
+            if(c.getAlignName() != null)
+                str += "&nbsp;(" + c.getAlignName() + ")";            
+            else  str += "&nbsp;(" + c.getAlignClass().getLabel() + ")";
         }
         
         if(!c.getAlignSupers().isEmpty() || !c.getAlignSubs().isEmpty())

@@ -41,6 +41,7 @@ import org.semanticweb.HermiT.*;
 import org.semanticweb.owlapi.model.ClassExpressionType;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import se.liu.ida.sambo.MModel.util.NameProcessor;
+import se.liu.ida.sambo.MModel.util.OntConstants;
 
 /** User interface to represent an ontology
  *
@@ -464,6 +465,19 @@ public class testMOntology {
     public HashSet<testLexicon> getclasslexicons(int index){
         return classlexicons.get(index);
     }
+    public testLexicon getclasslexicon(int index, String type){
+        testLexicon classlexicon = null;
+        for(testLexicon tl : classlexicons.get(index)){
+            if(tl.getlanguage().equals(OntConstants.lan)){
+                classlexicon = tl;
+                break;
+            }
+            else if(tl.getlanguage().equals("en")){
+                classlexicon = tl;
+            }
+        }
+        return classlexicon;
+    }
     public testURITable getURITable(){
         return this.urit;
     }
@@ -506,5 +520,18 @@ public class testMOntology {
             return objectproperties.get(index);
         else
             return null;
+    }
+    public ArrayList roots() {
+        ArrayList roots = new ArrayList();
+        for(testMClass mclass : classes.values())
+        {
+            if(mclass.getSuperClasses().isEmpty() && mclass.getSubClasses().isEmpty()){
+                roots.add(mclass);
+            }
+        }
+        return roots;
+    }
+    public HashMap<Integer, testMClass> getClasses(){
+        return this.classes;
     }
 }

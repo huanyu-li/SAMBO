@@ -10,6 +10,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import se.liu.ida.sambo.MModel.testLexicon;
+import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.algos.matching.algos.EditDistance;
@@ -51,6 +53,7 @@ import se.liu.ida.sambo.algos.matching.Matcher;
 import se.liu.ida.sambo.algos.matching.algos.SimValueConstructor;
 import se.liu.ida.sambo.jdbc.ResourceManager;
 import se.liu.ida.sambo.jdbc.simvalue.*;
+import se.liu.ida.sambo.util.Pair;
 import se.liu.ida.sambo.util.testHistory;
 /**
  *
@@ -766,14 +769,156 @@ public class testMergerManager {
 
 
     }
+    public int processClassSuggestion(testHistory history) {
+        testPair pair = history.getPair();
+        if(!historyStack.contains(history))
+        {
+        historyStack.add(history);
+        }
+        generalSuggestionVector.remove(pair);
+        if (history.getAction() == Constants.ALIGN_CLASS) {
+            for (Enumeration e = Constants.testgetHoldingPairs(pair, generalSuggestionVector).elements(); e.hasMoreElements();) {
+                Pair p = (Pair) e.nextElement();
+                
+                if(!historyStack.contains(history))
+                {
+                historyStack.updateMostRecent(new History(p));
+                }
+                generalSuggestionVector.remove(p);
+                
+
+
+            }
+        }
+        
+        
+        //**************************************** //
+
+        int c = setClassInfo(history, ToDo);
+        // return setClassInfo(history, ToDo);
+        System.out.println(c);
+        
+        
+        
+
+
+        return c;
+    }
     public void setSlotInfo(testHistory h, boolean set){
         
     }
-        public int suggestionsRemaining() {
+    int setClassInfo(testHistory h, boolean set) {
+
+        testPair pair = h.getPair();
+
+        //to do the action specified in the history
+        //and check the name conflict and give the warning
+        testMOntology source_ontology = this.getOntManager().getontology(Constants.ONTOLOGY_1);
+        testMOntology target_ontology = this.getOntManager().getontology(Constants.ONTOLOGY_2);
+        testMClass source_class = source_ontology.getClasses().get(source_ontology.getURITable().getIndex(pair.getSource()));
+        testMClass target_class = target_ontology.getClasses().get(target_ontology.getURITable().getIndex(pair.getTarget()));
+
+        if (set) {
+            
+            
+            //to merge the pair of the classes
+            if (h.getAction() == Constants.ALIGN_CLASS) {
+                    
+                if (h.getName() != null && h.getName().trim().length() > 0) {
+                    //the value will be minus, if the new name conflict                    
+                    h.setWarning(checkLabelConflict(h.getName()));
+                    System.out.println(h.getName());
+
+                    source_class.setAlignName(h.getName());
+                    target_class.setAlignName(h.getName());
+                } else {
+                    //if the classes to aligned do not have equivalent names or synonyms,
+                    //they could be equal to other names or synonyms
+                    if (!hasEquivLabel(source_class, target_class)) //if name1 is unique, check the name2
+                    {
+                        if (h.setWarning(checkLabelConflict(source_class.getLabel(), Constants.ONTOLOGY_2)) == Constants.UNIQUE) {
+                            h.setWarning(checkLabelConflict(target_class.getLabel(), Constants.ONTOLOGY_1));
+                        }
+                    }
+                }
+
+                //the name for the merged class is the name of the first class
+                source_class.setAlignClass(target_class);
+                target_class.setAlignClass(source_class);
+
+                //to include is-a relation between the pair of the classes
+
+
+            } else if (h.getAction() == Constants.IS_A_CLASS) {
+
+                //the first class is the super-class
+                if (h.getNum() == Constants.ONTOLOGY_1) {
+                    target_class.addAlignSuper(source_class);
+                } //the second class is the super-class
+                else {
+                    source_class.addAlignSuper(target_class);
+                } //if the classes has the same name or synonyms
+                if (hasEquivLabel(source_class, target_class)) {
+                    h.setWarning(Constants.ONTOLOGY_1);
+
+
+                }
+
+            } else if (h.getAction() == Constants.NO) {
+
+                if (hasEquivLabel(source_class, target_class)) {
+                    h.setWarning(Constants.ONTOLOGY_1);
+
+
+                }
+            }
+
+
+            if (h.getComment() != null && h.getComment().trim().length() > 0) {
+                source_class.addAlignComment(h.getComment());
+                target_class.addAlignComment(h.getComment());
+               
+
+
+            } //undo the action specified in the history
+        } else {
+            source_class.setAlignName(null);
+            target_class.setAlignName(null);
+            source_class.addAlignComment(null);
+            target_class.addAlignComment(null);
+
+            //undo the merge action
+
+
+            if (h.getAction() == Constants.ALIGN_CLASS) {
+                source_class.setAlignElement(null);
+                target_class.setAlignElement(null);
+
+                //undo include is-a relation action
+
+
+            } else if (h.getAction() == Constants.IS_A_CLASS) {
+
+                //the first class is the super class
+                if (h.getNum() == Constants.ONTOLOGY_1) {
+                    target_class.removeAlignSuper(source_class);
+
+
+                } else {
+                    source_class.removeAlignSuper(target_class);
+
+
+                }
+            }
+        }
+
+        return h.getWarning();
+
+
+    }
+    public int suggestionsRemaining() {
 
         return generalSuggestionVector.size() - 1;
-
-
     }
     public void undoSlotMerge() {
 
@@ -826,5 +971,78 @@ public class testMergerManager {
             return uri.substring(i);
         }
     }
+    public testOntManager getOntManager(){
+        return this.testOntManager;
+    }
+    public int checkLabelConflict(String name) {
+
+        if (existInOnto(name, Constants.ONTOLOGY_1)) {
+            return Constants.ONTOLOGY_1;
+
+
+        }
+
+        if (existInOnto(name, Constants.ONTOLOGY_2)) {
+            return Constants.ONTOLOGY_2;
+
+
+        }
+
+        return Constants.UNIQUE;
+    }
+        public int checkLabelConflict(String name, int ontonum) {
+
+        if (existInOnto(name, ontonum)) {
+            return ontonum;
+        }
+        return Constants.UNIQUE;
+    }
+     private boolean existInOnto(String name, int ontonum) {
+         for(Integer i : getOntManager().getontology(ontonum).getClasses().keySet()){
+             testMClass c = getOntManager().getontology(ontonum).getClasses().get(i);
+             if (name.equalsIgnoreCase(c.getLabel())) {
+                return true;
+
+
+            }
+             /*
+            for (Enumeration en = c.getSynonyms().elements(); en.hasMoreElements();) {
+                if (name.equalsIgnoreCase(((String) en.nextElement()))) {
+                    return true;
+
+
+                }
+            }
+            if ((c.getAlignElement() != null && c.getAlignElement().getLabel().equalsIgnoreCase(name))) {
+                return true;
+
+
+            }
+
+            if ((c.getAlignName() != null && c.getAlignName().equalsIgnoreCase(name))) {
+                return true;
+
+
+            }
+            */
+         }
+
+
+
+
+        return false;
+
+
+    }
+     public boolean hasEquivLabel(testMClass tc1, testMClass tc2){
+         if(tc1.getLabel().equalsIgnoreCase(tc2.getLabel())){
+             return true;
+         }
+         return false;
+     }
+     public void mergeRemaining(){
+     } 
+     public void finalizeClassSuggestions(){
+     }
 }
     

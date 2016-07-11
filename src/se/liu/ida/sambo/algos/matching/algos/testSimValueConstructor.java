@@ -951,17 +951,17 @@ public final class testSimValueConstructor {
                  */ 
                 AlgoConstants.USER_INTERRUPT_AT = computationCounter;
                 
-                String sourceconceptURI = merge.getConceptURI(task.getsourceid(), Constants.ONTOLOGY_1);
-                String targetconceptURI = merge.getConceptURI(task.gettargetid(), Constants.ONTOLOGY_2);
-                int concept_id = mapconceptTable.getCPairId(merge.get_mappableontologiesId(), sourceconceptURI, targetconceptURI);
+                String sourceconceptname = merge.getLocalName(merge.getConceptURI(task.getsourceid(), Constants.ONTOLOGY_1));
+                String targetconceptname = merge.getLocalName(merge.getConceptURI(task.gettargetid(), Constants.ONTOLOGY_2));
+                int concept_id = mapconceptTable.getCPairId(merge.get_mappableontologiesId(), sourceconceptname, targetconceptname);
                 if(concept_id > 0){
                     task.compute_sim(matcher_list.get(i));
                     int simvalue_id = similarityTable.getSimvalueId(concept_id, i);
                     if(simvalue_id > 0){
-                        insertStatement.add(similarityTable.generateUpdateStatement(simvalue_id, i, task.getsimilarity()));
+                        insertStatement.add(similarityTable.generateUpdateStatement(concept_id, i, task.getsimilarity()));
                     }
                     else{
-                        updateStatement.add(similarityTable.generateInsertStatement(simvalue_id, i, task.getsimilarity()));     
+                        updateStatement.add(similarityTable.generateInsertStatement(concept_id, i, task.getsimilarity()));     
                     }
                 }
                 if (insertStatement.size() > 100000) {

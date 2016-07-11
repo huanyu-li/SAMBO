@@ -10,6 +10,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
@@ -18,8 +19,12 @@ import java.util.logging.Logger;
 import se.liu.ida.sambo.MModel.MClass;
 import se.liu.ida.sambo.MModel.MOntology;
 import se.liu.ida.sambo.MModel.MProperty;
+import se.liu.ida.sambo.MModel.testLexicon;
+import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
+import se.liu.ida.sambo.MModel.util.OntConstants;
 import se.liu.ida.sambo.Merger.testMergerManager;
+import se.liu.ida.sambo.Merger.testOntManager;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.dao.PredefinedStrategiesDao;
 import se.liu.ida.sambo.dto.PredefinedStrategies;
@@ -769,10 +774,12 @@ public class testFormHandler {
      * @param settings general settings for the pages
      * @return a string containing the HTML representation of the form
      */
-    public static String createManualClassForm(MOntology onto1, MOntology onto2, SettingsInfo settings, int warning){
+    public static String createManualClassForm(testMergerManager merge, SettingsInfo settings, int warning){
         
         String servlet = "Class";
-        
+        testOntManager ontmanager = merge.getOntManager();
+        testMOntology source_ontology = ontmanager.getontology(Constants.ONTOLOGY_1);
+        testMOntology target_ontology = ontmanager.getontology(Constants.ONTOLOGY_2);
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
         String color2 = settings.getColor(Constants.ONTOLOGY_2);
         
@@ -800,10 +807,10 @@ public class testFormHandler {
         
         //row2: print class tree
         formStr += "<tr><td width=\"50%\" align=\"center\" valign=\"top\">"
-                + createClassTree(onto1, Constants.ONTOLOGY_1, servlet,
+                + createClassTree(source_ontology, Constants.ONTOLOGY_1, servlet,
                 settings.getColor(Constants.ONTOLOGY_1), settings.getColor(Constants.ONTOLOGY_2)) + "</td>";
         formStr += "<td width=\"50%\" align=\"center\" valign=\"top\">"
-                + createClassTree(onto2, Constants.ONTOLOGY_2, servlet,
+                + createClassTree(target_ontology, Constants.ONTOLOGY_2, servlet,
                 settings.getColor(Constants.ONTOLOGY_2), settings.getColor(Constants.ONTOLOGY_1))+ "</td></tr>";
         
         
@@ -861,16 +868,15 @@ public class testFormHandler {
     }
     
     
-    private static String createClassTree(MOntology onto, int ontonum, String servlet, String color, String highcolor){
+    private static String createClassTree(testMOntology onto, int ontonum, String servlet, String color, String highcolor){
         
         String tableStr = "<div class=\"tableContainer\">";
         tableStr += "<TABLE class=\"tree_table\">";
         String thiscolor = color;
         
         String blank = "&nbsp;&nbsp;&nbsp;&nbsp;";
-        for(Enumeration e = onto.roots().elements(); e.hasMoreElements();){
-            
-            MClass root = (MClass) e.nextElement();
+        for(Integer i : onto.getClasses().keySet()){
+            testMClass root = onto.getClasses().get(i);
             tableStr += "<tr><td nowrap class=\"tree_td\">" + blank;
             
             if(root.isHighlight()){
@@ -879,17 +885,17 @@ public class testFormHandler {
             }
             
             if(root.getAlignElement() == null)
-                tableStr += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ root.getId()  +"\">";
+                tableStr += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ root.getLocalName()  +"\">";
             else
                 tableStr += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
             
             if(root.getSubClasses().isEmpty() && root.getParts().isEmpty())
-                tableStr += "<a title=\"" + createManualClassInfo(root) + "\" >"
-                        + Constants.setNameWithIcon(root, thiscolor) + "</a>";
+                tableStr += "<a title=\"" + createManualClassInfo(root,onto.getclasslexicons(i)) + "\" >"
+                        + Constants.testsetNameWithIcon(root, thiscolor) + "</a>";
             else{
-                tableStr += "<a href='" + servlet + "?classname" + ontonum + "=" + root.getId()
-                + "' class='treelink' title=\"" + createManualClassInfo(root) + "\" >" + Constants.setNameWithIcon(root, thiscolor) + "</a>";
+                tableStr += "<a href='" + servlet + "?classname" + ontonum + "=" + root.getLocalName()
+                + "' class='treelink' title=\"" + createManualClassInfo(root,onto.getclasslexicons(i)) + "\" >" + Constants.testsetNameWithIcon(root, thiscolor) + "</a>";
                 if(root.isDisplay())
                     tableStr += classTreeRecursion(onto, ontonum, root, servlet, blank, color, highcolor);
             }
@@ -902,41 +908,41 @@ public class testFormHandler {
     }
     
     
-    private static String createManualClassInfo(MClass c){
-        
-        String Str = " ID     :  "  + c.getId()
-        + "\n Label :  "  + c.getLabel() ;
-        
-        Str += "\n Synonym :  ";
-        
-        for(Enumeration e = c.getSynonyms().elements(); e.hasMoreElements();){
-            
-            Str += (String)e.nextElement() + "; ";
-            if(e.hasMoreElements())
-                Str += "\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    private static String createManualClassInfo(testMClass c, HashSet<testLexicon> classlexicon){
+        String str = "";
+        String classlabel = "";
+        int lan_flag = 0;
+        for(testLexicon tl : classlexicon){
+            str += tl.getname() + "; ";
+            str += "\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                         + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+            if(tl.getlanguage().equals(OntConstants.lan)){
+                classlabel = tl.getname();
+                lan_flag = 1;
+            }else if(lan_flag == 0 && tl.getlanguage().equals("en")){
+                classlabel = tl.getname();
+            } 
         }
-        
+        String Str = " ID     :  "  + c.getLocalName()+ "\n Label :  "  + classlabel ;
+        Str += "\n Synonym :  ";
+        Str += str;
         Str += "\n Definition :  ";
-        
+        /*
         if(c.getComment() != null)
             Str += c.getComment();
         
-        
+        */
         return Str;
     }
     
-    private static String classTreeRecursion(MOntology onto, int ontonum, MClass pred, String servlet, String blank, String color, String highcolor){
+    private static String classTreeRecursion(testMOntology onto, int ontonum, testMClass pred, String servlet, String blank, String color, String highcolor){
         
         String str = "";
         blank += "&nbsp;&nbsp;&nbsp;&nbsp;";
         String thiscolor;
-        for( Enumeration e = pred.getSubClasses().elements(); e.hasMoreElements(); ){
-            
+        for(Integer i : pred.getSubClasses().keySet()){
+            testMClass child = pred.getSubClasses().get(i);
             str +=  "<tr><td nowrap class=\"tree_td\">" + blank + "<span class='isa'>i-</span>";
-            
-            MClass child = (MClass) e.nextElement();
-            
             thiscolor = color;
             if(child.isHighlight()){
                 thiscolor = highcolor;
@@ -944,26 +950,22 @@ public class testFormHandler {
             }
             
             if(child.getAlignElement() == null)
-                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getId()  +"\">";
+                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getLocalName()+"\">";
             else str += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
             if(child.getSubClasses().isEmpty() && child.getParts().isEmpty())
-                str +=  "<a title=\"" + createManualClassInfo(child) + "\" >"
-                        + Constants.setNameWithIcon(child, thiscolor) + "</a>";
+                str +=  "<a title=\"" + createManualClassInfo(child,onto.getclasslexicons(i)) + "\" >"
+                        + Constants.testsetNameWithIcon(child, thiscolor) + "</a>";
             else{
-                str += "<a href='" + servlet + "?classname" + ontonum + "=" + child.getId()
-                + "' class='treelink' title=\"" + createManualClassInfo(child) + "\">" + Constants.setNameWithIcon(child, thiscolor) + "</a>";
+                str += "<a href='" + servlet + "?classname" + ontonum + "=" + child.getLocalName()
+                + "' class='treelink' title=\"" + createManualClassInfo(child,onto.getclasslexicons(i)) + "\">" + Constants.testsetNameWithIcon(child, thiscolor) + "</a>";
                 if(child.isDisplay())
                     str += classTreeRecursion(onto, ontonum, child, servlet, blank, color, highcolor);
             }
         }
-        
-        for( Enumeration e = pred.getParts().elements(); e.hasMoreElements(); ){
-            
+        for(Integer i : pred.getParts().keySet()){
             str += "<tr><td nowrap class=\"tree_td\">" + blank + "<span class= 'part'>p-</span>";
-            
-            MClass child = (MClass) e.nextElement();
-            
+            testMClass child = pred.getParts().get(i);
             thiscolor = color;
             if(child.isHighlight()){
                 thiscolor = highcolor;
@@ -971,19 +973,20 @@ public class testFormHandler {
             }
             
             if(child.getAlignElement() == null)
-                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getId()  +"\">";
+                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getLocalName()+"\">";
             else str += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
             if(child.getSubClasses().isEmpty() && child.getParts().isEmpty())
-                str += "<a title=\"" + createManualClassInfo(child) + "\" >"
-                        + Constants.setNameWithIcon(child, thiscolor) + "</a>";
+                str += "<a title=\"" + createManualClassInfo(child,onto.getclasslexicons(i)) + "\" >"
+                        + Constants.testsetNameWithIcon(child, thiscolor) + "</a>";
             else{
-                str += "<a href='" + servlet + "?classname" + ontonum + "=" + child.getId()
-                + "' class='treelink' title=\"" + createManualClassInfo(child) + "\">" + Constants.setNameWithIcon(child, thiscolor) + "</a>";
+                str += "<a href='" + servlet + "?classname" + ontonum + "=" + child.getLocalName()
+                + "' class='treelink' title=\"" + createManualClassInfo(child,onto.getclasslexicons(i)) + "\">" + Constants.testsetNameWithIcon(child, thiscolor) + "</a>";
                 if(child.isDisplay())
                     str += classTreeRecursion(onto, ontonum, child, servlet, blank, color, highcolor);
             }
         }
+       
         
         return str;
         
