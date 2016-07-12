@@ -210,8 +210,7 @@ public class testSimValueGenerateQuery {
      * 
      * @return  List of suggestions.
      */
-    public ArrayList getSuggestionsMaximumBased(double[] weight,
-            double thershold) {
+    public ArrayList getSuggestionsMaximumBased(double[] weight,double thershold) {
         
 
        

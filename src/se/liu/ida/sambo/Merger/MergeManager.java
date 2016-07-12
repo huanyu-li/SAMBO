@@ -807,15 +807,9 @@ public class MergeManager {
 
             if (h.getAction() == Constants.ALIGN_CLASS) {
                 matchingAlgos.setAlignment(h.getPair());
-
-
             }
-
             historyVector.add(h);
-
-
         }
-
         //clear the lists
         generalSuggestionVector.removeAllElements();
         historyStack.removeAllElements();

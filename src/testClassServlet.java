@@ -114,8 +114,7 @@ public class testClassServlet extends HttpServlet {
     
     
     //handle the actions
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
-    throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         
         HttpSession session = req.getSession(false);
         

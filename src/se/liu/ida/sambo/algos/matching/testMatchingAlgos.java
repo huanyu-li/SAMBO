@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Vector;
 import se.liu.ida.sambo.MModel.MElement;
+import se.liu.ida.sambo.MModel.testMOntology;
 import se.liu.ida.sambo.Merger.Constants;
 import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.Merger.testOntManager;
@@ -17,6 +18,7 @@ import se.liu.ida.sambo.algos.matching.algos.AlignmentConstants;
 import se.liu.ida.sambo.algos.matching.algos.testSimValueConstructor;
 import se.liu.ida.sambo.algos.matching.algos.testSimValueConstructorMappableGrp;
 import se.liu.ida.sambo.util.Pair;
+import se.liu.ida.sambo.util.testPair;
 /**
  *
  * @author huali50
@@ -222,13 +224,11 @@ public class testMatchingAlgos {
      * 
      * @param pair  Concept pair.
      */
-    public void setAlignment(Pair pair){
-             
-        String concept1 = ((MElement) pair.getObject1()).getId(),
-                        concept2 = ((MElement) pair.getObject2()).getId();
-        
-        AlignmentConstants.IsAligned.add(concept1 + AlgoConstants.SEPERATOR 
-                + concept2);        
+    public void setAlignment(testPair pair){
+        String concept1 = merge.getLocalName(pair.getSource());
+        String concept2 = merge.getLocalName(pair.getTarget());
+       
+        AlignmentConstants.IsAligned.add(concept1 + AlgoConstants.SEPERATOR + concept2); 
     }
     
     /**

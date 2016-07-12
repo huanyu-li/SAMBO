@@ -735,7 +735,7 @@ public class testMergerManager {
                     mapconceptTable.executeStatements(insertStatement);               
                     insertStatement.clear();
                 }
-                count++;
+                
             }
         }
         if (insertStatement.size() > 0) {
@@ -748,7 +748,9 @@ public class testMergerManager {
             for(Integer j : targetlexicons)
             {
                 tasklist.put(count,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                count++;
             }
+            
         }
        
     }
@@ -1034,15 +1036,50 @@ public class testMergerManager {
 
 
     }
-     public boolean hasEquivLabel(testMClass tc1, testMClass tc2){
+    public boolean hasEquivLabel(testMClass tc1, testMClass tc2){
          if(tc1.getLabel().equalsIgnoreCase(tc2.getLabel())){
              return true;
          }
          return false;
      }
-     public void mergeRemaining(){
+    public void mergeRemaining(){
+        testPair pair = (testPair) generalSuggestionVector.firstElement();
+        testHistory history = new testHistory(pair, null, Constants.ONTOLOGY_NEW, Constants.ALIGN_CLASS);
+        historyStack.add(history);
+        setClassInfo(history, ToDo);
+        while (true) {
+            generalSuggestionVector.remove(pair);
+
+            //update historyStack due to the classes in the pair to be merged
+            for (Enumeration e = Constants.testgetHoldingPairs(pair, generalSuggestionVector).elements(); e.hasMoreElements();) {
+                testPair p = (testPair) e.nextElement();
+                generalSuggestionVector.remove(p);
+                historyStack.updateMostRecent(new testHistory(p));
+            }
+
+            if (generalSuggestionVector.isEmpty()) {
+                break;
+            }
+            pair = (testPair) generalSuggestionVector.firstElement();
+            history = new testHistory(pair, null, Constants.ONTOLOGY_NEW, Constants.ALIGN_CLASS);
+            historyStack.updateMostRecent(history);
+            setClassInfo(history, ToDo);
+        }
      } 
      public void finalizeClassSuggestions(){
+         //backup the class history stack
+        for (Enumeration e = historyStack.elements(); e.hasMoreElements();) {
+            testHistory h = (testHistory) e.nextElement();
+            if (h.getAction() == Constants.ALIGN_CLASS) {
+                matchingAlgos.setAlignment(h.getPair());
+            }
+            historyVector.add(h);
+        }
+
+        //clear the lists
+        generalSuggestionVector.removeAllElements();
+        historyStack.removeAllElements();
+        currentSuggestionVector.removeAllElements();
      }
 }
     

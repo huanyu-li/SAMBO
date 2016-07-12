@@ -927,9 +927,7 @@ public final class testSimValueConstructor {
             }
             for(Integer i : matcher_list.keySet())
             {
-                if (AlgoConstants.SET_INTERRUPT_ON &&
-                        AlgoConstants.STOP_COMPUTATION_AT == 
-                        computationCounter) {                    
+                if (AlgoConstants.SET_INTERRUPT_ON &&AlgoConstants.STOP_COMPUTATION_AT == computationCounter) {                    
                     AlgoConstants.STOPMATACHING_PROCESS = true;
                     break;                    
                 }       
@@ -958,10 +956,10 @@ public final class testSimValueConstructor {
                     task.compute_sim(matcher_list.get(i));
                     int simvalue_id = similarityTable.getSimvalueId(concept_id, i);
                     if(simvalue_id > 0){
-                        insertStatement.add(similarityTable.generateUpdateStatement(concept_id, i, task.getsimilarity()));
+                        updateStatement.add(similarityTable.generateUpdateStatement(concept_id, i, task.getsimilarity())); 
                     }
                     else{
-                        updateStatement.add(similarityTable.generateInsertStatement(concept_id, i, task.getsimilarity()));     
+                        insertStatement.add(similarityTable.generateInsertStatement(concept_id, i, task.getsimilarity()));
                     }
                 }
                 if (insertStatement.size() > 100000) {

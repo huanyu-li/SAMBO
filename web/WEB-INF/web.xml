@@ -181,7 +181,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>testClassServlet</servlet-name>
-        <url-pattern>/testClassServlet</url-pattern>
+        <url-pattern>/testClass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>
