@@ -42,11 +42,15 @@ public class MapConceptGenerateQuery {
                     " where moid ="+moid+" and scname='"+ concept1 +"' and tcname='"
                     + concept2 +"'";            
                       
-       cpairId = mcdbDao.getCPairId(statement, concept1, concept2, Conn);      
+       cpairId = mcdbDao.getCPairId(statement, Conn);      
         
        return cpairId;
     }
     public void executeStatements(ArrayList<String> statements) {
         mcdbDao.multipleUpdate(statements, Conn);
+    }
+    public String getconcepts(int mcid){
+        String statement = "Select scname, tcname from " + getTableName() + " where mcid = "+ mcid;
+        return mcdbDao.getconcepts(statement, Conn);
     }
 }

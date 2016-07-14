@@ -78,4 +78,29 @@ public class SimilarityDBAccess {
          
          return opairid;
      }
+    public ArrayList getSimvalueViewIdandValue(String statement,Connection conn){
+        ArrayList<String> mappable_concepts = new ArrayList<String>();
+        Statement stmt = null;
+	ResultSet queryResult = null;                              
+        String data = null;
+        boolean sqlreturn = false;
+        try {
+            stmt = conn.createStatement();
+            sqlreturn = stmt.execute(statement);
+            if(sqlreturn == true){
+                queryResult = stmt.getResultSet();
+                while (queryResult.next()) {
+                    data = "";
+                    data = data.concat(queryResult.getString("id")).concat(AlgoConstants.SEPERATOR).concat(queryResult.getString("simvalue"));
+                    mappable_concepts.add(data);                        
+                }
+            }        
+            
+            stmt.close();
+            queryResult.close();
+        } catch (Exception _e) {
+            _e.printStackTrace();
+        } 
+        return mappable_concepts;
+    }
 }

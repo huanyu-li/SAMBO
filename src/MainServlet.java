@@ -111,8 +111,7 @@ public class MainServlet extends HttpServlet {
                         merge, req), threshold, "weighted");
                 merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME + 
                         "_SuggestionList.xml");
-                session.setAttribute("sug", new Suggestion(merge.
-                        getNextSuggestion(), merge.suggestionsRemaining()));
+                session.setAttribute("sug", new Suggestion(merge.getNextSuggestion(), merge.suggestionsRemaining()));
                 //the default mode is suggestion mode
                 session.setAttribute("mode", Constants.MODE_SUGGESTION);
                 try {

@@ -657,8 +657,7 @@ public class testMergerManager {
             testPair pair = (testPair) generalSuggestionVector.firstElement();
 
 
-            //return currentSuggestionVector = Constants.getHoldingPairs(pair.getObject1(), generalSuggestionVector);
-            return null;
+            return currentSuggestionVector = Constants.testgetHoldingPairs(pair, generalSuggestionVector);
 
         }
         return currentSuggestionVector;

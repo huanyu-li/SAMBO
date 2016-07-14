@@ -75,6 +75,7 @@ public class testMOntology {
         factory=manager.getOWLDataFactory();
         
         classes=new HashMap<Integer,testMClass>();
+        classlocalname = new HashMap<String, Integer>();
         dataproperties=new HashMap<Integer,testMDataproperty>();
         objectproperties=new HashMap<Integer,testMObjectproperty>();
         classlexicons =new HashMap<Integer, HashSet<testLexicon>>();
@@ -179,6 +180,7 @@ public class testMOntology {
             testMClass tmc = new testMClass(class_uri);
             
             classes.put(class_id, tmc);
+            classlocalname.put(tmc.getLocalName(), class_id);
             //get class annotation
             Set<OWLAnnotation> annotation = c.getAnnotations(o);
             HashSet<testLexicon> tlset = new HashSet<testLexicon>();

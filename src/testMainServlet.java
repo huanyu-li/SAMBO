@@ -179,11 +179,9 @@ public class testMainServlet extends HttpServlet {
                             threshold, combinationMethod);
                 }
                 
-                merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME + 
-                        "_SuggestionList.xml");        
-                
-                session.setAttribute("sug", new testSuggestion(merge.
-                        getNextSuggestionList(), merge.suggestionsRemaining()));
+                merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME +"_SuggestionList.xml");        
+                testSuggestion suggestion = new testSuggestion(merge.getNextSuggestionList(), merge.suggestionsRemaining());
+                session.setAttribute("sug", suggestion);
                 
                 session.setAttribute("threshold", threshold);              
                 //do not display the hierarchy when first visit "user" model
@@ -201,9 +199,7 @@ public class testMainServlet extends HttpServlet {
                 
                 try {
                     out.println(testPageHandler.createHeader(Constants.STEP_CLASS));
-                    out.println(testFormHandler.createClassForm(settings, 
-                            (testSuggestion) session.getAttribute("sug"), 
-                            Constants.UNIQUE));
+                    out.println(testFormHandler.createClassForm(settings, (testSuggestion) session.getAttribute("sug"), Constants.UNIQUE));
                     out.println(testPageHandler.createFooter());
 
                 } finally {

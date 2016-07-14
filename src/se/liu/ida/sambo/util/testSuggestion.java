@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author huali50
  */
 public class testSuggestion {
-     testPair pair;
+    testPair pair;
     Vector list;
     int remainingSugs = 0;
     

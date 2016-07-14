@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 
 /**
  *
@@ -36,7 +37,7 @@ public class MapConceptDBAccess {
             _e.printStackTrace();		
         }
      }
-    public int getCPairId(String statement, String concept1,String concept2, Connection conn) {
+    public int getCPairId(String statement,  Connection conn) {
                   
          Statement stmt = null;
 	 ResultSet queryResult = null;                
@@ -57,6 +58,26 @@ public class MapConceptDBAccess {
          
          return cpairid;
      }
+    public String getconcepts(String statement,Connection conn){
+        Statement stmt = null;
+	 ResultSet queryResult = null;                
+         String data = "";
+		
+	 try {
+             stmt = conn.createStatement();
+	     queryResult = stmt.executeQuery(statement);             
+                        
+             while (queryResult.next()) {
+                 data = data.concat(queryResult.getString("scname")).concat(AlgoConstants.SEPERATOR).concat(queryResult.getString("tcname"));
+             }
+             stmt.close();
+             queryResult.close();
+         } catch (Exception _e) {
+             _e.printStackTrace();
+         }
+         
+         return data;
+    }
     public void multipleUpdate(ArrayList<String> sqlStatements,
              Connection conn) {
          

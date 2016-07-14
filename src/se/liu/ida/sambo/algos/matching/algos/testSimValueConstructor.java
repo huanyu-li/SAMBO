@@ -87,7 +87,7 @@ public final class testSimValueConstructor {
     /**
      * For querying the computation results of the matchers.
      */
-    private testSimValueGenerateQuery testsimValueTable;
+    private SimilarityGenerateQuery simValueTable;
     private MapConceptGenerateQuery mapconceptTable;
     private SimilarityGenerateQuery similarityTable;
     /**
@@ -142,7 +142,7 @@ public final class testSimValueConstructor {
         //ontologiesName = AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1).concat(AlgoConstants.SEPERATOR).concat(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2));
         // To query sim value table
         ontologiesName = "";
-        testsimValueTable = new testSimValueGenerateQuery(ontologiesName, sqlConn);
+        simValueTable = new SimilarityGenerateQuery(sqlConn);
         matcherResultTable = new ResultsForCombinationAccessDB(sqlConn);
         mapconceptTable = new MapConceptGenerateQuery(sqlConn);
         similarityTable = new SimilarityGenerateQuery(sqlConn);
@@ -198,7 +198,7 @@ public final class testSimValueConstructor {
        for (int i = 0; i < weight.length; i++) {
            // weight will be 0 if the matcher is not selected.
            if (weight[i] != 0) {
-               value[i] = testsimValueTable.getSimValue(source_concept_id, target_concept_id,i);
+               //value[i] = simValueTable.getSimValue(source_concept_id, target_concept_id,i);
                /**
                 * SimValue for the matcher is not found, then the compute the
                 * SimValue for this particular concept pair.
@@ -382,9 +382,9 @@ public final class testSimValueConstructor {
      * @return   List of mapping suggestions.
      */  
 
-    public Vector getPairList(double[] weight, double threshold,
-            String combination){
-        // List of pairs to be return.       
+    public Vector getPairList(double[] weight, double threshold,String combination){
+        
+        // List of pairs to be return.    
         Vector suggestions = new Vector();        
         String concept1 = "";
         String concept2 = "";                
@@ -392,39 +392,45 @@ public final class testSimValueConstructor {
         String concept2ID = "";        
         Connection selectConn = null;
         double finalSimValue = 0;
+        
         /**
          * To avoid combining simValue of the HierarchyMatcher with the other 
          * matchers.
-         */ 
+         */
         boolean hierarchyMatcherON=false;
         ArrayList<String> queryResult=null;
-        // Single SQL connection is used for the entire recommendation process.    
-        if (AlgoConstants.ISRECOMMENDATION_PROCESS) {
+        
+        if(AlgoConstants.ISRECOMMENDATION_PROCESS){
             selectConn= sqlConn;            
-        } else {
-             selectConn = makeConnection();            
+        }else{
+            selectConn = makeConnection();            
         }      
                 
-        if(weight[AlgoConstants.HIERARCHY]!=0) {
+        if(weight[AlgoConstants.HIERARCHY]!=0){
             hierarchyMatcherON=true;                
         }
-        if (combination.equalsIgnoreCase("maximum")) {
-            queryResult = testsimValueTable.getSuggestionsMaximumBased(
-                    weight, threshold);                
-        } else {
-            queryResult = testsimValueTable.getSuggestionsWeightedBased(weight, threshold,-1);                
+        if(combination.equalsIgnoreCase("maximum")){
+            queryResult = simValueTable.generateMaximumBasedSql(weight, threshold);   
+        }else{
+            queryResult = simValueTable.generateWeightedBasedSql(weight, threshold);               
         }
         /**
          * The above query will return results in the form of array list,
          * so in this step we will convert these array list into concept pairs.
          */
-        for (String data:queryResult) {
-            String[] resultParams = data.split(AlgoConstants.SEPERATOR);
-            concept1ID = resultParams[0];
-            concept2ID = resultParams[1];
-            finalSimValue = Double.valueOf(resultParams[2]).doubleValue();                    
-
-                    
+        ArrayList<String> Statements = new ArrayList<String>();
+        for(String concept_pair : queryResult){
+            
+            String[] resultParams = concept_pair.split("#");
+            int concept_pairId = Integer.valueOf(resultParams[0]).intValue();
+            finalSimValue = Double.valueOf(resultParams[1]).doubleValue();
+            
+            String concepts = mapconceptTable.getconcepts(concept_pairId);
+            String[] conceptsParams = concepts.split("#");
+            concept1ID = conceptsParams[0];
+            concept2ID = conceptsParams[1];
+            //finalSimValue = Double.valueOf(resultParams[2]).doubleValue();                    
+            
             /**
              * To avoid combining sim value of the Hierarchy Matcher, but
              * add its sim value to final sim value, in case if the
@@ -435,7 +441,6 @@ public final class testSimValueConstructor {
             }
             concept1 = source_ontology.getElementURI(concept1ID);
             concept2 = target_ontology.getElementURI(concept2ID);
-            
             
             // Generating concept pairs and adding to the suggestion list.
             if ( !concept1ID.equals("") && !concept2ID.equals("")) {
@@ -449,7 +454,8 @@ public final class testSimValueConstructor {
                     }
                 }               
             }
-        }        
+        }
+        
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
             ResourceManager.close(selectConn);
         }

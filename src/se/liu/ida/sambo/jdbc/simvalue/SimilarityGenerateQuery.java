@@ -85,24 +85,105 @@ public class SimilarityGenerateQuery {
     public void executeStatements(ArrayList<String> statements) {
         simvalueDao.multipleUpdate(statements, Conn);
     }
-    public void generateWeightedBasedSql(double[] weight, double thershold){
+    public ArrayList<String> generateWeightedBasedSql(double[] weight, double thershold){
+        
+        ArrayList<String> mappable_concepts = null;
         boolean hierarchyMatcherON = false;
         String[] matcher = null;
         String condition = "";
+        String sqlMatchers = "((";        
+        String sqlWeight = "(";
+        String statement = "";
+        int matchers = 0;
+        
         //To avoid combining sim values in HierarchyMatcher
         if (weight[AlgoConstants.HIERARCHY] !=0) {
            hierarchyMatcherON = true;
            weight[AlgoConstants.HIERARCHY] = 0;
         }
-        int count = 0;
-        for(int i = 0; i < weight.length; i++){
-            if(weight[i] != 0){
-                matcher[count] = getColumnName(i) + "*" + weight[i];
-                count++;
+        
+        for (int i=0; i <weight.length; i++) {
+           if (weight[i] != 0) {               
+               if (matchers > 0) {
+                   sqlMatchers = sqlMatchers+" + ";
+                   sqlWeight = sqlWeight+" + ";
+               }               
+               sqlMatchers = sqlMatchers+"("+ getColumnName(i) +"*"+weight[i]+")";
+               sqlWeight = sqlWeight+weight[i];
+               matchers++;               
+           }
+        }
+        sqlMatchers=sqlMatchers+")/";
+        sqlWeight=sqlWeight+"))";
+        if (hierarchyMatcherON) {
+           sqlWeight=sqlWeight+"+matcher"+AlgoConstants.HIERARCHY;                
+        }
+        statement = "SELECT id, " + sqlMatchers+sqlWeight+ " as simvalue from dbsambo.similarity_view where " + sqlMatchers+sqlWeight+ ">="+thershold;
+        mappable_concepts = simvalueDao.getSimvalueViewIdandValue(statement, Conn);
+        return mappable_concepts;
+    } 
+    public ArrayList<String> generateMaximumBasedSql(double[] weight, double thershold){
+        ArrayList<String> mappable_concepts = null;
+        String sqlMatcher = "(GREATEST(";
+        String statement;
+        int matcher = 0;
+        int noOFMatcher = 0;
+        boolean HierarchyMatcherON = false;
+        // The weight for matcher should be 1
+        for (int i = 0; i < weight.length; i++) {
+            if (weight[i]!= 0 && weight[i] != 1) {
+                System.out.println("Invalid weight for matcher" + i);
+                return null;
+            }
+            if (weight[i]!= 0 && i != AlgoConstants.HIERARCHY) {
+                noOFMatcher++;
             }
         }
-        for(int j = 0; j < count; j++){
-        
+        //In case if the user select only one matcher then do WeightedBased.
+        if (noOFMatcher == 1) {
+            System.out.println("MaximumBased is not applicable for single matcher"
+                   + "...So the system returning suggestions for "
+                   + "WeightedBased");
+            return generateWeightedBasedSql(weight, thershold);           
+       }       
+        //To avoid combining sim values in HierarchyMatcher
+        if (weight[AlgoConstants.HIERARCHY] != 0) {
+            HierarchyMatcherON = true;
+            weight[AlgoConstants.HIERARCHY] = 0;
+        }        
+       /**
+        * Generate part of a SQL Query
+        * 
+        * Eg.(GREATEST(matcher0, matcher1, matcher2))
+        */ 
+       
+        for (int i = 0;i < weight.length; i++) {
+            if (weight[i]!= 0) {
+                if (matcher == 0) {
+                    sqlMatcher = sqlMatcher + getColumnName(i);
+                } else {
+                    sqlMatcher = sqlMatcher + ", " + getColumnName(i);
+                }               
+                matcher++;
+            }
+        }       
+        sqlMatcher = sqlMatcher+")";       
+       //Adding HierarchyMatcher value to final sim value
+        if (HierarchyMatcherON) {
+           //sqlMatcher = sqlMatcher+"+matcher"+AlgoConstants.HIERARCHY+")";                
+        } else  {
+            sqlMatcher = sqlMatcher+")";                
         }
-    } 
+       /**
+        * The final statement will looks like
+        * 
+        * "SELECT concept1, concept2, (GREATEST(matcher0, matcher1, matcher2)) 
+        * as simvalue from dbsambo.savesimvalues WHERE 
+        * ontologies='eye_MA_1#eye_MeSH_2' AND 
+        * (GREATEST(matcher0, matcher1, matcher2))>=0.6"
+        */     
+        statement = "SELECT id, "+sqlMatcher+" as simvalue from dbsambo.similarity_view WHERE "+ sqlMatcher +">=" + thershold; 
+        mappable_concepts = simvalueDao.getSimvalueViewIdandValue(statement, Conn);
+        return mappable_concepts;
+    }
 }
