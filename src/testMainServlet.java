@@ -199,7 +199,7 @@ public class testMainServlet extends HttpServlet {
                 
                 try {
                     out.println(testPageHandler.createHeader(Constants.STEP_CLASS));
-                    out.println(testFormHandler.createClassForm(settings, (testSuggestion) session.getAttribute("sug"), Constants.UNIQUE));
+                    out.println(testFormHandler.createClassForm(merge,settings, (testSuggestion) session.getAttribute("sug"), Constants.UNIQUE));
                     out.println(testPageHandler.createFooter());
 
                 } finally {

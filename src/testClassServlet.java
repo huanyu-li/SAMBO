@@ -131,6 +131,7 @@ public class testClassServlet extends HttpServlet {
             session.setAttribute("mode", Constants.MODE_MANUAL);
         
         String mode = (String) session.getAttribute("mode");
+        mode = "s";
         
         
         res.setContentType("text/html");
@@ -285,7 +286,7 @@ public class testClassServlet extends HttpServlet {
             try {
                 
                 out.println(testPageHandler.createHeader(Constants.STEP_CLASS));
-                out.println(testFormHandler.createClassForm( settings, (testSuggestion)session.getAttribute("sug"), warning));
+                out.println(testFormHandler.createClassForm(merge, settings, (testSuggestion)session.getAttribute("sug"), warning));
                 out.print(testPageHandler.createFooter());
                 
             } finally {

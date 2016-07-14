@@ -177,11 +177,12 @@ public class testMOntology {
             int class_id = urit.getIndex(class_uri);
             if(class_id == 0)
                 continue;
-            testMClass tmc = new testMClass(class_uri);
             
-            classes.put(class_id, tmc);
-            classlocalname.put(tmc.getLocalName(), class_id);
+            
+
             //get class annotation
+            String class_label = null;
+            int label_flag = -1;
             Set<OWLAnnotation> annotation = c.getAnnotations(o);
             HashSet<testLexicon> tlset = new HashSet<testLexicon>();
             for(OWLAnnotation a : annotation)
@@ -198,7 +199,14 @@ public class testMOntology {
                         tl = new testLexicon("label", language, NameProcessor.getInstance().advCleanName(name));
                         //already get the lexical data. Next step is to store them.
                         tlset.add(tl);
-                        
+                        if(language.equals(OntConstants.lan)){
+                            class_label = name;
+                            label_flag = 0;
+                        }
+                        if(language.equals("en")){
+                            if(label_flag == -1)
+                                class_label = name;
+                        }
                     }
                     // annnotation is IRI
                     else if(a.getValue() instanceof IRI){
@@ -213,7 +221,9 @@ public class testMOntology {
                 }
                 
             }
-            
+            testMClass tmc = new testMClass(class_id,class_uri, class_label);
+            classes.put(class_id, tmc);
+            classlocalname.put(tmc.getLocalName(), class_id);
             classlexicons.put(class_id, tlset);
             
         }

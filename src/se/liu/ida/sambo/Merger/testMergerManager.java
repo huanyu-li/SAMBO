@@ -779,16 +779,13 @@ public class testMergerManager {
         generalSuggestionVector.remove(pair);
         if (history.getAction() == Constants.ALIGN_CLASS) {
             for (Enumeration e = Constants.testgetHoldingPairs(pair, generalSuggestionVector).elements(); e.hasMoreElements();) {
-                Pair p = (Pair) e.nextElement();
+                testPair p = (testPair) e.nextElement();
                 
                 if(!historyStack.contains(history))
                 {
-                historyStack.updateMostRecent(new History(p));
+                    historyStack.updateMostRecent(new testHistory(p));
                 }
                 generalSuggestionVector.remove(p);
-                
-
-
             }
         }
         

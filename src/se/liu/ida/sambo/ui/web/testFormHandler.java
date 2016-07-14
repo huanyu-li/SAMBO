@@ -588,7 +588,7 @@ public class testFormHandler {
      * @param ontonum the ontology where the new name already exists
      * @return a string containing the HTML representation of the form
      */
-    public static String createClassForm( SettingsInfo settings, testSuggestion sug, int warning){
+    public static String createClassForm(testMergerManager merge, SettingsInfo settings, testSuggestion sug, int warning){
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
         String color2 = settings.getColor(Constants.ONTOLOGY_2);
@@ -609,7 +609,7 @@ public class testFormHandler {
             
             //row1: the table with details about the classes
             formStr += "<tr><td width=\"100%\" valign=\"top\">"
-                    + createClassInfo(sug.getPairList(),color1,color2,settings) + "</td></tr>";
+                    + createClassInfo(merge,sug.getPairList(),color1,color2,settings) + "</td></tr>";
             
             //row2:
             formStr += "<tr><td valign=\"top\">"
@@ -683,11 +683,9 @@ public class testFormHandler {
     
     
     
-    private static String createClassInfo(Vector classNodes,
-            String color1,
-            String color2,
-            SettingsInfo settings) {
-        
+    private static String createClassInfo(testMergerManager merge,Vector classNodes,String color1,String color2,SettingsInfo settings) {
+        testMOntology source_ontology = merge.getOntManager().getontology(Constants.ONTOLOGY_1);
+        testMOntology target_ontology = merge.getOntManager().getontology(Constants.ONTOLOGY_2);
         int width = 50;
         if(classNodes.size() > 1)  width = 48;
         
@@ -706,17 +704,19 @@ public class testFormHandler {
         
         
         for(int i=0; i < classNodes.size(); i++){
-            /*
+            testPair pair = (testPair)classNodes.get(i);
+            testMClass source_class = source_ontology.getMClass(pair.getSource());
+            testMClass target_class = target_ontology.getMClass(pair.getTarget());
             infoStr += "<tr>";
             
             if(classNodes.size() >1)
                 infoStr +=  "<td width=\"4%\"><INPUT name=\"classPair\" type=\"radio\"" + "value=\"" + i + "\"></td>";
             
             infoStr += "<td width=\"" + width + "%\" valign=\"top\">"
-                    + createClassTable((MClass) ((testPair) classNodes.get(i)).getObject1(), color1) + "</td>"
+                    + createClassTable(source_class, source_ontology.getclasslexicons(source_class.getId()), color1) + "</td>"
                     +  "<td width=\"" + width + "%\" valign=\"top\">"
-                    + createClassTable((MClass) ((testPair) classNodes.get(i)).getObject2(), color2) + "</td></tr>";
-            */
+                    + createClassTable(target_class, target_ontology.getclasslexicons(target_class.getId()), color2) + "</td></tr>";
+            
         }
         
         
@@ -725,7 +725,7 @@ public class testFormHandler {
     
     
     
-    private static String createClassTable(MClass c, String color) {
+    private static String createClassTable(testMClass c, HashSet<testLexicon> lexicons, String color) {
         
         String tableStr = "<TABLE width=\"100%\" class=\"border_table\" valign=\"top\">";
         
@@ -748,17 +748,20 @@ public class testFormHandler {
         tableStr += "<tr><td  align=\"right\" class='classname'>"
                 + "Synonym: </font></td>";
         tableStr +="<td align=\"left\">" ;
-        
-        for(Enumeration e = c.getSynonyms().elements(); e.hasMoreElements();)
-            tableStr += "&nbsp;&nbsp;" + (String)e.nextElement() + "<br>";
+        for(testLexicon tl : lexicons)
+            tableStr += "&nbsp;&nbsp;" + tl.getname() + "<br>";
         tableStr += "</td></tr>";
         
         //print part-of
         tableStr += "<tr><td  align=\"right\" class='classname'>"
                 + "Part of: </font></td>";
         tableStr +="<td align=\"left\">" ;
-        for(Enumeration e = c.getPartOf().elements(); e.hasMoreElements();)
-            tableStr += "&nbsp;&nbsp;" + ((MClass)e.nextElement()).getLabel() + "<br>";
+        if(c.getPartOf() != null){
+            for(Integer i : c.getPartOf().keySet()){
+                tableStr += "&nbsp;&nbsp;" + c.getPartOf().get(i).getLabel() + "<br>";
+            }
+        }
+
         tableStr += "</td></tr>";
         
         tableStr += "</TABLE>";

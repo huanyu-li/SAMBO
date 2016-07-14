@@ -19,7 +19,7 @@
             <url>src/se/liu/ida/sambo/MModel/testMClass.java</url>
             <bookmark id="1">
                 <name/>
-                <line>157</line>
+                <line>160</line>
                 <key/>
             </bookmark>
         </file>
@@ -27,12 +27,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/testMergerManager.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/web/remaining_sugs.jsp</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/MapConceptDBAccess.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SimilarityDBAccess.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/algos/matching/MatchingAlgos.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SimilarityDBAccess.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/SaveSimValuesDBAccess.java</file>
-            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSaveSimValuesDBAccess.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/MainServlet.java</file>
+            <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/jdbc/simvalue/testSaveSimValuesDBAccess.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/Merger/MergeManager.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/ui/web/Constants.java</file>
             <file>file:/C:/Program%20Files/Apache%20Software%20Foundation/Apache%20Tomcat%208.0.27/webapps/SAMBOWebAppSession/src/se/liu/ida/sambo/util/Suggestion.java</file>

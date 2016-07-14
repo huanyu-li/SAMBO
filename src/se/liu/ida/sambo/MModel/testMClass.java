@@ -22,6 +22,7 @@ public class testMClass implements testMElement {
     private String label;
     private String alignComment;
     private String alignName;
+    private String Comment;
     private testMElement alignElement;
     private HashMap<Integer, testMClass> supers;
     private HashMap<Integer, testMClass> subs;
@@ -35,8 +36,10 @@ public class testMClass implements testMElement {
     private boolean highlight = false;
     
     public testMClass(){}
-    public testMClass(String uri){
+    public testMClass(Integer Id, String uri, String class_label){
+        this.id = Id;
         this.uri = uri;
+        this.label = class_label;
         this.name = getLocalName();
         supers = new HashMap<Integer,testMClass>();
         subs = new HashMap<Integer,testMClass>();
@@ -113,7 +116,7 @@ public class testMClass implements testMElement {
     public HashMap<Integer, testMClass> getParts(){
         return this.haspart;
     }
-        public HashMap<Integer, testMClass> getPartOf(){
+    public HashMap<Integer, testMClass> getPartOf(){
         return this.partof;
     }
     public String getLabel(){
@@ -185,5 +188,10 @@ public class testMClass implements testMElement {
         tc.removeAlignSub(this);
         
     }
-    
+    public void setComment(String comment){
+        this.Comment = comment;
+    }
+    public String getComment(){
+        return Comment;
+    }
 }
