@@ -90,11 +90,11 @@ public class testLoadFileServlet extends HttpServlet {
                 session.setAttribute(session.getId(), merge);
                 settings.setStep(Constants.STEP_SLOT);
                 
-                out.println(testFormHandler.createStartForm(settings, Constants.STEP_CLASS));  // This displays form which has filters
-                out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_CLASS));
+                //out.println(testFormHandler.createStartForm(settings, Constants.STEP_CLASS));  // This displays form which has filters
+                //out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_CLASS));
                 
-                //out.println(testFormHandler.createStartForm(settings, Constants.STEP_SLOT));  // This displays form which has filters
-                //out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_SLOT));
+                out.println(testFormHandler.createStartForm(settings, Constants.STEP_SLOT));  // This displays form which has filters
+                out.println(testFormHandler.testcreateRecommendationForm(settings, Constants.STEP_SLOT));
                 out.println(testPageHandler.createFooter());
                
             

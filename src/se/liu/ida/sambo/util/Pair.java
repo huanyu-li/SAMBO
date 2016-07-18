@@ -6,7 +6,7 @@ package se.liu.ida.sambo.util;
  * @version 
  */
 
-import java.util.*;
+
 
 public class Pair {
 

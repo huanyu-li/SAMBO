@@ -687,6 +687,8 @@ public class MergeManager {
         {
         historyStack.add(history);
         }
+        Pair temp = (Pair)generalSuggestionVector.get(0);
+        boolean result = pair.equals(temp);
         generalSuggestionVector.remove(pair);
         
 

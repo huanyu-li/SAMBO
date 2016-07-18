@@ -121,7 +121,7 @@ public final class SimValueConstructor {
             ontogy1Content = ontManager.getMOnt(
                     Constants.ONTOLOGY_1).getProperties();
             onto2Content = ontManager.getMOnt(
-                    Constants.ONTOLOGY_2).getProperties();
+                        Constants.ONTOLOGY_2).getProperties();
         }
         // To get class concepts.
         else if (matchingStep.equalsIgnoreCase("Init class")) {

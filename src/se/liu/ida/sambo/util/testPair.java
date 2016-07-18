@@ -12,10 +12,10 @@ package se.liu.ida.sambo.util;
 public class testPair {
     
 
-    private String sourceURI;
-    private String targetURI;
-    private Integer sid;
-    private Integer tid;
+    private String sourceURI = null;
+    private String targetURI = null;
+    //private Integer sid;
+    //private Integer tid;
     private double sim=0;
     /**
      * To store subset similarity value.
@@ -31,7 +31,7 @@ public class testPair {
     private boolean hasSameLabel = false; 
     
    
-    private boolean empty;
+    private boolean empty = false;
     
     private boolean isAligned = false;
 
@@ -118,8 +118,8 @@ public class testPair {
      * @return True if the pairs are equal, otherwise false.
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof Pair)) return false;
-        Pair pair = (Pair)obj;
+        if (!(obj instanceof testPair)) return false;
+        testPair pair = (testPair)obj;
         return (pair.contains(getSource()) && pair.contains(getTarget()));
     }
 
@@ -226,11 +226,12 @@ public class testPair {
      */
     public boolean getSameLabelInfo() {
         return hasSameLabel;
-    }
+    }/*
     public int getsourceid(){
         return this.sid;
     }
     public int gettargetid(){
         return this.tid;
     }
+*/
 }

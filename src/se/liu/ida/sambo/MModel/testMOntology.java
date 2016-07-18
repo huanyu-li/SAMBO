@@ -59,8 +59,8 @@ public class testMOntology {
     private HashMap<String,Integer> objectpropertylocalname;
     private HashMap<Integer,testMObjectproperty> objectproperties;
     private HashMap<Integer,HashSet<testLexicon>> classlexicons;
-    private HashMap<Integer,HashSet<testLexicon>> datapropertylexcions;
-    private HashMap<Integer,HashSet<testLexicon>> objectpropertylexcions;
+    private HashMap<Integer,HashSet<testLexicon>> datapropertylexicons;
+    private HashMap<Integer,HashSet<testLexicon>> objectpropertylexicons;
     private testURITable urit;
     
     
@@ -79,8 +79,8 @@ public class testMOntology {
         dataproperties=new HashMap<Integer,testMDataproperty>();
         objectproperties=new HashMap<Integer,testMObjectproperty>();
         classlexicons =new HashMap<Integer, HashSet<testLexicon>>();
-        datapropertylexcions =new HashMap<Integer, HashSet<testLexicon>>();
-        objectpropertylexcions =new HashMap<Integer, HashSet<testLexicon>>();
+        datapropertylexicons =new HashMap<Integer, HashSet<testLexicon>>();
+        objectpropertylexicons =new HashMap<Integer, HashSet<testLexicon>>();
         urit =new testURITable();
         
     }
@@ -290,7 +290,7 @@ public class testMOntology {
                 
                     }
             
-                    datapropertylexcions.put(property_id, tlset);
+                    datapropertylexicons.put(property_id, tlset);
                 }
 
             }
@@ -349,7 +349,7 @@ public class testMOntology {
                 
                     }
             
-                    objectpropertylexcions.put(property_id, tlset);
+                    objectpropertylexicons.put(property_id, tlset);
                 }
 
             }
@@ -468,8 +468,14 @@ public class testMOntology {
     public Set<Integer> getMObjectproperties(){
         return objectproperties.keySet();
     }
-    public Set<Integer> getLexicons(){
+    public Set<Integer> getClassLexicons(){
         return classlexicons.keySet();
+    }
+    public Set<Integer> getPropertiesLexicons(){
+        HashSet<Integer> temp = new HashSet<Integer>();
+        temp.addAll(datapropertylexicons.keySet());
+        temp.addAll(objectpropertylexicons.keySet());
+        return temp;
     }
     public Collection<HashSet<testLexicon>> getclasslexiconValues(){
         return classlexicons.values();

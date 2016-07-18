@@ -92,7 +92,7 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateSlotSimValue(HashSet<Integer> matcherlist){
-        slotSimValues.calculate_property_sim();
+        slotSimValues.calculate_property_sim(matcherlist,merge);
     }
     
     /**

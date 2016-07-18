@@ -103,7 +103,7 @@ public class testMergerManager {
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
         mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl","C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
-        mm.generate_tasklist();
+        mm.generate_classtasklist();
         //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
         mm.init();
         HashSet<Integer> matcherlist = new HashSet<Integer>();
@@ -132,8 +132,8 @@ public class testMergerManager {
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
         Set<Integer> targetclasses = targetontology.getMClasses();
-        Set<Integer> sourcelexicons = sourceontology.getLexicons();
-        Set<Integer> targetlexicons = targetontology.getLexicons();
+        Set<Integer> sourcelexicons = sourceontology.getClassLexicons();
+        Set<Integer> targetlexicons = targetontology.getClassLexicons();
         int count=0;
         int mappingcount = 0;
         long t1 = System.currentTimeMillis();
@@ -247,7 +247,7 @@ public class testMergerManager {
         //thread = Runtime.getRuntime().availableProcessors();
         thread = 4;
         System.out.println("Thread num: "+thread);
-       
+        generalSuggestionVector = new Vector<testPair>();
     }
 
 
@@ -702,13 +702,76 @@ public class testMergerManager {
     public HashSet getMatcherList(){
         return this.matcher_list;
     }
-    public void generate_tasklist(){
+    public void generate_tasklist(int step){
+        testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
+        testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
+        Set<Integer> sourceconcepts = null;
+        Set<Integer> targetconcepts = null;
+        Set<Integer> sourcelexicons = null;
+        Set<Integer> targetlexicons = null;
+        if(step == Constants.STEP_SLOT){
+            sourceconcepts = sourceontology.getProperties();
+            targetconcepts = targetontology.getProperties();
+            sourcelexicons = sourceontology.getPropertiesLexicons();
+            targetlexicons = targetontology.getPropertiesLexicons();
+        }
+        else if(step == Constants.STEP_CLASS){
+            sourceconcepts = sourceontology.getMClasses();
+            targetconcepts = targetontology.getMClasses();
+            sourcelexicons = sourceontology.getClassLexicons();
+            targetlexicons = targetontology.getClassLexicons();
+        }
+        int count = 1;
+        ArrayList<String> insertStatement = new ArrayList<String>();
+        Connection sqlConn = null; 
+        try {
+            sqlConn = ResourceManager.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SimValueConstructor.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        mapconceptTable = new MapConceptGenerateQuery(sqlConn);
+        for(Integer sid : sourceconcepts)
+        {
+            String sourceURI = getLocalName(getConceptURI(sid, Constants.ONTOLOGY_1));
+            for(Integer tid : targetconcepts)
+            {
+                String targetURI = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
+                int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourceURI, targetURI);
+                if(conceptId < 0)
+                {
+                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourceURI, targetURI));
+                }
+                if (insertStatement.size() > 100000) {
+                    mapconceptTable.executeStatements(insertStatement);               
+                    insertStatement.clear();
+                }
+                
+            }
+        }
+        if (insertStatement.size() > 0) {
+            mapconceptTable.executeStatements(insertStatement);           
+        }   
+        ResourceManager.close(sqlConn);
+        for(Integer i : sourcelexicons)
+        {
+            
+            for(Integer j : targetlexicons)
+            {
+                tasklist.put(count,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                count++;
+            }
+            
+        }
+   
+    }
+    public void generate_classtasklist(){
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
         Set<Integer> targetclasses = targetontology.getMClasses();
-        Set<Integer> sourcelexicons = sourceontology.getLexicons();
-        Set<Integer> targetlexicons = targetontology.getLexicons();
+        Set<Integer> sourcelexicons = sourceontology.getClassLexicons();
+        Set<Integer> targetlexicons = targetontology.getClassLexicons();
         int count = 1;
         ArrayList<String> insertStatement = new ArrayList<String>();
         Connection sqlConn = null; 
@@ -776,7 +839,10 @@ public class testMergerManager {
         {
         historyStack.add(history);
         }
+        testPair temp = (testPair)generalSuggestionVector.get(0);
+        boolean result = pair.equals(temp);
         generalSuggestionVector.remove(pair);
+        
         if (history.getAction() == Constants.ALIGN_CLASS) {
             for (Enumeration e = Constants.testgetHoldingPairs(pair, generalSuggestionVector).elements(); e.hasMoreElements();) {
                 testPair p = (testPair) e.nextElement();
@@ -795,11 +861,6 @@ public class testMergerManager {
         int c = setClassInfo(history, ToDo);
         // return setClassInfo(history, ToDo);
         System.out.println(c);
-        
-        
-        
-
-
         return c;
     }
     public void setSlotInfo(testHistory h, boolean set){
