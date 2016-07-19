@@ -115,10 +115,8 @@ public class testMainServlet extends HttpServlet {
             if (step == Constants.STEP_SLOT) {
 
                 System.out.println("STEP_SLOT");
-                merge.getSuggestions(Constants.STEP_SLOT, getWeight(step,
-                        merge, req), threshold, "weighted");
-                merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME
-                        + "_SuggestionList.xml");
+                merge.getSuggestions(Constants.STEP_SLOT, getWeight(step,merge, req), threshold, "weighted");
+                merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME + "_SuggestionList.xml");
                 /*session.setAttribute("sug", new Suggestion(merge.
                         getNextSuggestion(), merge.suggestionsRemaining()));
                  */
@@ -226,7 +224,7 @@ public class testMainServlet extends HttpServlet {
             String mergefile = settings.getName(Constants.ONTOLOGY_NEW) + "_"
                     + session.getId() + ".owl";
 
-            //merge.finalize(Constants.FILEHOME + alignfile, Constants.FILEHOME + mergefile);
+            merge.finalize(Constants.FILEHOME + alignfile, Constants.FILEHOME + mergefile);
             //set the new ontology for browsing
             session.setAttribute("file_link", "ontologies/" + mergefile);
             session.setAttribute("display", "false");
@@ -327,7 +325,11 @@ public class testMainServlet extends HttpServlet {
         if (req.getParameter(Constants.singleMatchers[Constants.Terminology]) != null) {
             //merge.matching(step, Constants.Terminology);
             merge.getMatcherList().add(Constants.Terminology);
-            weight[Constants.Terminology] = Double.parseDouble(req.getParameter("weight" + Constants.Terminology));
+            
+            //weight[Constants.Terminology] = Double.parseDouble(req.getParameter("weight" + Constants.Terminology));
+            weight[Constants.EditDistance] = 0.3;
+            weight[Constants.NGram] = 0.3;
+            
         }
 
         if (req.getParameter(Constants.singleMatchers[Constants.WordNet_Plus]) != null) {

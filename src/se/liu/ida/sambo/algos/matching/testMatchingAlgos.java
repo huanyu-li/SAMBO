@@ -92,7 +92,7 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateSlotSimValue(HashSet<Integer> matcherlist){
-        slotSimValues.calculate_property_sim(matcherlist,merge);
+        slotSimValues.calculate_concept_sim(matcherlist,merge);
     }
     
     /**
@@ -133,8 +133,7 @@ public class testMatchingAlgos {
      */ 
     public Vector getSlotSugs(double[] weight, double threshold, 
             String combinationMethod) {                
-        return slotSimValues.getPairListSegmentPairs(weight, threshold, 
-                combinationMethod);
+        return slotSimValues.getPropertyList(weight, threshold,combinationMethod);
     }
     
     /**
@@ -147,11 +146,9 @@ public class testMatchingAlgos {
             String combinationMethod) {        
         
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            return classSimValues.getPairList(weight, threshold, 
-                    combinationMethod);                
+            return classSimValues.getPairList(weight, threshold, combinationMethod);                
         } else {
-            return classSimValues.getPairListSegmentPairs(weight, threshold, 
-                    combinationMethod);                
+            return classSimValues.getPairListSegmentPairs(weight, threshold,combinationMethod);                
         }    
     }
     

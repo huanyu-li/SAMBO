@@ -33,9 +33,11 @@ public class Task {
         
             for(testLexicon stl : sourcelexicon){
                 for(testLexicon ttl : targetlexicon){
-                    double similarity = matcher.getSimValue(stl.getname(),ttl.getname());
-                    if(similarity > max_sim)
-                        max_sim = similarity;
+                    if(stl.getlanguage().equals(ttl.getlanguage())){
+                        double similarity = matcher.getSimValue(stl.getname(),ttl.getname());
+                        if(similarity > max_sim)
+                            max_sim = similarity;
+                    }
                 }
             }
             

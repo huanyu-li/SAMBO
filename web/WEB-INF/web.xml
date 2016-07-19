@@ -119,6 +119,18 @@
         <servlet-name>testClassServlet</servlet-name>
         <servlet-class>testClassServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>testBrowseServlet</servlet-name>
+        <servlet-class>testBrowseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>testLoadSessionServlet</servlet-name>
+        <servlet-class>testLoadSessionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>testLockSessionServlet</servlet-name>
+        <servlet-class>testLockSessionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadFileServlet</servlet-name>
         <url-pattern>/LoadFile</url-pattern>
@@ -182,6 +194,18 @@
     <servlet-mapping>
         <servlet-name>testClassServlet</servlet-name>
         <url-pattern>/testClass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testBrowseServlet</servlet-name>
+        <url-pattern>/testBrowseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testLoadSessionServlet</servlet-name>
+        <url-pattern>/testLoadSessionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testLockSessionServlet</servlet-name>
+        <url-pattern>/testLockSessionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>

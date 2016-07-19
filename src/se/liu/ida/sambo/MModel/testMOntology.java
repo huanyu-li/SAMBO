@@ -483,6 +483,17 @@ public class testMOntology {
     public HashSet<testLexicon> getclasslexicons(int index){
         return classlexicons.get(index);
     }
+    public HashSet<testLexicon> getlexicons(int index){
+        if(classlexicons.containsKey(index)){
+            return classlexicons.get(index);
+        }else if(datapropertylexicons.containsKey(index)){
+            return datapropertylexicons.get(index);
+        }else if(objectpropertylexicons.containsKey(index)){
+            return objectpropertylexicons.get(index);
+        }else{
+            return null;
+        }
+    }
     public testLexicon getclasslexicon(int index, String type){
         testLexicon classlexicon = null;
         for(testLexicon tl : classlexicons.get(index)){

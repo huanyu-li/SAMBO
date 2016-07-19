@@ -260,8 +260,7 @@ public final class testSimValueConstructor {
      *
      * @return List of mapping suggestions.
      */
-    public Vector getPairListSegmentPairs(final double[] weight,
-            final double threshold, final String combination) {
+    public Vector getPairListSegmentPairs(final double[] weight,final double threshold, final String combination) {
 
         // List of pairs to be return.        
         Vector suggestions = new Vector();
@@ -351,7 +350,68 @@ public final class testSimValueConstructor {
         }
         return suggestions;
     }
+    public Vector getPropertyList(double[] weight, double threshold, String combination){
+        Vector suggestions = new Vector();
+        String concept1 = "";
+        String concept2 = "";
+        String concept1ID = "";
+        String concept2ID = "";
+        Connection selectConn = null;
+        double finalSimValue = 0;
+        boolean hierarchyMatcherON = false;
+        ArrayList<String> queryResult = null;
 
+        if (AlgoConstants.ISRECOMMENDATION_PROCESS) {
+            selectConn = sqlConn;
+        } else {
+            selectConn = makeConnection();
+        }
+
+        if (weight[AlgoConstants.HIERARCHY] != 0) {
+            hierarchyMatcherON = true;
+        }
+        queryResult = simValueTable.generateWeightedBasedSql(weight, threshold);
+        for (String concept_pair : queryResult) {
+
+            String[] resultParams = concept_pair.split("#");
+            int concept_pairId = Integer.valueOf(resultParams[0]).intValue();
+            finalSimValue = Double.valueOf(resultParams[1]).doubleValue();
+
+            String concepts = mapconceptTable.getconcepts(concept_pairId);
+            String[] conceptsParams = concepts.split("#");
+            concept1ID = conceptsParams[0];
+            concept2ID = conceptsParams[1];
+            //finalSimValue = Double.valueOf(resultParams[2]).doubleValue();                    
+
+            /**
+             * To avoid combining sim value of the Hierarchy Matcher, but add
+             * its sim value to final sim value, in case if the final sim value
+             * is greater than 1 then make it as 1.
+             */
+            if (hierarchyMatcherON && finalSimValue > 1) {
+                finalSimValue = 1;
+            }
+            concept1 = source_ontology.getElementURI(concept1ID);
+            concept2 = target_ontology.getElementURI(concept2ID);
+
+            // Generating concept pairs and adding to the suggestion list.
+            if (!concept1ID.equals("") && !concept2ID.equals("")) {
+                testPair pair = new testPair(concept1, concept2);
+                // Checking if the suggestion aligned in the previous round.
+                if (source_ontology.getElement(concept1).getAlignElement() == null || target_ontology.getElement(concept2).getAlignElement() == null) {
+                    if (!AlignmentConstants.IsAligned.contains(
+                            concept1ID + AlgoConstants.SEPERATOR + concept2ID)) {
+                        pair.setSim(finalSimValue);
+                        suggestions.add(pair);
+                    }
+                }
+            }
+        }
+        if (!AlgoConstants.ISRECOMMENDATION_PROCESS) {
+            ResourceManager.close(selectConn);
+        }
+        return suggestions;
+    }
     /**
      * To get mapping suggestions if more than one matcher is selected, usually
      * used in the class matching (non recommendation process).
@@ -848,7 +908,7 @@ public final class testSimValueConstructor {
     }
 
     public void calculate_property_sim(HashSet<Integer> matcherlist, testMergerManager merge) {
-
+        
     }
 
     public void calculate_concept_sim(HashSet<Integer> matcherlist, testMergerManager merge) {

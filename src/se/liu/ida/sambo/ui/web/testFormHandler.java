@@ -324,7 +324,7 @@ public class testFormHandler {
             
             //the small windows to show the remaining suggestions and previously processed classes
             formStr += "<img src=\"img/suggest.gif\" border=\"0\">&nbsp;&nbsp;"
-                    +"<span class=\"menulink\" onClick=\"openwindow('remaining_sugs.jsp', 'blank');\">"
+                    +"<span class=\"menulink\" onClick=\"openwindow('testremaining_sugs.jsp', 'blank');\">"
                     + sug.getRemainingSug() + " Remaining Suggestions, " +  "</span> &nbsp;&nbsp;&nbsp;&nbsp;";
             
             //If there are no suggestions, only show the finish button
@@ -339,7 +339,7 @@ public class testFormHandler {
         }
         
         formStr += "<img src=\"img/history.gif\" border=\"0\">"
-            + "<span class=\"menulink\" onClick=\"openwindow('history.jsp', 'blank');\"> History  </span> </center>";
+            + "<span class=\"menulink\" onClick=\"openwindow('testhistory.jsp', 'blank');\"> History  </span> </center>";
         
         
         // Close table and form
@@ -417,7 +417,7 @@ public class testFormHandler {
         
         formStr += Constants.JavaScript_OpenWindow;
         formStr += "<img src=\"img/history.gif\" border=\"0\">"
-            + "<span class=\"menulink\" onClick=\"openwindow('history.jsp', 'blank');\"> History  </span></center>";
+            + "<span class=\"menulink\" onClick=\"openwindow('testhistory.jsp', 'blank');\"> History  </span></center>";
         
         formStr += "</td> </tr> ";
         
@@ -527,7 +527,7 @@ public class testFormHandler {
 
                         //the small windows to show the remaining suggestions
                         + "<img src=\"img/suggest.gif\" border=\"0\">&nbsp;"
-                        + "<span class=\"menulink\" onClick=\"openwindow('remaining_sugs.jsp', 'blank');\">"
+                        + "<span class=\"menulink\" onClick=\"openwindow('testremaining_sugs.jsp', 'blank');\">"
                         + sug.getRemainingSug() + " Remaining Suggestions " + "</span>&nbsp;"
 
                         + makeButton("remaining", "remaining", "submit", "Align Remaining")
@@ -549,7 +549,7 @@ public class testFormHandler {
             formStr += "<tr><td><br><table width=\"56%\" align=\"center\"><tr>"
                     //history link
                     + "<td width=\"22%\"><img src=\"img/history.gif\" border=\"0\">"
-                    + "<span class=\"menulink\" onClick=\"openwindow('history.jsp', 'blank');\"> History  </span></td>"
+                    + "<span class=\"menulink\" onClick=\"openwindow('testhistory.jsp', 'blank');\"> History  </span></td>"
                     //warning label
                     + "<td align=\"left\">"
                     + "<table width=\"100%\" class=\"border_table\">"
@@ -634,7 +634,7 @@ public class testFormHandler {
                     
                     //the small windows to show the remaining suggestions
                     + "<img src=\"img/suggest.gif\" border=\"0\">&nbsp;"
-                    + "<span class=\"menulink\" onClick=\"openwindow('remaining_sugs.jsp', 'blank');\">"
+                    + "<span class=\"menulink\" onClick=\"openwindow('testremaining_sugs.jsp', 'blank');\">"
                     + sug.getRemainingSug() + " Remaining Suggestions " + "</span>&nbsp;"
                     
                     + makeButton("remaining", "remaining", "submit", "Align Remaining")
@@ -658,7 +658,7 @@ public class testFormHandler {
         formStr += "<tr><td><br><table width=\"56%\" align=\"center\"><tr>"
                 //history link
                 + "<td width=\"22%\"><img src=\"img/history.gif\" border=\"0\">"
-                + "<span class=\"menulink\" onClick=\"openwindow('history.jsp', 'blank');\"> History  </span></td>"
+                + "<span class=\"menulink\" onClick=\"openwindow('testhistory.jsp', 'blank');\"> History  </span></td>"
                 //warning label
                 + "<td align=\"left\">"
                 + "<table width=\"100%\" class=\"border_table\">"
@@ -735,7 +735,7 @@ public class testFormHandler {
         
         tableStr += "<tr><td width=\"20%\" align=\"right\"class=\"classname\">"
                 +"Id: </td><td align=\"left\">&nbsp;&nbsp;"
-                + c.getId() + "</td></tr>";
+                + c.getLocalName()+ "</td></tr>";
         
         // Print definition
         tableStr += "<tr><td align=\"right\" class='classname'>"
@@ -850,7 +850,7 @@ public class testFormHandler {
         formStr += "<tr><td colspan=\"2\"><table width=\"56%\" align=\"center\"><tr>"
                 //history link
                 + "<td width=\"22%\"><img src=\"img/history.gif\" border=\"0\">"
-                + "<span class=\"menulink\" onClick=\"openwindow('history.jsp', 'blank');\"> History  </span></td>"
+                + "<span class=\"menulink\" onClick=\"openwindow('testhistory.jsp', 'blank');\"> History  </span></td>"
                 //warning label
                 + "<td align=\"left\">"
                 + "<table width=\"100%\" class=\"border_table\">"
