@@ -16,9 +16,9 @@ public class testMObjectproperty extends testMProperty {
     }
     public testMObjectproperty(String uri){
         this.uri = uri;
-        this.name = getdatapropertyname();
+        this.name = getobjectpropertyname();
     }
-    public String getdatapropertyname(){
+    public String getobjectpropertyname(){
         if(this.uri==null){
             return null;
         }
@@ -30,5 +30,11 @@ public class testMObjectproperty extends testMProperty {
             }
             return this.uri.substring(i);
         }
+    }
+    public String getURI(){
+        return this.uri;
+    }
+    public String getName(){
+        return this.name;
     }
 }

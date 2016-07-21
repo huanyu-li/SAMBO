@@ -76,6 +76,8 @@ public class testMOntology {
         
         classes=new HashMap<Integer,testMClass>();
         classlocalname = new HashMap<String, Integer>();
+        datapropertylocalname = new HashMap<String, Integer>();
+        objectpropertylocalname = new HashMap<String, Integer>();
         dataproperties=new HashMap<Integer,testMDataproperty>();
         objectproperties=new HashMap<Integer,testMObjectproperty>();
         classlexicons =new HashMap<Integer, HashSet<testLexicon>>();
@@ -289,7 +291,8 @@ public class testMOntology {
                         }
                 
                     }
-            
+                   
+                    datapropertylocalname.put(tmdp.getName(), property_id);
                     datapropertylexicons.put(property_id, tlset);
                 }
 
@@ -348,7 +351,7 @@ public class testMOntology {
                         }
                 
                     }
-            
+                    objectpropertylocalname.put(tmdp.getName(), property_id);
                     objectpropertylexicons.put(property_id, tlset);
                 }
 
@@ -526,13 +529,13 @@ public class testMOntology {
         }
     }
     public String getElementURI(String localname){
-        if(classlocalname.containsKey(localname)){
+        if(classlocalname.isEmpty() == false && classlocalname.containsKey(localname)){
             return urit.getURI(classlocalname.get(localname));
         }
-        else if(datapropertylocalname.containsValue(localname)){
+        else if(datapropertylocalname.isEmpty() == false && datapropertylocalname.containsKey(localname)){
             return urit.getURI(datapropertylocalname.get(localname));
         }
-        else if(objectpropertylocalname.containsValue(localname)){
+        else if(objectpropertylocalname.isEmpty() == false && objectpropertylocalname.containsKey(localname)){
             return urit.getURI(objectpropertylocalname.get(localname));
         }
         else{
@@ -562,5 +565,14 @@ public class testMOntology {
     }
     public HashMap<Integer, testMClass> getClasses(){
         return this.classes;
+    }
+    public String getPropertyType(String URI){
+        int index = urit.getIndex(URI);
+        if(dataproperties.containsKey(URI))
+            return "DATAPROPERTY";
+        else if(objectproperties.containsKey(URI))
+            return "OBJECTPROPERTY";
+        else
+            return null;
     }
 }

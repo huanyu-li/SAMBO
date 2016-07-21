@@ -117,15 +117,12 @@ public class testMainServlet extends HttpServlet {
                 System.out.println("STEP_SLOT");
                 merge.getSuggestions(Constants.STEP_SLOT, getWeight(step,merge, req), threshold, "weighted");
                 merge.getSuggestionsXML(Commons.DATA_PATH + Commons.USER_NAME + "_SuggestionList.xml");
-                /*session.setAttribute("sug", new Suggestion(merge.
-                        getNextSuggestion(), merge.suggestionsRemaining()));
-                 */
+                session.setAttribute("sug", new testSuggestion(merge.getNextSuggestion(), merge.suggestionsRemaining()));
                 //the default mode is suggestion mode
                 session.setAttribute("mode", Constants.MODE_SUGGESTION);
                 try {
                     out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
-                    String sid = QueryStringHandler.ParseSessionId(
-                            req.getQueryString());
+                    String sid = QueryStringHandler.ParseSessionId(req.getQueryString());
                     out.println(testFormHandler.createSlotForm((testSuggestion) session.getAttribute("sug"), settings, sid));
                     out.println(testPageHandler.createFooter());
 
@@ -151,7 +148,7 @@ public class testMainServlet extends HttpServlet {
                 if (!useMappableGrp && thresholdType.
                         equalsIgnoreCase("double")) {
                     merge.getSuggestions(getWeight(step, merge, req),
-                            upperThreshold, lowerThreshold, combinationMethod);
+                            upperThreshold, lowerThreshold, combinationMethod,Constants.STEP_CLASS);
                 } else if (!useMappableGrp && thresholdType.
                         equalsIgnoreCase("single")) {
                     merge.getSuggestions(Constants.STEP_CLASS, getWeight(step,
@@ -433,7 +430,8 @@ public class testMainServlet extends HttpServlet {
             //weight[Constants.Hierarchy] = (new Double(req.getParameter("weight" + Constants.Hierarchy))).doubleValue();
             weight[Constants.Hierarchy] = 1.0;
         }
-        merge.generate_classtasklist();
+        int step = 0;
+        merge.generate_classtasklist(step);
         merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
 
         return weight;

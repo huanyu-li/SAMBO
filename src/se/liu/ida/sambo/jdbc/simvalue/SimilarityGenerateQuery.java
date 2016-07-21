@@ -7,6 +7,7 @@ package se.liu.ida.sambo.jdbc.simvalue;
 
 import java.util.ArrayList;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
+import se.liu.ida.sambo.ui.web.Constants;
 
 /**
  *
@@ -44,11 +45,11 @@ public class SimilarityGenerateQuery {
         }
         return column_name;
     }
-    public String generateInsertStatement(int id, int matcher,double simvalue) {
+    public String generateInsertStatement(int id,int moid, int matcher,double simvalue) {
         
         String statement="";               
-        statement="INSERT INTO "+ getTableName(matcher) + "(id, "+ getColumnName(matcher) +") VALUES";                  
-        statement=statement.concat("('"+id+"', "+simvalue+")");
+        statement="INSERT INTO "+ getTableName(matcher) + "(id, moid "+ getColumnName(matcher) +") VALUES";                  
+        statement=statement.concat("('"+id+"', '"+moid+"', "+simvalue+")");
         return statement;
     }
     
@@ -85,7 +86,7 @@ public class SimilarityGenerateQuery {
     public void executeStatements(ArrayList<String> statements) {
         simvalueDao.multipleUpdate(statements, Conn);
     }
-    public ArrayList<String> generateWeightedBasedSql(double[] weight, double thershold){
+    public ArrayList<String> generateWeightedBasedSql(double[] weight, double thershold, int step, int moid){
         
         ArrayList<String> mappable_concepts = null;
         boolean hierarchyMatcherON = false;
@@ -118,11 +119,16 @@ public class SimilarityGenerateQuery {
         if (hierarchyMatcherON) {
            sqlWeight=sqlWeight+"+matcher"+AlgoConstants.HIERARCHY;                
         }
-        statement = "SELECT id, " + sqlMatchers+sqlWeight+ " as simvalue from dbsambo.similarity_view where " + sqlMatchers+sqlWeight+ ">="+thershold;
+        String viewname= null;
+        if(step == Constants.STEP_SLOT)
+            viewname = "dbsambo.similarity_view_property";
+        else if(step == Constants.STEP_CLASS)
+            viewname = "dbsambo.similarity_view_class";
+        statement = "SELECT id, " + sqlMatchers+sqlWeight+ " as simvalue from " +viewname +" where moid= "+ moid +" and type =" + step + " and " + sqlMatchers+sqlWeight+ ">="+thershold;
         mappable_concepts = simvalueDao.getSimvalueViewIdandValue(statement, Conn);
         return mappable_concepts;
     } 
-    public ArrayList<String> generateMaximumBasedSql(double[] weight, double thershold){
+    public ArrayList<String> generateMaximumBasedSql(double[] weight, double thershold, int step, int moid){
         ArrayList<String> mappable_concepts = null;
         String sqlMatcher = "(GREATEST(";
         String statement;
@@ -144,7 +150,7 @@ public class SimilarityGenerateQuery {
             System.out.println("MaximumBased is not applicable for single matcher"
                    + "...So the system returning suggestions for "
                    + "WeightedBased");
-            return generateWeightedBasedSql(weight, thershold);           
+            return generateWeightedBasedSql(weight, thershold,step, moid);           
        }       
         //To avoid combining sim values in HierarchyMatcher
         if (weight[AlgoConstants.HIERARCHY] != 0) {

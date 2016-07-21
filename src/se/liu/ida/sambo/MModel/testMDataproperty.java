@@ -31,4 +31,10 @@ public class testMDataproperty extends testMProperty {
             return this.uri.substring(i);
         }
     }
+    public String getURI(){
+        return this.uri;
+    }
+    public String getName(){
+        return this.name;
+    }
 }

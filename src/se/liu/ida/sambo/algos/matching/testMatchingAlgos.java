@@ -131,9 +131,8 @@ public class testMatchingAlgos {
      * 
      * @return List of mapping suggestion.
      */ 
-    public Vector getSlotSugs(double[] weight, double threshold, 
-            String combinationMethod) {                
-        return slotSimValues.getPropertyList(weight, threshold,combinationMethod);
+    public Vector getSlotSugs(double[] weight, double threshold, String combinationMethod,int step) {                
+        return slotSimValues.getPropertyList(weight, threshold,combinationMethod,step,merge.getMoid());
     }
     
     /**
@@ -142,11 +141,10 @@ public class testMatchingAlgos {
      * 
      * @return List of mapping suggestion.
      */ 
-    public Vector getClassSugs(double[] weight, double threshold, 
-            String combinationMethod) {        
+    public Vector getClassSugs(double[] weight, double threshold, String combinationMethod, int step) {        
         
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            return classSimValues.getPairList(weight, threshold, combinationMethod);                
+            return classSimValues.getPairList(weight, threshold, combinationMethod, step,merge.getMoid());                
         } else {
             return classSimValues.getPairListSegmentPairs(weight, threshold,combinationMethod);                
         }    
@@ -159,12 +157,10 @@ public class testMatchingAlgos {
      * 
      * @return List of mapping suggestion.
      */
-    public Vector getClassSugs(double[] weight, double upperthreshold, 
-            double lowerthreshold, String combinationMethod) {        
+    public Vector getClassSugs(double[] weight, double upperthreshold, double lowerthreshold, String combinationMethod,int step) {        
         
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            return classSimValues.getPairList(weight, upperthreshold, 
-                    lowerthreshold, combinationMethod);                
+            return classSimValues.getPairList(weight, upperthreshold, lowerthreshold, combinationMethod,step,merge.getMoid());                
         } else {
             return classSimValues.getPairListSegmentPairs(weight, 
                     upperthreshold, lowerthreshold, combinationMethod);                

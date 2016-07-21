@@ -350,7 +350,7 @@ public final class testSimValueConstructor {
         }
         return suggestions;
     }
-    public Vector getPropertyList(double[] weight, double threshold, String combination){
+    public Vector getPropertyList(double[] weight, double threshold, String combination, int step, int moid){
         Vector suggestions = new Vector();
         String concept1 = "";
         String concept2 = "";
@@ -370,7 +370,7 @@ public final class testSimValueConstructor {
         if (weight[AlgoConstants.HIERARCHY] != 0) {
             hierarchyMatcherON = true;
         }
-        queryResult = simValueTable.generateWeightedBasedSql(weight, threshold);
+        queryResult = simValueTable.generateWeightedBasedSql(weight, threshold,step,moid);
         for (String concept_pair : queryResult) {
 
             String[] resultParams = concept_pair.split("#");
@@ -424,7 +424,7 @@ public final class testSimValueConstructor {
      *
      * @return List of mapping suggestions.
      */
-    public Vector getPairList(double[] weight, double threshold, String combination) {
+    public Vector getPairList(double[] weight, double threshold, String combination,int step,int moid) {
 
         // List of pairs to be return.    
         Vector suggestions = new Vector();
@@ -452,9 +452,9 @@ public final class testSimValueConstructor {
             hierarchyMatcherON = true;
         }
         if (combination.equalsIgnoreCase("maximum")) {
-            queryResult = simValueTable.generateMaximumBasedSql(weight, threshold);
+            queryResult = simValueTable.generateMaximumBasedSql(weight, threshold,step,moid);
         } else {
-            queryResult = simValueTable.generateWeightedBasedSql(weight, threshold);
+            queryResult = simValueTable.generateWeightedBasedSql(weight, threshold,step,moid);
         }
         /**
          * The above query will return results in the form of array list, so in
@@ -518,15 +518,13 @@ public final class testSimValueConstructor {
      *
      * @return List of mapping suggestions.
      */
-    public Vector<testPair> getPairList(double[] weight, double upperthreshold,
-            double lowerthreshold, String combination) {
+    public Vector<testPair> getPairList(double[] weight, double upperthreshold, double lowerthreshold, String combination,int step,int moid) {
         // List of mapping suggestions to be return.        
         Vector suggestion = new Vector<testPair>();
         // List of mapping suggestions between upper and lower threshold.
         Vector unprocessedSuggestions = new Vector();
         // Getting mapping suggestions above or equal to lower threshold.
-        Iterator pairs = getPairList(weight, lowerthreshold,
-                combination).iterator();
+        Iterator pairs = getPairList(weight, lowerthreshold,combination,step,moid).iterator();
         /**
          * Separating mapping suggestions. (i.e) The suggestions with a simvalue
          * greater than or equals to upper threshold will be added to the final
@@ -982,7 +980,7 @@ public final class testSimValueConstructor {
                     if (simvalue_id > 0) {
                         updateStatement.add(similarityTable.generateUpdateStatement(concept_id, i, task.getsimilarity()));
                     } else {
-                        insertStatement.add(similarityTable.generateInsertStatement(concept_id, i, task.getsimilarity()));
+                        insertStatement.add(similarityTable.generateInsertStatement(concept_id,merge.getMoid(), i, task.getsimilarity()));
                     }
                 }
                 if (insertStatement.size() > 100000) {

@@ -23,12 +23,12 @@ public class MapConceptGenerateQuery {
         return dataBaseName+".mappable_concepts";	
     }  
     
-    public String generateInsertStatement(int moid, String concept1, String concept2) {
+    public String generateInsertStatement(int moid, String concept1, String concept2, int step) {
         
         String statement="";               
         statement="INSERT INTO "+ getTableName() +
-                "(moid, scname, tcname) VALUES";                  
-        statement=statement.concat("("+moid+","+"'"+concept1+"',"+"'"+concept2+"')");
+                "(moid, scname, tcname, type) VALUES";                  
+        statement=statement.concat("("+moid+","+"'"+concept1+"',"+"'"+concept2+"', "+ step +")");
         return statement;
     }
     public void singleinsert(String statement){

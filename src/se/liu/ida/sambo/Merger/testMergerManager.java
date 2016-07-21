@@ -103,7 +103,7 @@ public class testMergerManager {
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
         mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl", "C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
-        mm.generate_classtasklist();
+        mm.generate_classtasklist(0);
         //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
         mm.init();
         HashSet<Integer> matcherlist = new HashSet<Integer>();
@@ -395,15 +395,14 @@ public class testMergerManager {
      *
      * @return List of mapping suggestions.
      */
-    public Vector getSuggestions(int step, double[] weights, double threshold,
-            String combinationMethod) {
+    public Vector getSuggestions(int step, double[] weights, double threshold,String combinationMethod) {
 
         switch (step) {
             case Constants.STEP_SLOT:
-                generalSuggestionVector = matchingAlgos.getSlotSugs(weights,threshold, combinationMethod);
+                generalSuggestionVector = matchingAlgos.getSlotSugs(weights,threshold, combinationMethod,step);
                 break;
             case Constants.STEP_CLASS:
-                generalSuggestionVector = matchingAlgos.getClassSugs(weights,threshold, combinationMethod);
+                generalSuggestionVector = matchingAlgos.getClassSugs(weights,threshold, combinationMethod,step);
                 break;
         }
         return generalSuggestionVector;
@@ -419,11 +418,10 @@ public class testMergerManager {
      *
      * @return List of mapping suggestions.
      */
-    public Vector getSuggestions(double[] weights, double upperthreshold,
-            double lowerthreshold, String combinationMethod) {
+    public Vector getSuggestions(double[] weights, double upperthreshold,double lowerthreshold, String combinationMethod, int step) {
 
         generalSuggestionVector = matchingAlgos.getClassSugs(weights,
-                upperthreshold, lowerthreshold, combinationMethod);
+                upperthreshold, lowerthreshold, combinationMethod,step);
         return generalSuggestionVector;
     }
 
@@ -689,7 +687,7 @@ public class testMergerManager {
                 String targetlocalname = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
                 int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourcelocalname, targetlocalname);
                 if (conceptId < 0) {
-                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourcelocalname, targetlocalname));
+                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourcelocalname, targetlocalname,step));
                 }
                 if (insertStatement.size() > 100000) {
                     mapconceptTable.executeStatements(insertStatement);
@@ -712,7 +710,7 @@ public class testMergerManager {
 
     }
 
-    public void generate_classtasklist() {
+    public void generate_classtasklist(int step) {
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
@@ -735,7 +733,7 @@ public class testMergerManager {
                 String targetURI = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
                 int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourceURI, targetURI);
                 if (conceptId < 0) {
-                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourceURI, targetURI));
+                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourceURI, targetURI,step));
                 }
                 if (insertStatement.size() > 100000) {
                     mapconceptTable.executeStatements(insertStatement);
@@ -1081,5 +1079,8 @@ public class testMergerManager {
     }
     public void finalize(String alignfile, String mergefile){
     
+    }
+    public int getMoid(){
+        return this.mappable_ontologies_id;
     }
 }
