@@ -16,6 +16,13 @@ import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
  * @author huali50
  */
 public class SimilarityDBAccess {  
+    
+    /**
+     * Single insert
+     * @author huali50
+     * @param sqlStatement
+     * @param conn 
+     */
      public void singleinsert(String sqlStatement,Connection conn) {
          
          Statement stmt = null;
@@ -34,6 +41,12 @@ public class SimilarityDBAccess {
             _e.printStackTrace();		
         }
      }
+     /**
+      * Update in batch
+      * @author huali50
+      * @param sqlStatements
+      * @param conn 
+      */
      public void multipleUpdate(ArrayList<String> sqlStatements,
              Connection conn) {
          
@@ -57,6 +70,13 @@ public class SimilarityDBAccess {
             _e.printStackTrace();		
         }
      }
+     /**
+      * Get similarity id
+      * @author huali50
+      * @param statement
+      * @param conn
+      * @return similarity record id
+      */
      public int getSimvalueId(String statement,Connection conn) {
                   
          Statement stmt = null;
@@ -78,6 +98,13 @@ public class SimilarityDBAccess {
          
          return opairid;
      }
+     /**
+      * Get results form similarity view
+      * @author huali50
+      * @param statement
+      * @param conn
+      * @return records list
+      */
     public ArrayList getSimvalueViewIdandValue(String statement,Connection conn){
         ArrayList<String> mappable_concepts = new ArrayList<String>();
         Statement stmt = null;

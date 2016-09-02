@@ -66,7 +66,7 @@ public class Constants extends se.liu.ida.sambo.MModel.util.OntConstants {
      * indicate merging class
      */
     public static final int ALIGN_CLASS = 2;
-
+ 
     /**
      * indicate is-a relation
      */
@@ -149,9 +149,11 @@ public class Constants extends se.liu.ida.sambo.MModel.util.OntConstants {
 
     //indicate the unique label 
     public static final int UNIQUE = -1;
-
+    public static final int MAXBASED = 1;   
+    public static final int WEIGHTBASED = 2;
     // Gets all pairs that contains the specified object 
     //  from a vector.
+
     public static Vector getHoldingPairs(Object object, Vector vector) {
 
         Vector holdingList = new Vector();
@@ -163,19 +165,19 @@ public class Constants extends se.liu.ida.sambo.MModel.util.OntConstants {
         }
         return holdingList;
     }
-    /*
-    public static Vector testgetHoldingPairs(Object object, Vector vector) {
+    
+    public static Vector testgetHoldingPairs(String sourceURI, Vector vector,int flag) {
 
         Vector holdingList = new Vector();
         for (Enumeration e = vector.elements(); e.hasMoreElements();) {
-            testPair pair = (testPair) e.nextElement();
-            if (pair.contains(object)) {
-                holdingList.add(pair);
+            testPair temppair = (testPair) e.nextElement();
+            if (temppair.contains(sourceURI)) {
+                holdingList.add(temppair);
             }
         }
         return holdingList;
     }
-    */
+    
     //Gets all pairs that contains one of the objects 
     // in the specified pair from ta vector.
     public static Vector getHoldingPairs(Pair pair, Vector vector) {

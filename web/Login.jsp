@@ -270,6 +270,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <%!
     synchronized String LoadSession(String email, String filePath, HttpServletRequest req){
+        /*
         String str = new String();
         String mName = new String();
         String mValue = new String();
@@ -400,8 +401,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }catch (Exception e){
             System.out.println(e);
         }
-        return str;
-        /*
+        return str;*/
+        
         int count = 0;
         String str = new String();
         String strTable = new String();;
@@ -487,7 +488,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         catch (Exception _e) {
                 _e.printStackTrace();
         }
-        return str;*/
+        return str;
     }
 
     /**

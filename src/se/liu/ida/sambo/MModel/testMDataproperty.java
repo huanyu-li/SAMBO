@@ -8,6 +8,7 @@ package se.liu.ida.sambo.MModel;
 /**
  *
  * @author huali50
+ * Data Property in Ontology
  */
 public class testMDataproperty extends testMProperty {
     private String uri;

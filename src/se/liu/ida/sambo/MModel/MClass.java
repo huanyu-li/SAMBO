@@ -382,7 +382,6 @@ public class MClass implements MElement {
     public boolean addAlignComment(String c) {
 
         if (c == null) {
-
             alignComment = OntConstants.ALIGN_COMMENT;
             return false;
 

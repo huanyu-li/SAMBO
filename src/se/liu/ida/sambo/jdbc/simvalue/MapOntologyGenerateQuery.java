@@ -21,6 +21,13 @@ public class MapOntologyGenerateQuery {
 
         Conn = sqlConn; 
     }
+    /**
+     * Generate insert statement
+     * @author huali50
+     * @param ontology1
+     * @param ontology2
+     * @return statement
+     */
     public String generateInsertStatement(String ontology1, String ontology2) {
         
         String statement="";               
@@ -29,6 +36,13 @@ public class MapOntologyGenerateQuery {
         statement=statement.concat("('"+ontology1+"', '"+ontology2+"')");
         return statement;
     }
+    /**
+     * Get ontology pair id
+     * @author huali50
+     * @param ontology1
+     * @param ontology2
+     * @return ontology pair id
+     */
      public int getOPairId(String ontology1, String ontology2) {
         int opairId;                     
         String statement;   

@@ -17,7 +17,12 @@ import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
  */
 public class MapConceptDBAccess {
 
-    
+    /**
+     * Singel insert
+     * @author huali50
+     * @param sqlStatement
+     * @param conn 
+     */
     public void singleinsert(String sqlStatement,Connection conn) {
          
          Statement stmt = null;
@@ -37,6 +42,13 @@ public class MapConceptDBAccess {
             _e.printStackTrace();		
         }
      }
+    /**
+     * Get concept pair id
+     * @author huali50
+     * @param statement
+     * @param conn
+     * @return 
+     */
     public int getCPairId(String statement,  Connection conn) {
                   
          Statement stmt = null;
@@ -58,6 +70,13 @@ public class MapConceptDBAccess {
          
          return cpairid;
      }
+    /**
+     * Get concepts
+     * @author huali50
+     * @param statement
+     * @param conn
+     * @return 
+     */
     public String getconcepts(String statement,Connection conn){
         Statement stmt = null;
 	 ResultSet queryResult = null;                
@@ -78,6 +97,12 @@ public class MapConceptDBAccess {
          
          return data;
     }
+    /**
+     * Update in batch
+     * @author huali50
+     * @param sqlStatements
+     * @param conn 
+     */
     public void multipleUpdate(ArrayList<String> sqlStatements,
              Connection conn) {
          
@@ -90,12 +115,30 @@ public class MapConceptDBAccess {
             // It prevents statement to execute immediately.
             conn.setAutoCommit(false);
             // All statements in the list will be executed in a single batch.
+            int i=0;
+            int size = sqlStatements.size();
+            int batches_size = size/100000;
+            int last_batch_size = size%100000;
+            int block_flag = 0;
             for(String statement: sqlStatements) {
-                stmt.addBatch(statement);                
+                stmt.addBatch(statement);
+                i++;
+                if(i == 100000){
+                    stmt.executeBatch();
+                    stmt.clearBatch();
+                    conn.commit();
+                    conn.setAutoCommit(false);
+                    block_flag++;
+                    i=0;
+                    System.out.println("block_id"+block_flag);
+                }
+                if((block_flag == batches_size) &&(i==last_batch_size)){
+                    stmt.executeBatch();
+                    stmt.clearBatch();
+                    conn.commit();
+                }
+                             
             }
-            stmt.executeBatch();
-            conn.commit();
-            conn.setAutoCommit(true);
             stmt.close();		
         } catch (Exception _e) {
             _e.printStackTrace();		

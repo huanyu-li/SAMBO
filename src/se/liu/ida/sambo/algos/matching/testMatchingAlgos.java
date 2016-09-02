@@ -45,13 +45,13 @@ public class testMatchingAlgos {
         // Initailize sim value list for slots
         System.out.println("Init slot");         
         String step = "Init slot";
-        slotSimValues = new testSimValueConstructor(step, ontManager);        
+        slotSimValues = new testSimValueConstructor(step, ontManager,merge);        
         System.out.println("Finish init slot");
         
         // Initialize sim value list for classes
         System.out.println("Init class");        
         step = "Init class";
-        classSimValues = new testSimValueConstructor(step, ontManager);
+        classSimValues = new testSimValueConstructor(step, ontManager,merge);
         
         // Initialize mappable group
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
@@ -92,7 +92,7 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateSlotSimValue(HashSet<Integer> matcherlist){
-        slotSimValues.calculate_concept_sim(matcherlist,merge);
+        slotSimValues.calculate_concept_sim(matcherlist,merge,Constants.STEP_SLOT);
     }
     
     /**
@@ -101,11 +101,12 @@ public class testMatchingAlgos {
      * @param matcher   Name of the matcher. 
      */
     public void calculateClassSimValue(HashSet<Integer> matcherlist){
-        classSimValues.calculate_concept_sim(matcherlist,merge);
+
+        classSimValues.calculate_concept_sim(matcherlist,merge,Constants.STEP_CLASS);
     }
     public void calculateclasssim(HashSet<Integer> matcher,testMergerManager merge)
     {
-        classSimValues.calculate_concept_sim(matcher,merge);
+        classSimValues.calculate_concept_sim(matcher,merge,Constants.STEP_CLASS);
     }
     /**
      * To start computation for the class matching, this process use only 
@@ -142,9 +143,26 @@ public class testMatchingAlgos {
      * @return List of mapping suggestion.
      */ 
     public Vector getClassSugs(double[] weight, double threshold, String combinationMethod, int step) {        
-        
+        merge.setWeight(weight);
+        if (combinationMethod.equalsIgnoreCase("maximum")){
+            merge.setCombination(Constants.MAXBASED);
+        }
+        else{
+            merge.setCombination(Constants.WEIGHTBASED);
+        }
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            return classSimValues.getPairList(weight, threshold, combinationMethod, step,merge.getMoid());                
+            if(merge.getIsDatabase()== false){
+                if(merge.getIsLarge() == true){
+                    return merge.generate_tasklist_match(step, threshold, 0);
+                }
+                else{
+                    return classSimValues.getPairListLocal(weight, threshold, combinationMethod, step);
+                }
+            }
+            else{
+                
+                return classSimValues.getPairList(weight, threshold, combinationMethod, step, merge.getMoid());
+            }                
         } else {
             return classSimValues.getPairListSegmentPairs(weight, threshold,combinationMethod);                
         }    
@@ -158,9 +176,24 @@ public class testMatchingAlgos {
      * @return List of mapping suggestion.
      */
     public Vector getClassSugs(double[] weight, double upperthreshold, double lowerthreshold, String combinationMethod,int step) {        
-        
+        merge.setWeight(weight);
+        if (combinationMethod.equalsIgnoreCase("maximum")){
+            merge.setCombination(Constants.MAXBASED);
+        }
+        else{
+            merge.setCombination(Constants.WEIGHTBASED);
+        }
         if(!AlgoConstants.ISRECOMMENDATION_PROCESS) {
-            return classSimValues.getPairList(weight, upperthreshold, lowerthreshold, combinationMethod,step,merge.getMoid());                
+            if(merge.getIsDatabase()== false){
+                 if(merge.getIsLarge() == true){
+                    return merge.generate_tasklist_match(step,lowerthreshold,upperthreshold);
+                }
+                 else{
+                return classSimValues.getPairListLocal(weight, upperthreshold, lowerthreshold, combinationMethod, step);}
+            }
+            else{
+                return classSimValues.getPairList(weight, upperthreshold, lowerthreshold, combinationMethod,step,merge.getMoid());    
+            }            
         } else {
             return classSimValues.getPairListSegmentPairs(weight, 
                     upperthreshold, lowerthreshold, combinationMethod);                

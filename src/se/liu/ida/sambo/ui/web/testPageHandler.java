@@ -139,16 +139,17 @@ public class testPageHandler {
        // Remove User Session From Database
        //RemoveUserSessionFromDb();
 
-       String message = "<TABLE class=\"border_table\" width=\"45%\" ><tr><td>";
+       String message = "<TABLE class=\"border_table\" width=\"45%\" align=\"center\" ><tr><td>";
          
        //the ontology file
         message += "<ul><li><a class='menulink' target=\"_blank\" href=\"ontologies/" + alignfile + "\">"+
                 "The Alignment in OWL file </a><br>&nbsp;";
         
         //the ontology file
+        /*
         message += "<li><a class='menulink' target=\"_blank\" href=\"ontologies/" + mergefile + "\">"+
                 "The Merged Ontology in OWL file </a><br>&nbsp;";
-         
+         */
         //browse the ontology
         message += "<li><a  class='menulink' target=\"_blank\" href=\"Browse?ontofile="
                 + mergefile + "&new\">Browse the Merged Ontology</a><br>&nbsp;";

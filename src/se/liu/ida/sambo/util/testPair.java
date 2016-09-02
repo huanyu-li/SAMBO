@@ -13,6 +13,8 @@ public class testPair {
 
     private String sourceURI = null;
     private String targetURI = null;
+    private String comment = null;
+    private int type = -1;
     //private Integer sid;
     //private Integer tid;
     private double sim = 0;
@@ -51,6 +53,12 @@ public class testPair {
         this.sourceURI = sourceURI;
         this.targetURI = targetURI;
     }
+    public testPair(String sourceURI, String targetURI,double sim) {
+        empty = false;
+        this.sourceURI = sourceURI;
+        this.targetURI = targetURI;
+        this.sim = sim;
+    }
 
     /**
      * Gets the first object in a pair.
@@ -62,13 +70,11 @@ public class testPair {
     }
 
     public String getLocalName(String uri) {
-        if(uri==null){
+        if (uri == null) {
             return null;
-        }
-        else
-        {
+        } else {
             int i = uri.indexOf("#") + 1;
-            if(i == 0){
+            if (i == 0) {
                 i = uri.lastIndexOf("/") + 1;
             }
             return uri.substring(i);
@@ -232,7 +238,6 @@ public class testPair {
 
     /**
      * To get WordList matcher similarity value, will be useful in some filters.
-     *
      * @return Similarity value.
      */
     public double getWLSim() {
@@ -247,7 +252,6 @@ public class testPair {
     public double getUMLSSim() {
         return umlsSim;
     }
-
     /**
      * To get label info, will be useful in some filters.
      *
@@ -255,12 +259,18 @@ public class testPair {
      */
     public boolean getSameLabelInfo() {
         return hasSameLabel;
-    }/*
-    public int getsourceid(){
-        return this.sid;
     }
-    public int gettargetid(){
-        return this.tid;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
-     */
+
+    public void setType(int type) {
+        this.type = type;
+    }
+    public int getType(){
+        return this.type;
+    }
+    public String getComment(){
+        return this.comment;
+    }
 }

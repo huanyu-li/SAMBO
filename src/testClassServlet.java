@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
 import se.liu.ida.sambo.Merger.testMergerManager;
+import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.session.Commons;
 import se.liu.ida.sambo.ui.SettingsInfo;
 import se.liu.ida.sambo.ui.web.Constants;
@@ -43,20 +44,24 @@ public class testClassServlet extends HttpServlet {
         // Add merge object to the session
         testMergerManager merge = (testMergerManager) session.getAttribute(session.getId());
         SettingsInfo settings = (SettingsInfo) session.getAttribute("settings");
-        /*
+        
         //expand tree structure
-        if(req.getParameter("classname1") != null)
-            merge.getOntology(Constants.ONTOLOGY_1).getClass(req.getParameter("classname1")).turnDisplay();
-        else if(req.getParameter("classname2") != null)
-            merge.getOntology(Constants.ONTOLOGY_2).getClass(req.getParameter("classname2")).turnDisplay();
+        if(req.getParameter("classname1") != null){
+            String class1_url = merge.getOntManager().getontology(Constants.ONTOLOGY_1).getElementURI(req.getParameter("classname1"));
+            merge.getOntManager().getontology(Constants.ONTOLOGY_1).getMClass(class1_url).turnDisplay();
+        }
+        else if(req.getParameter("classname2") != null){
+            String class2_url = merge.getOntManager().getontology(Constants.ONTOLOGY_2).getElementURI(req.getParameter("classname2"));
+            merge.getOntManager().getontology(Constants.ONTOLOGY_2).getMClass(class2_url).turnDisplay();
+        }
         
         //showAll or hideAll
         if(req.getParameter("allOne") != null)
-            showAll(session, merge.getOntology(Constants.ONTOLOGY_1), "display1");
+            showAll(session, merge.getOntManager().getontology(Constants.ONTOLOGY_1), "display1");
         
         if(req.getParameter("allTwo") != null)
-            showAll(session, merge.getOntology(Constants.ONTOLOGY_2), "display2");
-         */
+            showAll(session, merge.getOntManager().getontology(Constants.ONTOLOGY_2), "display2");
+         
 
         try {
 
@@ -129,7 +134,7 @@ public class testClassServlet extends HttpServlet {
         }
 
         String mode = (String) session.getAttribute("mode");
-        mode = "s";
+        //mode = "s";
 
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
@@ -140,7 +145,9 @@ public class testClassServlet extends HttpServlet {
         if (req.getParameter("merge") != null) {
 
             testPair acceptedSuggestion = acceptedSug(req, session, sug.getPairList());
-
+            acceptedSuggestion.setType(0);
+            acceptedSuggestion.setComment(req.getParameter("comment"));
+            merge.getSuggestedpairs().add(acceptedSuggestion);
             warning = merge.processClassSuggestion(new testHistory(acceptedSuggestion, req.getParameter("newmergename"),
                     Constants.ONTOLOGY_NEW, Constants.ALIGN_CLASS, req.getParameter("comment")));
 
@@ -149,13 +156,17 @@ public class testClassServlet extends HttpServlet {
         } else if ((req.getParameter("subclass") != null) || req.getParameter("superclass") != null) {
 
             testPair acceptedSuggestion = acceptedSug(req, session, sug.getPairList());
-
+            acceptedSuggestion.setComment(req.getParameter("comment"));
             if (req.getParameter("subclass") != null) {
                 warning = merge.processClassSuggestion(new testHistory(acceptedSuggestion, null, Constants.ONTOLOGY_2,
                         Constants.IS_A_CLASS, req.getParameter("comment")));
+                acceptedSuggestion.setType(1);
+                merge.getSuggestedpairs().add(acceptedSuggestion);
             } else {
                 warning = merge.processClassSuggestion(new testHistory(acceptedSuggestion, null, Constants.ONTOLOGY_1,
                         Constants.IS_A_CLASS, req.getParameter("comment")));
+                acceptedSuggestion.setType(2);
+                merge.getSuggestedpairs().add(acceptedSuggestion);
             }
 
             session.setAttribute("sug", new testSuggestion(merge.getNextSuggestionList(), merge.suggestionsRemaining()));
@@ -171,16 +182,16 @@ public class testClassServlet extends HttpServlet {
             //a pair of class that user select to merge
             if ((req.getParameter("manualclass1") != null) && (req.getParameter("manualclass2") != null)) {
 
-                String classname1 = req.getParameter("manualclass1").trim();
-                String classname2 = req.getParameter("manualclass2").trim();
+                String class1_url = req.getParameter("manualclass1").trim();
+                String class2_url = req.getParameter("manualclass2").trim();
 
-                testPair pair = new testPair(classname1, classname2);
+                testPair pair = new testPair(class1_url, class2_url);
 
                 warning = merge.processClassSuggestion(new testHistory(pair, req.getParameter("newmergename"), Constants.ONTOLOGY_NEW,
                         Constants.ALIGN_CLASS, req.getParameter("comment")));
 
                 //When manual mode, if the suggestion contains one or both of elements accepted by user
-                if (!Constants.getHoldingPairs(pair, sug.getPairList()).isEmpty()) {
+                if (!Constants.testgetHoldingPairs(pair, sug.getPairList()).isEmpty()) {
                     session.setAttribute("sug", new testSuggestion(merge.getNextSuggestionList(), merge.suggestionsRemaining()));
                 }
             }
@@ -190,16 +201,16 @@ public class testClassServlet extends HttpServlet {
             //a pair of class that user select to create relation
             if ((req.getParameter("manualclass1") != null) && (req.getParameter("manualclass2") != null)) {
 
-                String classname1 = req.getParameter("manualclass1").trim();
-                String classname2 = req.getParameter("manualclass2").trim();
-                testMClass class1 = merge.getOntManager().getontology(Constants.ONTOLOGY_1).getMClass(classname1);
-                testMClass class2 = merge.getOntManager().getontology(Constants.ONTOLOGY_2).getMClass(classname2);
+                String class1_url = req.getParameter("manualclass1").trim();
+                String class2_url = req.getParameter("manualclass2").trim();
+                testMClass class1 = merge.getOntManager().getontology(Constants.ONTOLOGY_1).getMClass(class1_url);
+                testMClass class2 = merge.getOntManager().getontology(Constants.ONTOLOGY_2).getMClass(class2_url);
 
                 //check whether this pair of class already have is-a relation in the new ontology
                 if (!class1.getAlignSupers().containsValue(class2)
                         || !class2.getAlignSupers().containsValue(class1)) {
 
-                    testPair pair = new testPair(classname1, classname2);
+                    testPair pair = new testPair(class1_url, class2_url);
 
                     if (req.getParameter("manualsub") != null) {
                         warning = merge.processClassSuggestion(new testHistory(pair, null, Constants.ONTOLOGY_2,
@@ -210,7 +221,7 @@ public class testClassServlet extends HttpServlet {
                     }
 
                     //When manual mode, if the suggestion contains one or both of elements accepted by user
-                    if (!Constants.getHoldingPairs(pair, sug.getPairList()).isEmpty()) {
+                    if (!Constants.testgetHoldingPairs(pair, sug.getPairList()).isEmpty()) {
                         session.setAttribute("sug", new testSuggestion(merge.getNextSuggestionList(), merge.suggestionsRemaining()));
                     }
                 }

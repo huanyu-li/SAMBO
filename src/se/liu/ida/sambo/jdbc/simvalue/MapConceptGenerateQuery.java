@@ -19,10 +19,23 @@ public class MapConceptGenerateQuery {
 
         Conn = sqlConn; 
     }
+    /**
+     * Get Table name
+     * @author huali50
+     * @return table name
+     */
     public String getTableName() {
         return dataBaseName+".mappable_concepts";	
     }  
-    
+    /**
+     * Generate insert statement
+     * @author huali50
+     * @param moid
+     * @param concept1
+     * @param concept2
+     * @param step
+     * @return statement
+     */
     public String generateInsertStatement(int moid, String concept1, String concept2, int step) {
         
         String statement="";               
@@ -34,6 +47,14 @@ public class MapConceptGenerateQuery {
     public void singleinsert(String statement){
         mcdbDao.singleinsert(statement, Conn);
     }
+    /**
+     * Get Concept pair Id
+     * @author huali50
+     * @param moid
+     * @param concept1
+     * @param concept2
+     * @return cpairId
+     */
      public int getCPairId(int moid,String concept1, String concept2) {
         int cpairId;                     
         String statement;   
@@ -46,9 +67,20 @@ public class MapConceptGenerateQuery {
         
        return cpairId;
     }
+     /**
+      * Execute statements insert
+      * @author huali50
+      * @param statements 
+      */
     public void executeStatements(ArrayList<String> statements) {
         mcdbDao.multipleUpdate(statements, Conn);
     }
+    /**
+     * Get Concepts
+     * @author huali50
+     * @param mcid
+     * @return souce names and target names
+     */
     public String getconcepts(int mcid){
         String statement = "Select scname, tcname from " + getTableName() + " where mcid = "+ mcid;
         return mcdbDao.getconcepts(statement, Conn);

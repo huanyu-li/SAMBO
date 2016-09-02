@@ -51,6 +51,7 @@ public final class testSimValueConstructor {
     /**
      * Acts as a temporary database to store concepts of the ontology.
      */
+    private testMergerManager mergermanager;
     private testOntManager ontmanager;
     private testMOntology source_ontology;
     private testMOntology target_ontology;
@@ -109,10 +110,11 @@ public final class testSimValueConstructor {
      * @param step Matching step.
      * @param ontMan Ontologies content manager.
      */
-    public testSimValueConstructor(final String step, final testOntManager ontMan) {
+    public testSimValueConstructor(final String step, final testOntManager ontMan, testMergerManager merge) {
 
         matchingStep = step;
         this.ontmanager = ontMan;
+        this.mergermanager = merge;
         this.source_ontology = ontmanager.getontology(Constants.ONTOLOGY_1);
         this.target_ontology = ontmanager.getontology(Constants.ONTOLOGY_2);
         singleComp = new testSinglePairComputation(this.ontmanager);
@@ -504,7 +506,16 @@ public final class testSimValueConstructor {
 
         return suggestions;
     }
-
+    public Vector getPairListLocal(double[] weight, double downthreshold, String combination,int step){
+        Vector suggestions = new Vector();
+        suggestions = mergermanager.matchexecutor(mergermanager.getExecutorlist(), downthreshold, 0);
+        return suggestions;
+    }
+    public Vector<testPair> getPairListLocal(double[] weight, double upthreshold, double downthreshold, String combination,int step) {
+        Vector suggestions = new Vector();
+        suggestions = mergermanager.matchexecutor(mergermanager.getExecutorlist(), downthreshold, upthreshold);
+        return suggestions;
+    }
     /**
      * To get mapping suggestions for the double threshold filtering, if more
      * than one matcher is selected, usually used in the class matching (non
@@ -904,12 +915,14 @@ public final class testSimValueConstructor {
 
         return Alignment;
     }
-
-    public void calculate_property_sim(HashSet<Integer> matcherlist, testMergerManager merge) {
-        
-    }
-
-    public void calculate_concept_sim(HashSet<Integer> matcherlist, testMergerManager merge) {
+    /**
+     * Calculate Concepts Similarities
+     * @author huali50
+     * @param matcherlist
+     * @param merge
+     * @param step 
+     */
+    public void calculate_concept_sim(HashSet<Integer> matcherlist, testMergerManager merge,int step) {
         HashMap<Integer, Matcher> matcher_list = new HashMap<Integer, Matcher>();
         double[] weight = {};
         int computationCounter = 0;
@@ -980,7 +993,7 @@ public final class testSimValueConstructor {
                     if (simvalue_id > 0) {
                         updateStatement.add(similarityTable.generateUpdateStatement(concept_id, i, task.getsimilarity()));
                     } else {
-                        insertStatement.add(similarityTable.generateInsertStatement(concept_id,merge.getMoid(), i, task.getsimilarity()));
+                        insertStatement.add(similarityTable.generateInsertStatement(concept_id,merge.getMoid(), i, task.getsimilarity(),step));
                     }
                 }
                 if (insertStatement.size() > 100000) {
@@ -1024,5 +1037,4 @@ public final class testSimValueConstructor {
             ResourceManager.close(updateConn);
         }
     }
-
 }

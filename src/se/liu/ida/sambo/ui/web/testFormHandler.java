@@ -22,6 +22,7 @@ import se.liu.ida.sambo.MModel.MProperty;
 import se.liu.ida.sambo.MModel.testLexicon;
 import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
+import se.liu.ida.sambo.MModel.testMProperty;
 import se.liu.ida.sambo.MModel.util.OntConstants;
 import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.Merger.testOntManager;
@@ -88,6 +89,8 @@ public class testFormHandler {
             fileform += "</tr></TABLE></td>";
             
             fileform += "</tr>";
+            
+
         }
         
         
@@ -126,6 +129,20 @@ public class testFormHandler {
                     + "<td>&nbsp;&nbsp;" + makeButton("upload", "upload", "submit", "Upload") + "</td>";
             fileform += "</tr></TABLE></td>";
             
+            fileform += "</tr>";
+            
+            fileform += "<tr></tr><tr></tr>";
+            
+            fileform += "<tr> <td width=\"25%\" align=\"center\">"
+                    + "<font class='classname'>Database: </font></td>";
+            fileform += "<td> <INPUT TYPE=\"CHECKBOX\" NAME=\"database\"> MySql Database </td>";
+            fileform += "</tr>";
+            
+            fileform += "<tr></tr><tr></tr>";
+            
+            fileform += "<tr> <td width=\"25%\" align=\"center\">"
+                    + "<font class='classname'>Large Scale: </font></td>";
+            fileform += "<td> <INPUT TYPE=\"CHECKBOX\" NAME=\"large_scale\"></td>";
             fileform += "</tr>";
         }
         
@@ -242,7 +259,7 @@ public class testFormHandler {
      * @param sameSlotType indicate whether the pair of slots have the same type
      * @return a string containing the HTML representation of the form
      */
-    public static String createSlotForm( testSuggestion sug, SettingsInfo settings, String SessionId){
+    public static String createSlotForm(testMergerManager merge, testSuggestion sug, SettingsInfo settings, String SessionId){
         
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
@@ -267,15 +284,13 @@ public class testFormHandler {
         Commons.OWL_2 = settings.getName(Constants.ONTOLOGY_2);
         
         // While there are suggestions left, print them out as a suggestions table.
-        boolean is_empty = false;
-        //if(!sug.getPair().isEmptyPair()){
-        if(is_empty){    
-            /*
-            formStr += "<TABLE width=\"100%\" align=\"center\"> ";
+        if(!sug.getPair().isEmptyPair()){   
             
-            MProperty p1 = (MProperty) sug.getPair().getObject1();
-            MProperty p2 = (MProperty) sug.getPair().getObject2();
-
+            formStr += "<TABLE width=\"100%\" align=\"center\"> ";
+            String sourceURI = sug.getPair().getSource();
+            String targetURI = sug.getPair().getTarget();
+            testMProperty p1 = merge.getOntManager().getontology(Constants.ONTOLOGY_1).getProperty(sourceURI);
+            testMProperty p2 = merge.getOntManager().getontology(Constants.ONTOLOGY_2).getProperty(targetURI);
 
             //row1: MOntology Names
             formStr += "<tr><td colspan = \"2\" align=\"center\"> <font class=\"classname\">"
@@ -295,22 +310,22 @@ public class testFormHandler {
                     +"<font color=\"#eeeeee\"> Name </font></td></tr>";
             
             formStr += "<tr><td align=\"center\">" + Constants.fontify(p1.getType(), color1) + "</td>"
-                    + "<td align=\"center\">" + Constants.fontify(p1.getLabel(), color1) + "</td>" ;
+                    + "<td align=\"center\">" + Constants.fontify(p1.getName(), color1) + "</td>" ;
             
             formStr += "<td walign=\"center\">" +  Constants.fontify(p2.getType(), color2) + "</td>"
-                    + "<td align=\"center\">" + Constants.fontify(p2.getLabel(), color2) + "</td></tr>";
+                    + "<td align=\"center\">" + Constants.fontify(p2.getName(), color2) + "</td></tr>";
             
             formStr += "</TABLE></td></tr>";
             
             
             //input a new name for the merged class
-            if(p1.getType().equalsIgnoreCase(p2.getType()))
+            if(p1.getName().equalsIgnoreCase(p2.getName()))
                 formStr += " <tr><td>" + Constants.commentStr +  "</td></tr>";
             
             formStr += "<tr> <td align=\"center\"><br>";
             
             //if different type, block the "equiv" button
-            if(!p1.getType().equalsIgnoreCase(p2.getType()))
+            if(!p1.getName().equalsIgnoreCase(p2.getName()))
                 formStr += "<INPUT name=\"merge\" value=\"Equiv. Relations\" type=\"submit\" disabled>";
             else  formStr += makeButton("merge", "merge", "submit", "Accept an Equivalence Relation");
             
@@ -328,7 +343,7 @@ public class testFormHandler {
                     + sug.getRemainingSug() + " Remaining Suggestions, " +  "</span> &nbsp;&nbsp;&nbsp;&nbsp;";
             
             //If there are no suggestions, only show the finish button
-            */
+            
         } else {
             formStr += "<p> No Remaining Suggestions </p> ";
             
@@ -367,7 +382,8 @@ public class testFormHandler {
         
         String color1 = settings.getColor(Constants.ONTOLOGY_1);
         String color2 = settings.getColor(Constants.ONTOLOGY_2);
-        
+        testMOntology onto1 = merge.getOntManager().getontology(Constants.ONTOLOGY_1);
+        testMOntology onto2 = merge.getOntManager().getontology(Constants.ONTOLOGY_2);
         
         // Outer table
         String formStr = "<TABLE width=\"85%\" class=\"border_table\" align=\"center\">"
@@ -393,12 +409,12 @@ public class testFormHandler {
         
         
         //row2: print slot list
-        /*
+        
         formStr += "<tr><td width=\"50%\" align=\"center\"  valign = \"top\">"
                 + createSlotList(onto1, Constants.ONTOLOGY_1, settings.getColor(Constants.ONTOLOGY_1)) + "</td>";
         formStr += "<td width=\"50%\" align=\"center\"  valign = \"top\">"
                 + createSlotList(onto2, Constants.ONTOLOGY_2, settings.getColor(Constants.ONTOLOGY_2))+ "</td></tr>";
-        */
+        
         
         //row3: different slot type
         if(sug.reset())
@@ -436,26 +452,22 @@ public class testFormHandler {
         String formStr = "<div class=\"tableContainer\">";
         //print the slot list
         formStr += "<TABLE class=\"tree_table\">" ;
-        /*
-        for(Enumeration e = onto.getProperties().elements(); e.hasMoreElements();){
-            
-            MProperty slot = (MProperty) e.nextElement();
-            
+        for(Integer i : onto.getProperties()){
+            String propertyuri = onto.getURITable().getURI(i);
+            testMProperty slot = onto.getProperty(propertyuri);
             formStr += "<tr><td nowrap class=\"tree_td\">";
-            
-            if (slot.getAlignElement() == null)
-                formStr += "<INPUT name=\"manualslot" + ontonum + "\" type=\"radio\"" + "value=\""+ slot.getId() +"\">"
-                        + "<INPUT name=\"manualslot" + ontonum + slot.getId() +  "type\" type=\"hidden\"" + "value=\""+ slot.getType() +"\">";
-            
+            if(slot.getAlignElement() == null)
+                 formStr += "<INPUT name=\"manualslot" + ontonum + "\" type=\"radio\"" + "value=\""+ propertyuri +"\">"
+                        + "<INPUT name=\"manualslot" + ontonum + propertyuri +  "type\" type=\"hidden\"" + "value=\""+ slot.getType() +"\">";
             else formStr += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
-            formStr += Constants.fontify(slot.getType() + ":" + slot.getLabel(), color);
+            formStr += Constants.fontify(slot.getType() + ":" + slot.getName(), color);
             if(slot.getAlignName() != null)
                 formStr +=  " (" + slot.getAlignName() + ")";
             
             formStr += "</td></tr>";
         }
-        */
+        
         return formStr += "</TABLE>";
     }
 
@@ -730,8 +742,11 @@ public class testFormHandler {
         String tableStr = "<TABLE width=\"100%\" class=\"border_table\" valign=\"top\">";
         
         // Header for the table- the class name
+        String label = c.getLabel();
+        if(label == null)
+            label = c.getLocalName();
         tableStr += "<tr><td colspan=\"2\"><font color=\"" + color
-                + "\" class=\"classname\">" + c.getLabel() + "</td></tr>";
+                + "\" class=\"classname\">" + label + "</td></tr>";
         
         tableStr += "<tr><td width=\"20%\" align=\"right\"class=\"classname\">"
                 +"Id: </td><td align=\"left\">&nbsp;&nbsp;"
@@ -779,7 +794,7 @@ public class testFormHandler {
      */
     public static String createManualClassForm(testMergerManager merge, SettingsInfo settings, int warning){
         
-        String servlet = "Class";
+        String servlet = "testClass";
         testOntManager ontmanager = merge.getOntManager();
         testMOntology source_ontology = ontmanager.getontology(Constants.ONTOLOGY_1);
         testMOntology target_ontology = ontmanager.getontology(Constants.ONTOLOGY_2);
@@ -878,8 +893,10 @@ public class testFormHandler {
         String thiscolor = color;
         
         String blank = "&nbsp;&nbsp;&nbsp;&nbsp;";
-        for(Integer i : onto.getClasses().keySet()){
-            testMClass root = onto.getClasses().get(i);
+        
+        for(testMClass root : onto.getRoots()){
+            Integer i = root.getId();
+            System.out.println("rootid = "+i);
             tableStr += "<tr><td nowrap class=\"tree_td\">" + blank;
             
             if(root.isHighlight()){
@@ -888,7 +905,7 @@ public class testFormHandler {
             }
             
             if(root.getAlignElement() == null)
-                tableStr += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ root.getLocalName()  +"\">";
+                tableStr += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ root.getURI() +"\">";
             else
                 tableStr += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
@@ -953,7 +970,7 @@ public class testFormHandler {
             }
             
             if(child.getAlignElement() == null)
-                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getLocalName()+"\">";
+                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+child.getURI()+"\">";
             else str += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
             if(child.getSubClasses().isEmpty() && child.getParts().isEmpty())
@@ -976,7 +993,7 @@ public class testFormHandler {
             }
             
             if(child.getAlignElement() == null)
-                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+ child.getLocalName()+"\">";
+                str += "<INPUT name=\"manualclass" + ontonum + "\" type=\"radio\"" + "value=\""+child.getURI()+"\">";
             else str += "&nbsp;<img src=\"img/icon_merge.jpg\" border=\"0\">&nbsp;";
             
             if(child.getSubClasses().isEmpty() && child.getParts().isEmpty())
@@ -1204,11 +1221,12 @@ startform +="<td><input type=\"checkbox\" name=\"enable_interrupt\" value=\"true
         
         //Added By Rajaram
         if(step == Constants.STEP_SLOT){
-            startform += "<td>&nbsp;&nbsp;" + makeButton("start", "start", "submit", "Start");
+            startform += "<td align=\"center\">&nbsp;&nbsp;" + makeButton("start", "start", "submit", "Start");
             startform += "</table></TABLE> </FORM>";  
         }
         else if(step == Constants.STEP_CLASS){
-            startform += "<td>&nbsp;&nbsp;" + makeButton("finish-1", "finish", "submit", "Finish");
+            
+            startform += "<td align=\"center\">&nbsp;&nbsp;" + makeButton("finish-1", "finish", "submit", "Finish");
             startform += "</table></TABLE> </FORM>"; 
         }
         else

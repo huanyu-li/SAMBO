@@ -17,7 +17,12 @@ import se.liu.ida.sambo.jdbc.ResourceManager;
  */
 public class MapOntologyDBAccess {
  
-    
+    /**
+     * Insert Ontology into databases
+     * @author huali50
+     * @param sqlStatement
+     * @param conn 
+     */
     public void mapontologyinsert(String sqlStatement,Connection conn) {
          
          Statement stmt = null;
@@ -37,6 +42,13 @@ public class MapOntologyDBAccess {
             _e.printStackTrace();		
         }
      }
+    /**
+     * Get ontology id
+     * @author huali50
+     * @param statement
+     * @param conn
+     * @return ontology pair id 
+     */
     public int getOPairId(String statement, Connection conn) {
                   
          Statement stmt = null;

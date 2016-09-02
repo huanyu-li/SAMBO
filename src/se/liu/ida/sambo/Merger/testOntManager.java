@@ -24,13 +24,13 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
  *
  * ontology 1, ontology 2, and the new ontology.
  *
- * @author  He Tan
+ * @author  huali50
  * @version
  */
 public class testOntManager {
-    
-
+    //Source Ontology
     private testMOntology sourceontology;
+    //Target Ontology
     private testMOntology targetontology;
     
     /**
@@ -40,18 +40,44 @@ public class testOntManager {
         sourceontology=new testMOntology();
         targetontology=new testMOntology();
     }
+    /**
+     * Load ontologies based on String paths
+     * @author huali50
+     * @param sourcepath
+     * @param targetpath
+     * @throws OWLOntologyCreationException 
+     */
     public void loadOntologies(String sourcepath,String targetpath) throws OWLOntologyCreationException {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }
+    /**
+     * Load ontologies based on URL paths
+     * @author huali50
+     * @param sourcepath
+     * @param targetpath
+     * @throws OWLOntologyCreationException 
+     */
     public void loadOntologies(URL sourcepath,URL targetpath) throws OWLOntologyCreationException {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }
+    /**
+     * Load ontologies based on URI paths
+     * @author huali50
+     * @param sourcepath
+     * @param targetpath
+     * @throws OWLOntologyCreationException 
+     */
     public void loadOntologies(URI sourcepath,URI targetpath) throws OWLOntologyCreationException {
         sourceontology.loadMOntology(sourcepath);
         targetontology.loadMOntology(targetpath);
     }
+    /**
+     * Get ontology based on integer flag
+     * @param ontology
+     * @return 
+     */
     public testMOntology getontology(int ontology){
         if(ontology == Constants.ONTOLOGY_1){
             return this.sourceontology;
@@ -63,14 +89,4 @@ public class testOntManager {
             return null;
         }
     }
-    /**Loads an ontology.
-     *
-     *@param url the url of the ontology file
-     *
-     *@throws MalformedURLException
-     *
-     *@return the MOntology of the ontology
-     */
-
-    
 }

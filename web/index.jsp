@@ -91,7 +91,7 @@ synchronized String createMenu() throws java.io.IOException {
     
     try {
         
-        File menu = new File(getServletContext().getRealPath("inc/menuitems.inc"));
+        File menu = new File(getServletContext().getRealPath("/")+"inc\\testmenuitems.inc");
         in = new BufferedReader(new FileReader(menu));
         
         String line;

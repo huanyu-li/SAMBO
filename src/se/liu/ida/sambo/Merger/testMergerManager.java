@@ -6,6 +6,7 @@
 package se.liu.ida.sambo.Merger;
 
 import java.io.*;
+import static java.lang.Thread.sleep;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
@@ -18,9 +19,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -46,12 +49,17 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import se.liu.ida.sambo.MModel.testLexicon;
 import se.liu.ida.sambo.MModel.testMClass;
 import se.liu.ida.sambo.MModel.testMOntology;
+import se.liu.ida.sambo.MModel.testMProperty;
+import static se.liu.ida.sambo.Merger.Constants.NGram;
 import se.liu.ida.sambo.algos.matching.algos.AlgoConstants;
 import se.liu.ida.sambo.algos.matching.algos.EditDistance;
 import se.liu.ida.sambo.algos.matching.testMatchingAlgos;
 import se.liu.ida.sambo.util.testPair;
 import se.liu.ida.sambo.algos.matching.Matcher;
+import se.liu.ida.sambo.algos.matching.algos.NGram;
+import se.liu.ida.sambo.algos.matching.algos.Porter_WordNet;
 import se.liu.ida.sambo.algos.matching.algos.SimValueConstructor;
+import se.liu.ida.sambo.algos.matching.algos.UMLSKSearch_V6;
 import se.liu.ida.sambo.jdbc.ResourceManager;
 import se.liu.ida.sambo.jdbc.simvalue.*;
 import se.liu.ida.sambo.util.Pair;
@@ -61,7 +69,7 @@ import se.liu.ida.sambo.util.testHistory;
  *
  * @author huali50
  *//*
- * Merger.java
+ * testMergerManager.java
  *
  */
 
@@ -70,12 +78,12 @@ import se.liu.ida.sambo.util.testHistory;
  * The class controls the merging process.
  * </p>
  *
- * @authors He Tan, Rajaram.
- * @version 2.0
+ * 
  */
 public class testMergerManager {
 
     //the model manager
+    public int list_block_size = 10000000;
     private testOntManager testOntManager;
     private int thread;
     private int mappable_ontologies_id;
@@ -96,35 +104,68 @@ public class testMergerManager {
     private final boolean ToDo = true, UnDo = false;
     NameProcessor labelClean = new NameProcessor();
     private HashSet<Integer> matcher_list = new HashSet<Integer>();
+    private HashSet<testPair> suggestedpairs = new HashSet<testPair>();
     private HashMap<Integer, Task> tasklist = new HashMap<Integer, Task>();
     private MapOntologyGenerateQuery mapontologyTable;
     private MapConceptGenerateQuery mapconceptTable;
+    private ArrayList<testMappingtask> executortasks;
+    private Matcher matcher= null;
+    private boolean is_Large = false;
+    private int combination;
+    private double[] weight;
+    private boolean is_Database  = false;
+    private int pageSize = 0;
+    private int mapping_count = 0;
 
     public static void main(String args[]) throws OWLOntologyCreationException {
         testMergerManager mm = new testMergerManager();
-        mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl", "C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
-        mm.generate_classtasklist(0);
+        
+        //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\nose_MA_1.owl", "C:\\Users\\huali50\\Desktop\\ontologies\\nose_MeSH_2.owl");
+        //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\ear_MA_1.owl", "C:\\Users\\huali50\\Desktop\\ontologies\\ear_MeSH_2.owl");
+        //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\eye_MA_1.owl", "C:\\Users\\huali50\\Desktop\\ontologies\\eye_MeSH_2.owl");
+
+       //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_small_overlapping_nci.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_small_overlapping_fma.owl");
         //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_NCI_whole_ontology.owl");
+         //mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_SNOMED_extended_overlapping_fma_nci.owl","C:\\Users\\huali50\\Desktop\\ontologies\\oaei2014_FMA_whole_ontology.owl");
+        
+//mm.loadOntologies("C:\\Program Files\\Apache Software Foundation\\Apache Tomcat 8.0.27\\webapps\\SAMBOWebAppSession\\build\\web\\ontologies\\OWL\\oaei2014_FMA_whole_ontology.owl","C:\\Program Files\\Apache Software Foundation\\Apache Tomcat 8.0.27\\webapps\\SAMBOWebAppSession\\build\\web\\ontologies\\OWL\\oaei2014_NCI_whole_ontology.owl");
+        
+        mm.loadOntologies("C:\\Users\\huali50\\Desktop\\ontologies\\human.owl","C:\\Users\\huali50\\Desktop\\ontologies\\mouse.owl");
+        //long t1 = System.currentTimeMillis();
+        //mm.generate_classtasklist(0);
+        //long t2 = System.currentTimeMillis();
+        //System.out.println( "Time Taken to Generate List " + (t2-t1) + " ms" );
         mm.init();
+        //mm.setDatabase();
         HashSet<Integer> matcherlist = new HashSet<Integer>();
         matcherlist.add(AlgoConstants.EDIT_DISTANCE);
         matcherlist.add(AlgoConstants.NGRAM);
-        mm.getmatchingalgos().calculateclasssim(matcherlist, mm);
-        //long t1 = System.currentTimeMillis();
-        //Matcher matcher = new EditDistance();
-        //mm.match(matcher);
-        //long t2 = System.currentTimeMillis();
-        //System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
+        //mm.getmatchingalgos().calculateclasssim(matcherlist, mm);
+        HashMap<Integer,Task> task_list = new HashMap<Integer,Task>();
+        //mm.matcher = new UMLSKSearch_V6();
+        //mm.matcher = new Porter_WordNet(true);
+        mm.matcher_list.add(Constants.NGram);
+        mm.matcher_list.add(Constants.EditDistance);
+        mm.weight = new double[9];
+        mm.weight[Constants.NGram] = 1.0;
+        mm.weight[Constants.EditDistance] = 1.0;
+        mm.combination = Constants.MAXBASED;
+        mm.generate_tasklist_match(Constants.STEP_CLASS,0.4,0.7);
         Integer step = new Integer(Constants.STEP_CLASS);
         Commons.hasProcessStarted = true;
         Commons.isFinalized = 0;
         AlgoConstants.STOPMATACHING_PROCESS = false;
         AlgoConstants.ISRECOMMENDATION_PROCESS = false;
         //mm.getSuggestions(Constants.STEP_CLASS, getWeight(step,mm), 0.6, combinationMethod)
-
+        System.out.println("Mapping Count = "+mm.getMappingcount());
     }
-
-    public void match(Matcher matcher_list) {
+    /**
+     * Compute in Parallel with fork/join
+     * author huali50
+     * @param matcher_list
+     * @param task_list
+     **/
+    public void match(Matcher matcher_list, HashMap<Integer,Task> task_list) {
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceclasses = sourceontology.getMClasses();
@@ -134,94 +175,173 @@ public class testMergerManager {
         int count = 0;
         int mappingcount = 0;
         long t1 = System.currentTimeMillis();
+        
+        Matcher matcher = new EditDistance();
+        Integer block_num = (sourcelexicons.size()*targetlexicons.size())/this.list_block_size;
+        Integer last_block_size = (sourcelexicons.size()*targetlexicons.size())%this.list_block_size;
+        if(last_block_size>0)
+            block_num++;
+        int blockid=0;
         for (Integer i : sourcelexicons) {
             for (Integer j : targetlexicons) {
                 //mapinparallel(sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j));
                 //System.out.println(edfinalvalue);
-                if (count < 1000) {
-                    //tasklist.put(new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
+                    
+                if (count < this.list_block_size) {
+                    task_list.put(mappingcount,new Task(i,j,sourceontology.getclasslexicons(i),targetontology.getclasslexicons(j)));
                     mappingcount++;
                     count++;
+                    
                 }
-                if (count == 1000) {
-                    //System.out.println("----------------------------------------------------------------------------");
-                    //matchforkjoin(tasklist);
+                if (count == this.list_block_size) {
+                    matchforkjoin(task_list,matcher,blockid, false, last_block_size);
                     //matchexecutor(tasklist);
                     count = 0;
-                    tasklist.clear();
+                    blockid++;
+                    //task_list.clear();
                 }
-
+                if((blockid == block_num-1)&& (count == last_block_size)){
+                    matchforkjoin(task_list,matcher,blockid, true,last_block_size);
+                    count = 0;
+                    blockid++;
+                }
+               
             }
-        }
-
-        //matchforkjoin(tasklist);
-        long t2 = System.currentTimeMillis();
-        System.out.println("Time Taken to generate " + mappingcount + " mappings in " + (t2 - t1) + " ms");
+        }    
     }
-
-    public void matchexecutor(ArrayList<Task> tasklist) {
-
-        ArrayList<testMappingtask> tasks = new ArrayList<testMappingtask>();
-        List<Future<testMapping>> results;
-        for (int i = 0; i < tasklist.size(); i++) {
-            testMappingtask e = new testMappingtask(tasklist.get(i).getsource(), tasklist.get(i).gettarget());
-            tasks.add(e);
-        }
+    /**
+     * Parallel matching using ExecutorService (Future and Callable)
+     * @author huali50
+     * @param tasks
+     * @param downthresh
+     * @param upthresh
+     * @return 
+     */
+    public Vector matchexecutor(ArrayList<testMappingtask> tasks,double downthresh,double upthresh) {
+        int flag = 0;
+        if((upthresh > downthresh) && (downthresh >= 0))
+            flag = 1;
+        //Vector Suggestions = new Vector();
+        List<Future<testPair>> results;
         ExecutorService exec = Executors.newFixedThreadPool(thread);
         try {
             results = exec.invokeAll(tasks);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            results = new ArrayList<Future<testMapping>>();
+            results = new ArrayList<Future<testPair>>();
         }
         exec.shutdown();
-
-        for (Future<testMapping> ftm : results) {
+        testPair tm = null;
+        for (Future<testPair> ftm : results) {
             try {
                 ii++;
-                testMapping tm = ftm.get();
-
+                tm = ftm.get(10,TimeUnit.SECONDS);
+                double similarity = tm.getSim();
+                if(flag == 0){
+                    if(similarity >= downthresh){
+                        this.generalSuggestionVector.add(tm);
+                        //Suggestions.add(tm);
+                        this.mapping_count++;
+                    }
+                    
+                }
+                else if(flag == 1){
+                    if((similarity >= downthresh)&&(similarity <= upthresh)){
+                        this.generalSuggestionVector.add(tm);
+                        //Suggestions.add(tm);
+                        this.mapping_count++;
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        /*
-        EditDistance test = new EditDistance();
-        double simvalue;
-        double maxvalue = 0;
-        for(testLexicon stl : sourcelexicon)
-        {
-            for(testLexicon ttl : targetlexicon)
-            {
-                if(stl.getlanguage().equals(ttl.getlanguage())){
-                    simvalue = test.getSimValue(stl.getname(), ttl.getname());
-                    if(simvalue > maxvalue)
-                        maxvalue = simvalue;
-                }
+        return this.generalSuggestionVector;
+    }
+    /**
+     * Task implements Callable<testPair>
+     * @author huali50
+     */
+    private class testMappingtask implements Callable<testPair> {
 
+        private String sourceURI;
+        private String targetURI;
+        
+
+        testMappingtask(String sourceURI, String targetURI) {
+            this.sourceURI = sourceURI;
+            this.targetURI = targetURI;
+        }
+
+        public testPair call() {
+            return new testPair(sourceURI,targetURI,compute_sim(sourceURI,targetURI));
+            
+        }
+    }
+    /**
+     * Compute Similarity in parallel
+     * @author huali50
+     * @param sourceURI
+     * @param targetURI
+     * @return 
+     */
+    public double compute_sim(String sourceURI,String targetURI){
+        double max_sim = 0;
+        double[] sim = new double[9];
+        Integer sourceId = this.testOntManager.getontology(Constants.ONTOLOGY_1).getURITable().getIndex(sourceURI);
+        Integer targetId = this.testOntManager.getontology(Constants.ONTOLOGY_2).getURITable().getIndex(targetURI);
+        HashSet<testLexicon> sourcelexicon = this.getOntManager().getontology(Constants.ONTOLOGY_1).getclasslexicons(sourceId);
+        HashSet<testLexicon> targetlexicon = this.getOntManager().getontology(Constants.ONTOLOGY_2).getclasslexicons(targetId);
+        for(testLexicon stl : sourcelexicon){
+            for(testLexicon ttl : targetlexicon){
+                if(stl.getlanguage().equals(ttl.getlanguage())){
+                    for(Integer i : this.matcher_list){
+                        if(i == Constants.EditDistance){
+                            Matcher matcher = new EditDistance();
+                            sim[i] = matcher.getSimValue(stl.getname(),ttl.getname());
+                            if (sim[i] >= max_sim)
+                                max_sim =sim[i];
+                        }
+                        else if(i == Constants.NGram){
+                            Matcher matcher = new NGram(3);
+                            sim[i] = matcher.getSimValue(stl.getname(),ttl.getname());
+                            if (sim[i] >= max_sim)
+                                max_sim =sim[i];
+                        }
+                        else if(i == Constants.WordNet_Plus){
+                            Matcher matcher = new Porter_WordNet(true);
+                            sim[i] = matcher.getSimValue(stl.getname(),ttl.getname());
+                            if (sim[i] >= max_sim)
+                                max_sim =sim[i];
+                        }
+                        else if(i == Constants.UMLS){
+                            Matcher matcher = new UMLSKSearch_V6();
+                            sim[i] = matcher.getSimValue(stl.getname(),ttl.getname());
+                            if (sim[i] >= max_sim)
+                                max_sim =sim[i];
+                        }
+                    }
+                }
             }
         }
-         */
-
-    }
-
-    private class testMappingtask implements Callable<testMapping> {
-
-        private HashSet<testLexicon> sourcelexicon;
-        private HashSet<testLexicon> targetlexicon;
-
-        testMappingtask(HashSet<testLexicon> s, HashSet<testLexicon> t) {
-            sourcelexicon = s;
-            targetlexicon = t;
+        if(this.combination == Constants.MAXBASED){
+            return max_sim;
         }
-
-        public testMapping call() {
-            testMapping tm = new testMapping(sourcelexicon, targetlexicon);
-            tm.compute_sim();
-            return tm;
+        else if(this.combination == Constants.WEIGHTBASED){
+            double numerator = 0;
+            double denominator =0;
+            for(Integer i :this.matcher_list){
+                numerator += this.weight[i.intValue()] * sim[i.intValue()];
+                denominator += this.weight[i.intValue()];
+            }
+            max_sim = numerator / denominator;
+            return max_sim;
         }
+        else{
+            return max_sim;
+        }
+        //System.out.println("source "+this.source_id+"--target "+this.target_id+"==Similarity "+this.value);
     }
-
     private double mapresults(String source, String target) {
         double sim = 0;
         EditDistance test = new EditDistance();
@@ -231,27 +351,33 @@ public class testMergerManager {
 
     /**
      * Creates new Merger
+     * author huali50
      */
     public testMergerManager() {
         testOntManager = new testOntManager();
-        //thread = Runtime.getRuntime().availableProcessors();
-        thread = 4;
+        thread = Runtime.getRuntime().availableProcessors();
+        //thread = 8;
         System.out.println("Thread num: " + thread);
         generalSuggestionVector = new Vector<testPair>();
     }
 
     /**
-     * Loads the ontologies
-     *
+     * Loads the ontologies based on String paths
+     * author huali50
      **@param url1 the url of the ontology-1
      **@param url2 the url of the ontology-2
      */
-    public void loadOntologies(String uri1, String uri2) throws OWLOntologyCreationException {
-        testOntManager.loadOntologies(uri1, uri2);
+    public void loadOntologies(String url1, String url2) throws OWLOntologyCreationException {
+        testOntManager.loadOntologies(url1, url2);
     }
-
-    public void loadOntologies(URL uri1, URL uri2) throws OWLOntologyCreationException {
-        testOntManager.loadOntologies(uri1, uri2);
+    /**
+     * Loads the ontologies based on URLs
+     * author huali50
+     **@param url1 the url of the ontology-1
+     **@param url2 the url of the ontology-2
+     */
+    public void loadOntologies(URL url1, URL url2) throws OWLOntologyCreationException, SQLException {
+        testOntManager.loadOntologies(url1, url2);
 
         Connection sqlConn = null;
         try {
@@ -266,23 +392,18 @@ public class testMergerManager {
             mapontologyTable.execute(mapontologyTable.generateInsertStatement(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2)));
             mappable_ontologies_id = mapontologyTable.getOPairId(AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_1), AlgoConstants.settingsInfo.getName(Constants.ONTOLOGY_2));
         }
-        ResourceManager.close(sqlConn);
+        sqlConn.close();
 
     }
-
+    /**
+     * Loads the ontologies
+     * author huali50
+     **@param uri1 the url of the ontology-1
+     **@param uri2 the url of the ontology-2
+     */
     public void loadOntologies(URI uri1, URI uri2) throws OWLOntologyCreationException {
         testOntManager.loadOntologies(uri1, uri2);
     }
-
-    /**
-     * Loads the ontologies
-     *
-     *
-     *
-     * /** Load Ontology-1
-     *
-     * @param url1 the url of the ontology-1
-     */
     /* Prepare to begin matching
      **/
     public void init() {
@@ -297,51 +418,6 @@ public class testMergerManager {
 
         tempSuggestionVector = new Vector();
     }
-
-    /**
-     * Clear the current merge process
-     *
-     * @return a new merge manager with already loaded ontologies.
-     */
-    /**
-     * Clear the current merge process
-     *
-     * @parameter n the number indicate which ontology is closed.
-     *
-     * @return a new merge manager with already loaded ontologies.
-     */
-    /**
-     * Calls the matching algorithms to calculate similarity value
-     *
-     * @param step the steps: STEP_SLOT, STEP_CLASS.
-     * @param matcher the matcher
-     *
-     * @return a list of suggestions
-     */
-    /*
-    public void matching(int step, int matcher) {
-
-        switch (step) {
-            case Constants.STEP_SLOT:
-                matchingAlgos.calculateSlotSimValue(matcher);
-                break;
-            case Constants.STEP_CLASS:
-                matchingAlgos.calculateClassSimValue(matcher);
-                break;
-        }
-    }
-     */
-    public void test_match(int step) {
-        switch (step) {
-            case Constants.STEP_SLOT:
-
-                break;
-            case Constants.STEP_CLASS:
-
-                break;
-        }
-    }
-
     /**
      * Calls the matching algorithms to calculate similarity value for
      * MappableGroup
@@ -377,14 +453,6 @@ public class testMergerManager {
         return generalSuggestionVector;
 
     }
-
-    //Added by MZK
-    // updated by Qiang
-    /**
-     * Gets validated mapping suggestion.
-     *
-     * @param step Slot/class matching step.
-     */
     /**
      * Load mapping suggestions for single threshold alignment strategy.
      *
@@ -612,23 +680,12 @@ public class testMergerManager {
             //Pick out the first element and group all suggestions containing that element
             testPair pair = (testPair) generalSuggestionVector.firstElement();
 
-            return currentSuggestionVector = Constants.testgetHoldingPairs(pair, generalSuggestionVector);
+            return currentSuggestionVector = Constants.testgetHoldingPairs(pair.getSource(), generalSuggestionVector,0);
 
         }
         return currentSuggestionVector;
 
     }
-
-    /**
-     * Encapsulates the slot suggestion with merging info, and add it to the
-     * history stack.
-     *
-     * @param history encapsulation of the accepted suggestion.
-     *
-     */
-    /**
-     * Undo the previous action on slots
-     */
     /**
      * Finalizes the slot merging It is not possible to undo merged slots after
      * the finalize method has been run.
@@ -640,20 +697,40 @@ public class testMergerManager {
         generalSuggestionVector.removeAllElements();
 
     }
-
-    //Added by MZK
-    public void matchforkjoin(ArrayList<Task> tasklist) {
+    /**
+    * Fork-Join Function
+    * author huali50
+    * @param tasklist
+    * @param matcher
+    * @param block_id
+    * @param is_last
+    * @param last_block_size
+    */
+    public void matchforkjoin(HashMap<Integer, Task> tasklist,Matcher matcher,int block_id,boolean is_last,int last_block_size) {
         int tasksize = tasklist.size();
-        ComputeTask task = new ComputeTask(0, tasksize);
+        int start = block_id * this.list_block_size;
+        int end = start + this.list_block_size - 1;
+        if(is_last == true)
+            end = start + last_block_size - 1;
+        ComputeTask task = new ComputeTask(start, end, matcher);
         task.settasklist(tasklist);
         task.compute();
     }
-
+    /**
+    * Get the set of Matcher
+    * author huali50
+    * @return matcher_list
+    **/
     public HashSet getMatcherList() {
         return this.matcher_list;
     }
-
+    /**
+     * Generate task list
+     * @author huali50
+     * @param step 
+     */
     public void generate_tasklist(int step) {
+        this.executortasks = new ArrayList<testMappingtask>();
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
         Set<Integer> sourceconcepts = null;
@@ -672,44 +749,58 @@ public class testMergerManager {
             targetlexicons = targetontology.getClassLexicons();
         }
         int count = 1;
-        ArrayList<String> insertStatement = new ArrayList<String>();
         Connection sqlConn = null;
+        ArrayList<String> insertStatement = null;
+        insertStatement = new ArrayList<String>();
         try {
             sqlConn = ResourceManager.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(SimValueConstructor.class.getName()).log(
-                    Level.SEVERE, null, ex);
+            Logger.getLogger(SimValueConstructor.class.getName()).log(Level.SEVERE, null, ex);
         }
         mapconceptTable = new MapConceptGenerateQuery(sqlConn);
+        int source_size = sourceconcepts.size();
+        int target_size = targetconcepts.size();
         for (Integer sid : sourceconcepts) {
             String sourcelocalname = getLocalName(getConceptURI(sid, Constants.ONTOLOGY_1));
             for (Integer tid : targetconcepts) {
-                String targetlocalname = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
-                int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourcelocalname, targetlocalname);
-                if (conceptId < 0) {
-                    insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourcelocalname, targetlocalname,step));
+                count++;
+                if(this.is_Database == false){
+                    if(step == Constants.STEP_CLASS){
+                        this.executortasks.add(new testMappingtask(sourceontology.getURITable().getURI(sid),targetontology.getURITable().getURI(tid)));
+                    }
+                    else if(step == Constants.STEP_SLOT){
+                        String targetlocalname = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
+                        tasklist.put(count, new Task(sid, tid, sourceontology.getlexicons(sid), targetontology.getlexicons(tid)));
+                        int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourcelocalname, targetlocalname);
+                        if (conceptId < 0) {
+                            insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourcelocalname, targetlocalname,step));
+                        }   
+                    }
                 }
-                if (insertStatement.size() > 100000) {
-                    mapconceptTable.executeStatements(insertStatement);
-                    insertStatement.clear();
+                if(this.is_Database == true){
+                    String targetlocalname = getLocalName(getConceptURI(tid, Constants.ONTOLOGY_2));
+                    tasklist.put(count, new Task(sid, tid, sourceontology.getlexicons(sid), targetontology.getlexicons(tid)));
+                    if(count % 1000000 == 0)
+                        System.out.println("count = " + count);
+                    //int conceptId = mapconceptTable.getCPairId(this.get_mappableontologiesId(), sourcelocalname, targetlocalname);
+                    //if (conceptId < 0) {
+                        insertStatement.add(mapconceptTable.generateInsertStatement(this.get_mappableontologiesId(), sourcelocalname, targetlocalname,step));
+                    //}   
                 }
-
             }
         }
-        if (insertStatement.size() > 0) {
-            mapconceptTable.executeStatements(insertStatement);
+        if((this.is_Database == true) || (step == Constants.STEP_SLOT)){
+            if (insertStatement.size() > 0) {
+                mapconceptTable.executeStatements(insertStatement);
+            }
         }
         ResourceManager.close(sqlConn);
-        for (Integer i : sourcelexicons) {
-            for (Integer j : targetlexicons) {
-                tasklist.put(count, new Task(i, j, sourceontology.getlexicons(i), targetontology.getlexicons(j)));
-                count++;
-            }
-
-        }
-
     }
-
+    /**
+    * Generate a class list to be matched
+    * author huali50
+    * @param step: property or class
+    */
     public void generate_classtasklist(int step) {
         testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
         testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
@@ -718,6 +809,7 @@ public class testMergerManager {
         Set<Integer> sourcelexicons = sourceontology.getClassLexicons();
         Set<Integer> targetlexicons = targetontology.getClassLexicons();
         int count = 1;
+        /*
         ArrayList<String> insertStatement = new ArrayList<String>();
         Connection sqlConn = null;
         try {
@@ -746,25 +838,40 @@ public class testMergerManager {
             mapconceptTable.executeStatements(insertStatement);
         }
         ResourceManager.close(sqlConn);
+        */
         for (Integer i : sourcelexicons) {
 
             for (Integer j : targetlexicons) {
                 tasklist.put(count, new Task(i, j, sourceontology.getclasslexicons(i), targetontology.getclasslexicons(j)));
                 count++;
+                System.out.println(count);
             }
 
         }
 
     }
-
+    /**
+     * Get Task_List
+     * author huali50
+     * @param tasklist 
+     */
     public HashMap<Integer, Task> getTasklist() {
         return this.tasklist;
     }
-
+    /**
+     * Get matching algos instance
+     * author huali50
+     * @param matchingAlgos 
+     */
     public testMatchingAlgos getmatchingalgos() {
         return this.matchingAlgos;
     }
-
+    /**
+     * Encapsulates the slot suggestion with merging info, and add it to the history stack.
+     *
+     * @param history encapsulation of the accepted suggestion.
+     *
+     */
     public void processSlotSuggestion(testHistory history) {
 
         generalSuggestionVector.remove(history.getPair());
@@ -775,15 +882,26 @@ public class testMergerManager {
                 history, ToDo);
 
     }
-
+    /**
+     * Encapsulates the class suggestion with merging info, and add it to the history stack.
+     * update huali50
+     * @param history encapsulation of the accepted suggestion.
+     *
+     */
     public int processClassSuggestion(testHistory history) {
         testPair pair = history.getPair();
         if (!historyStack.contains(history)) {
             historyStack.add(history);
         }
-        testPair temp = (testPair) generalSuggestionVector.get(0);
-        boolean result = pair.equals(temp);
-        generalSuggestionVector.remove(pair);
+        if(generalSuggestionVector.isEmpty() == false){
+            testPair temp = (testPair) generalSuggestionVector.get(0);
+            if(temp != null){
+                boolean result = pair.equals(temp);
+                 generalSuggestionVector.remove(pair);
+        
+            }
+        }
+
 
         if (history.getAction() == Constants.ALIGN_CLASS) {
             for (Enumeration e = Constants.testgetHoldingPairs(pair, generalSuggestionVector).elements(); e.hasMoreElements();) {
@@ -804,9 +922,42 @@ public class testMergerManager {
     }
 
     public void setSlotInfo(testHistory h, boolean set) {
+        testPair pair = h.getPair();
 
+        //to do the action
+        testMOntology source_ontology = this.getOntManager().getontology(Constants.ONTOLOGY_1);
+        testMOntology target_ontology = this.getOntManager().getontology(Constants.ONTOLOGY_2);
+        testMProperty p1 = source_ontology.getProperty(pair.getSource());
+        testMProperty p2 = target_ontology.getProperty(pair.getTarget());
+        if (set) {
+            //to merge the pair of slots
+            if (h.getAction() == Constants.ALIGN_SLOT) {
+                if (h.getName() != null && h.getName().trim().length() > 0) {                   
+                    p1.setAlignName(h.getName());
+                    p2.setAlignName(h.getName());
+                }
+                p1.setAlignElement(p2);
+                p2.setAlignElement(p1);
+            }
+            if (h.getComment() != null && h.getComment().trim().length() > 0) {
+                p1.addAlignComment(h.getComment());
+                p2.addAlignComment(h.getComment());
+            } //undo the action
+        } else {
+            p1.setAlignElement(null);
+            p2.setAlignElement(null);
+            p1.setAlignName(null);
+            p2.setAlignName(null);
+            p1.addAlignComment(null);
+            p2.addAlignComment(null);
+        }
     }
-
+    /**
+     * Set the matching information
+     * update huali50
+     * @param h: testHistory the history of matching process
+     * @param set: if the pair is matched
+     **/
     int setClassInfo(testHistory h, boolean set) {
 
         testPair pair = h.getPair();
@@ -899,12 +1050,17 @@ public class testMergerManager {
         return h.getWarning();
 
     }
-
+    /**
+     * get the number of remaining suggestions in the current step
+     * @return the number of the remaining suggestions
+     */
     public int suggestionsRemaining() {
 
         return generalSuggestionVector.size() - 1;
     }
-
+   /**
+     * Undo the previous action on slots
+     */
     public void undoSlotMerge() {
 
         if (!historyStack.isEmpty()) {
@@ -916,7 +1072,9 @@ public class testMergerManager {
 
         }
     }
-
+    /**
+     * Undo the latest action
+     */
     public void undoClassMerge() {
 
         if (!historyStack.empty()) {
@@ -937,15 +1095,26 @@ public class testMergerManager {
              */
         }
     }
-
+    /**
+    * Return the id of ontologies
+    * author huali50
+    **/
     public int get_mappableontologiesId() {
         return this.mappable_ontologies_id;
     }
-
+    /**
+    * Return the concept URI
+    * author huali50
+    * @param Id-concept ID
+    * @param ontology-source or target
+    **/
     public String getConceptURI(int Id, int ontology) {
         return this.testOntManager.getontology(ontology).getURITable().getURI(Id);
     }
-
+    /**
+    * Return Local name
+    * author huali50
+    **/
     public String getLocalName(String uri) {
         if (uri == null) {
             return null;
@@ -957,11 +1126,21 @@ public class testMergerManager {
             return uri.substring(i);
         }
     }
-
+    /**
+    * Return OntManager object
+    * author huali50
+    * @return testIntManager
+    **/
     public testOntManager getOntManager() {
         return this.testOntManager;
     }
-
+    /*check name conflict
+     *
+     *@name the name to be checked
+     *
+     *@return the number of the ontology in which the name already exist
+     *        if the name is unique, return -1;
+     */
     public int checkLabelConflict(String name) {
 
         if (existInOnto(name, Constants.ONTOLOGY_1)) {
@@ -976,55 +1155,53 @@ public class testMergerManager {
 
         return Constants.UNIQUE;
     }
-
+    /*check name conflict
+     *
+     *@name the name
+     *@ontonum the number of the ontology
+     *
+     *@return if the name also exist in the indicated ontology, return the num;
+     *        if the name is unique, return -1;
+     */
     public int checkLabelConflict(String name, int ontonum) {
-
+        if(name == null)
+            return ontonum;
         if (existInOnto(name, ontonum)) {
             return ontonum;
         }
         return Constants.UNIQUE;
     }
-
+    /* check the new name whether exists in the ontology
+     *update huali50
+     *@param name
+     *@param ontonum
+     *@return if exists, return true
+     */
     private boolean existInOnto(String name, int ontonum) {
         for (Integer i : getOntManager().getontology(ontonum).getClasses().keySet()) {
             testMClass c = getOntManager().getontology(ontonum).getClasses().get(i);
             if (name.equalsIgnoreCase(c.getLabel())) {
                 return true;
-
             }
-            /*
-            for (Enumeration en = c.getSynonyms().elements(); en.hasMoreElements();) {
-                if (name.equalsIgnoreCase(((String) en.nextElement()))) {
-                    return true;
-
-
-                }
-            }
-            if ((c.getAlignElement() != null && c.getAlignElement().getLabel().equalsIgnoreCase(name))) {
-                return true;
-
-
-            }
-
-            if ((c.getAlignName() != null && c.getAlignName().equalsIgnoreCase(name))) {
-                return true;
-
-
-            }
-             */
         }
-
         return false;
-
     }
-
+    /** Check if the labels from two class are same
+    * author huali50
+    * @param tc1: class 1
+    * @param tc2: class 2
+    **/
     public boolean hasEquivLabel(testMClass tc1, testMClass tc2) {
+        if ((tc1.getLabel() == null) ||(tc2.getLabel() == null) )
+            return false;
         if (tc1.getLabel().equalsIgnoreCase(tc2.getLabel())) {
             return true;
         }
         return false;
     }
-
+    /** Merge the remaining suggestions
+    * update huali50
+    **/
     public void mergeRemaining() {
         testPair pair = (testPair) generalSuggestionVector.firstElement();
         testHistory history = new testHistory(pair, null, Constants.ONTOLOGY_NEW, Constants.ALIGN_CLASS);
@@ -1049,7 +1226,9 @@ public class testMergerManager {
             setClassInfo(history, ToDo);
         }
     }
-
+    /** Finalize the class merging
+    * update huali50
+    **/
     public void finalizeClassSuggestions() {
         //backup the class history stack
         for (Enumeration e = historyStack.elements(); e.hasMoreElements();) {
@@ -1059,28 +1238,277 @@ public class testMergerManager {
             }
             historyVector.add(h);
         }
-
         //clear the lists
         generalSuggestionVector.removeAllElements();
         historyStack.removeAllElements();
         currentSuggestionVector.removeAllElements();
     }
-
+    /** Get History Vector
+    * author huali50
+    * @return historyVector
+    **/
     public Vector getHistory() {
         return historyVector;
     }
-
+    /** Get History Stack
+    * author huali50
+    * @return historyStack
+    **/
     public Vector getCurrentHistory() {
         return historyStack;
     }
-
+    /** Get Suggestion Vector
+    * author huali50
+    * @return generalSuggestionVector
+    **/
     public Vector getRemainingSuggestions() {
         return generalSuggestionVector;
     }
-    public void finalize(String alignfile, String mergefile){
-    
+    /** Save matching result to files
+    * author huali50
+    * @param String alignfile: alignment file
+    * @param String mergefile: merge file(no use so far)
+    **/
+    public void finalize(String alignfile, String mergefile) throws FileNotFoundException{
+        saveRDF(alignfile);
     }
+    /** Save the matching result into a file
+    * author huali50
+    * @param String file: file path
+    * 
+    **/
+    public void saveRDF(String file) throws FileNotFoundException{
+        testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
+        testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
+        String sourceOURI = sourceontology.getOntologyURI();
+        String targetOURI = targetontology.getOntologyURI();
+        PrintWriter outStream =new PrintWriter(new FileOutputStream(file));
+        outStream.println("<?xml version='1.0' encoding='utf-8'?>");
+        outStream.println("<rdf:RDF");
+        outStream.println("\t xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'");
+        outStream.println("\t xmlns:owl='http://www.w3.org/2002/07/owl#'");
+        outStream.println("\t xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'");
+        outStream.println("\t xmlns:xsd='http://www.w3.org/2001/XMLSchema#' ");
+        outStream.println("\t xml:base='SAMBO-Session'>");
+        outStream.println("\t\t <owl:Ontology rdf:about=\"\">");
+        outStream.println("\t\t\t <owl:imports rdf:resource='" + sourceOURI +"'/>" );
+        outStream.println("\t\t\t <owl:imports rdf:resource='" + targetOURI +"'/>" );
+        outStream.println("</owl:Ontology>");
+        for(Integer i : sourceontology.getClasses().keySet()){
+            String out = classToRDF(sourceontology.getClasses().get(i));
+            if(out != null){
+                out =  "\t\t<rdf:Description rdf:about=\"" + sourceontology.getClasses().get(i).getURI() +"\">\n" + out;
+                out = out + "\t\t</rdf:Description>";
+                outStream.println(out);
+            }
+        }
+        for(Integer j : sourceontology.getProperties()){
+            testMProperty property = sourceontology.getPropertyById(j);
+            String out = propertyToRDF(property);
+            if(out!= null){
+                out =  "\t\t<rdf:Description rdf:about=\"" + property.getURI() +"\">\n" + out;
+                out = out + "\t\t</rdf:Description>";
+                outStream.println(out);
+            }
+        }
+        outStream.println("</rdf:RDF>");
+        outStream.close();
+    }
+    /** Transfer matching information of each class in ontology
+    * author huali50
+    * @param testMClass mclass:class instance in ontology
+    * 
+    **/
+    public String classToRDF(testMClass mclass){
+        String out = "";
+        if(mclass.getAlignClass() == null && mclass.getAlignSubs().isEmpty() && mclass.getAlignSupers().isEmpty())
+            return null;
+        else
+        {
+            if(mclass.getAlignClass() != null){
+                out = out + "\t\t\t<owl:equivalentClass rdf:resource=\"" + mclass.getAlignClass().getURI() + "\"/>\n";
+                out = out + "\t\t\t\t<rdfs:comment>" + mclass.getAlignComment() + " </rdfs:comment>\n";
+            }
+            
+            if(mclass.getAlignSubs()!=null){
+                for(Integer i : mclass.getAlignSubs().keySet()){
+                    testMClass targetclass = mclass.getAlignSubs().get(i);
+                    out = out + "\t\t\t<rdfs:subClassOf>\n";
+                    out = out + "\t\t\t\t<rdf:Description rdf:about=\"" + targetclass.getURI() + "\">\n";
+                    out = out + "\t\t\t\t\t<rdfs:comment>" + mclass.getAlignComment() + " </rdfs:comment>\n";
+                    out = out + "\t\t\t\t</rdf:Description>\n";
+                    out = out + "\t\t\t</rdfs:subClassOf>\n";
+                }
+            }
+            if(mclass.getAlignSupers()!=null){
+                for(Integer j : mclass.getAlignSupers().keySet()){
+                    testMClass targetclass = mclass.getAlignSupers().get(j);
+                    out = out + "\t\t\t<rdfs:superClassOf>\n";
+                    out = out + "\t\t\t\t<rdf:Description rdf:about=\"" + targetclass.getURI() + "\">\n";
+                    out = out + "\t\t\t\t\t<rdfs:comment>" + mclass.getAlignComment() + " </rdfs:comment>\n";
+                    out = out + "\t\t\t\t</rdf:Description>\n";
+                    out = out + "\t\t\t</rdfs:superClassOf>\n";
+                }
+            }
+        }
+        return out;
+    }
+    /**
+     * Transfer matching information of each property in ontology
+     * @author huali50
+     * @param property
+     * @return 
+     */
+    public String propertyToRDF(testMProperty property){
+        String out = "";
+        if(property.getAlignElement()== null )
+            return null;
+        else
+        {
+            if(property.getAlignElement()!= null){
+                out = out + "\t\t\t<owl:equivalentProperty rdf:resource=\"" + property.getAlignElement().getURI() + "\"/>\n";
+                out = out + "\t\t\t\t<rdfs:comment>" + property.getAlignComment() + " </rdfs:comment>\n";
+            }
+        }
+        return out;
+    }
+    /** Get the sourceontology-targetontology id used in database
+    * author huali50
+    * @return mappable_ontologies_id
+    * 
+    **/
     public int getMoid(){
         return this.mappable_ontologies_id;
+    }
+     /** Get the sourceontology-targetontology id used in database
+    * author huali50
+    * @return mappable_ontologies_id
+    *  
+    **/
+    public HashSet<testPair> getSuggestedpairs(){
+        return this.suggestedpairs;
+    }
+    /**
+     * Get List for parallel matching
+     * "author huali50
+     * @return 
+     */
+    public ArrayList<testMappingtask> getExecutorlist(){
+        return this.executortasks;
+    }
+    /**
+     * Set matcher weight
+     * "author huali50
+     * @param weight 
+     */
+    public void setWeight(double[] weight){
+        this.weight = weight;
+    }
+    /**
+     * Set combination
+     * @author huali50
+     * @param combination 
+     */
+    public void setCombination(int combination){
+        this.combination = combination;
+    }
+    /**
+     * Set is_Large
+     * @author huali50
+     * @param is_Large 
+     */
+    public void setLarge_scale(){
+        this.is_Large = true;
+    }
+    /**
+     * Get is_Large
+     * @author huali50
+     * @return 
+     */
+    public boolean getIsLarge(){
+        return this.is_Large;
+    }
+    /**
+     * Set is_Paging
+     * ¨@author huali50
+     */
+    public void setDatabase(){
+        this.is_Database = true;
+    }
+    /**
+     * Get is_Database
+     * @author huali50
+     * @return is_Database
+     */
+    public boolean getIsDatabase(){
+        return this.is_Database;
+    }
+    /**
+     * Generate task list and match by block
+     * @author huali50
+     * @param step 
+     */
+    public Vector generate_tasklist_match(int step,double downthresh,double upthresh) {
+        this.executortasks = new ArrayList<testMappingtask>();
+        testMOntology sourceontology = testOntManager.getontology(Constants.ONTOLOGY_1);
+        testMOntology targetontology = testOntManager.getontology(Constants.ONTOLOGY_2);
+        Set<Integer> sourceconcepts = null;
+        Set<Integer> targetconcepts = null;
+        Set<Integer> sourcelexicons = null;
+        Set<Integer> targetlexicons = null;
+        if (step == Constants.STEP_SLOT) {
+            sourceconcepts = sourceontology.getProperties();
+            targetconcepts = targetontology.getProperties();
+            sourcelexicons = sourceontology.getPropertiesLexicons();
+            targetlexicons = targetontology.getPropertiesLexicons();
+        } else if (step == Constants.STEP_CLASS) {
+            sourceconcepts = sourceontology.getMClasses();
+            targetconcepts = targetontology.getMClasses();
+            sourcelexicons = sourceontology.getClassLexicons();
+            targetlexicons = targetontology.getClassLexicons();
+        }
+        int count = 0;
+        int k=0;
+        int source_size = sourceconcepts.size();
+        int target_size = targetconcepts.size();
+        int tasks_size = source_size * target_size;
+        this.pageSize = 1000000;
+        int task_block_count = tasks_size / this.pageSize;
+        int last_block_size = tasks_size % this.pageSize;
+        int block_count = 0;
+        long time =0;
+        for (Integer sid : sourceconcepts) {
+            for (Integer tid : targetconcepts) {
+                this.executortasks.add(new testMappingtask(sourceontology.getURITable().getURI(sid),targetontology.getURITable().getURI(tid)));
+                count++;
+                //System.out.println("count : "+count);
+                if(count == this.pageSize){
+                    //match
+                    long start = System.currentTimeMillis();
+                    matchexecutor(this.executortasks, downthresh, upthresh);
+                    long end = System.currentTimeMillis();
+                    //System.out.println("blockcount : "+block_count+" Time: "+(end-start)+"ms.");
+                    time += end-start;
+                    block_count++;
+                    count = 0;
+                    this.executortasks.clear();
+                }
+            }
+        }
+        if(this.executortasks.size()>0){
+            long start = System.currentTimeMillis();
+           matchexecutor(this.executortasks, downthresh, upthresh);
+            long end = System.currentTimeMillis();
+        }
+        System.out.println( "Time Taken to Compute " + time + " ms." );
+        return this.generalSuggestionVector;
+    }
+    /**
+     * Get Mapping count
+     * @author huali50
+     * @return 
+     */
+    public int getMappingcount(){
+        return this.mapping_count;
     }
 }

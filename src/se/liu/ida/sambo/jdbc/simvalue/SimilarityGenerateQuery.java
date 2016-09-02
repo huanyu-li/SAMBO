@@ -21,6 +21,12 @@ public class SimilarityGenerateQuery {
 
         Conn = sqlConn; 
     }
+    /**
+     * Get Table based on matcher
+     * @author huali50
+     * @param matcher
+     * @return table name
+     */
     public String getTableName(int matcher) {
         String tablename=null;
         switch(matcher){
@@ -33,6 +39,12 @@ public class SimilarityGenerateQuery {
         }
         return tablename;
     }  
+    /**
+     * Return column name
+     * @author huali50
+     * @param matcher
+     * @return column name
+     */
     public String getColumnName(int matcher){
         String column_name = null;
         switch(matcher){
@@ -45,14 +57,33 @@ public class SimilarityGenerateQuery {
         }
         return column_name;
     }
-    public String generateInsertStatement(int id,int moid, int matcher,double simvalue) {
+    /**
+     * Generate insert statement
+     * @author huali50
+     * @param id
+     * @param moid
+     * @param matcher
+     * @param simvalue
+     * @param type
+     * @return statement
+     */
+    public String generateInsertStatement(int id,int moid, int matcher,double simvalue,int type) {
         
         String statement="";               
-        statement="INSERT INTO "+ getTableName(matcher) + "(id, moid "+ getColumnName(matcher) +") VALUES";                  
-        statement=statement.concat("('"+id+"', '"+moid+"', "+simvalue+")");
+        statement="INSERT INTO "+ getTableName(matcher) + "(id, moid, "+ getColumnName(matcher) +" ,type) VALUES";                  
+        statement=statement.concat("('"+id+"', '"+moid+"', '"+simvalue+"', '"+type+"')");
         return statement;
     }
-    
+     /**
+     * Generate Update statement
+     * @author huali50
+     * @param id
+     * @param moid
+     * @param matcher
+     * @param simvalue
+     * @param type
+     * @return statement
+     */
     public String generateUpdateStatement(int id, int matcher, double simvalue) {
         
         String statement;
@@ -60,16 +91,13 @@ public class SimilarityGenerateQuery {
                 + "id ="+ id;
         return statement;
     }
-    public String generateSelectMulti(int id, int[] matcher, double[] weight){
-        String statement = null;
-        
-        return statement;
-    }
-    public String generateMultiSelect(int id, int[] matcher, int[] weight){
-        String statement = "";
-        
-        return statement;
-    }
+    /**
+     * Get similarity record id
+     * @author huali50
+     * @param id
+     * @param matcher
+     * @return id
+     */
     public int getSimvalueId(int id,int matcher){
         int sId;                     
         String statement;   
@@ -86,6 +114,15 @@ public class SimilarityGenerateQuery {
     public void executeStatements(ArrayList<String> statements) {
         simvalueDao.multipleUpdate(statements, Conn);
     }
+    /**
+     * Get results based on weight 
+     * @author huali50
+     * @param weight
+     * @param thershold
+     * @param step
+     * @param moid
+     * @return results list
+     */
     public ArrayList<String> generateWeightedBasedSql(double[] weight, double thershold, int step, int moid){
         
         ArrayList<String> mappable_concepts = null;
@@ -128,6 +165,15 @@ public class SimilarityGenerateQuery {
         mappable_concepts = simvalueDao.getSimvalueViewIdandValue(statement, Conn);
         return mappable_concepts;
     } 
+    /**
+     * Get results based on maximum
+     * @author huali50
+     * @param weight
+     * @param thershold
+     * @param step
+     * @param moid
+     * @return results list
+     */
     public ArrayList<String> generateMaximumBasedSql(double[] weight, double thershold, int step, int moid){
         ArrayList<String> mappable_concepts = null;
         String sqlMatcher = "(GREATEST(";
@@ -188,7 +234,12 @@ public class SimilarityGenerateQuery {
         * ontologies='eye_MA_1#eye_MeSH_2' AND 
         * (GREATEST(matcher0, matcher1, matcher2))>=0.6"
         */     
-        statement = "SELECT id, "+sqlMatcher+" as simvalue from dbsambo.similarity_view WHERE "+ sqlMatcher +">=" + thershold; 
+        String viewname= null;
+        if(step == Constants.STEP_SLOT)
+            viewname = "dbsambo.similarity_view_property";
+        else if(step == Constants.STEP_CLASS)
+            viewname = "dbsambo.similarity_view_class";
+        statement = "SELECT id, "+sqlMatcher+" as simvalue from " +viewname +" where "+ sqlMatcher +">=" + thershold; 
         mappable_concepts = simvalueDao.getSimvalueViewIdandValue(statement, Conn);
         return mappable_concepts;
     }

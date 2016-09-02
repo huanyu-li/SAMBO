@@ -39,36 +39,50 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.HermiT.*;
 import org.semanticweb.owlapi.model.ClassExpressionType;
+import org.semanticweb.owlapi.model.NodeID;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import se.liu.ida.sambo.MModel.util.NameProcessor;
 import se.liu.ida.sambo.MModel.util.OntConstants;
 
 /** User interface to represent an ontology
  *
- * @author  He Tan
- * @version
+ * @author  huali50
+ * Ontology instance
  */
 public class testMOntology {
+    //From OWL API-Ontology manager
     protected OWLOntologyManager manager;
+    //From OWL API-Data Factory
     protected OWLDataFactory factory;
-    
+    //Ontology URI
+    protected String uri;
+    //Map of ids and class instances
     private HashMap<Integer,testMClass> classes;
+    //Map of classlocal and its id
     private HashMap<String,Integer> classlocalname;
+    //Map of ids and data properties
     private HashMap<Integer,testMDataproperty> dataproperties;
+    //Map of dataproperty local name and id
     private HashMap<String,Integer> datapropertylocalname;
+    //Map of objectproperty local name and id
     private HashMap<String,Integer> objectpropertylocalname;
+    //Map of class labels and ids
+    private HashMap<String,Integer> classlabels;
+    //Map of ids and object properties
     private HashMap<Integer,testMObjectproperty> objectproperties;
+    //Map of class id and its lexicons
     private HashMap<Integer,HashSet<testLexicon>> classlexicons;
+    //Map of data property id and its lexicons
     private HashMap<Integer,HashSet<testLexicon>> datapropertylexicons;
+    //Map of object property id and its lexicons
     private HashMap<Integer,HashSet<testLexicon>> objectpropertylexicons;
+    //Set of roots
+    private HashSet<testMClass> roots;
+    //URITable
     private testURITable urit;
-    
     
     private int LOCAL_FILE=0;
     private int NOT_LOCAL_FILE=1;
-
-
-
 
     public testMOntology(){
         manager=OWLManager.createOWLOntologyManager();
@@ -83,20 +97,33 @@ public class testMOntology {
         classlexicons =new HashMap<Integer, HashSet<testLexicon>>();
         datapropertylexicons =new HashMap<Integer, HashSet<testLexicon>>();
         objectpropertylexicons =new HashMap<Integer, HashSet<testLexicon>>();
+        classlabels = new HashMap<String,Integer>();
+        roots = new HashSet<testMClass>();
         urit =new testURITable();
         
     }
+    /**
+     * Load Ontology based on String path
+     * @author huali50
+     * @param path
+     * @throws OWLOntologyCreationException 
+     */
     public void loadMOntology(String path) throws OWLOntologyCreationException   {
+        long t1 = System.currentTimeMillis();
         File file=new File(path);
         OWLOntology o;
         o=manager.loadOntologyFromOntologyDocument(file);
-        
+        this.uri = o.getOntologyID().getOntologyIRI().toString();
         buildFromOWLOntology(o);
         manager.removeOntology(o);
+        long t2 = System.currentTimeMillis();
+        System.out.println("Time to load ontology is "+ (t2-t1)+ " ms.");
     }
-
-    /** Creates new MOntology
-     *
+    /**
+     * Load Ontology based on URL path
+     * @author huali50
+     * @param url
+     * @throws OWLOntologyCreationException 
      */
     public void loadMOntology(URL url) throws OWLOntologyCreationException {
         OWLOntology o;
@@ -111,11 +138,18 @@ public class testMOntology {
             IRI iri=IRI.create(url.toString());
             o=manager.loadOntology(iri);
         }
+        this.uri = o.getOntologyID().getOntologyIRI().toString();
         buildFromOWLOntology(o);
         manager.removeOntology(o);
         
     }
-        public void loadMOntology(URI uri) throws OWLOntologyCreationException {
+    /**
+     * Load Ontology based on URI path
+     * @author huali50
+     * @param uri
+     * @throws OWLOntologyCreationException 
+     */
+    public void loadMOntology(URI uri) throws OWLOntologyCreationException {
         OWLOntology o;
 
         if(uri.toString().startsWith("file"))
@@ -128,10 +162,17 @@ public class testMOntology {
             IRI iri=IRI.create(uri);
             o=manager.loadOntology(iri);
         }
+        this.uri = o.getOntologyID().getOntologyIRI().toString();
         buildFromOWLOntology(o);
         manager.removeOntology(o);
         
     }
+    /**
+     * Check url starts with "file:" or not
+     * @author huali50
+     * @param url
+     * @return 
+     */
     public int checkURL(URL url)
     {
         if(url.toString().startsWith("file:"))
@@ -146,10 +187,13 @@ public class testMOntology {
     
     /**
      * Build classes, properties and relationships in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildFromOWLOntology(OWLOntology o) {
+        if(o.getOntologyID().getOntologyIRI() != null)
+            this.uri = o.getOntologyID().getOntologyIRI().toString();
         long t1 = System.currentTimeMillis();
         buildClasses(o);
         
@@ -159,11 +203,12 @@ public class testMOntology {
         System.out.println("End build relationships");
         
         long t2 = System.currentTimeMillis();
-        System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms" );
+        System.out.println( "Time Taken to LOAD FILE " + (t2-t1) + " ms." );
     }
      /**
      * Build classes in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildClasses(OWLOntology o) {
@@ -179,20 +224,22 @@ public class testMOntology {
             int class_id = urit.getIndex(class_uri);
             if(class_id == 0)
                 continue;
-            
-            
 
             //get class annotation
             String class_label = null;
             int label_flag = -1;
             Set<OWLAnnotation> annotation = c.getAnnotations(o);
+            for(OWLOntology ont : o.getImports())
+		annotation.addAll(c.getAnnotations(ont));
             HashSet<testLexicon> tlset = new HashSet<testLexicon>();
+            int anntation_flag = 0;
             for(OWLAnnotation a : annotation)
             {
                 testLexicon tl;
                 String propertyuri = a.getProperty().getIRI().toString();
                 if(getAnnotationtype(propertyuri) != null)
                 {
+                    anntation_flag = 1;
                     // annotation is String
                     if(a.getValue() instanceof OWLLiteral) {
                         OWLLiteral annotation_value = (OWLLiteral) a.getValue();
@@ -209,30 +256,42 @@ public class testMOntology {
                             if(label_flag == -1)
                                 class_label = name;
                         }
+                        if(language.isEmpty()){
+                            if(label_flag == -1)
+                                class_label = name;
+                        }
                     }
                     // annnotation is IRI
                     else if(a.getValue() instanceof IRI){
                         OWLNamedIndividual nameindividual = factory.getOWLNamedIndividual((IRI) a.getValue());
                         for(OWLAnnotation individual_annotation : nameindividual.getAnnotations(o, rdf_label))
                         {
-                            
+                            // to be implemented in the future
                         }
                     }
                     else{
+                        continue;
                     }
                 }
                 
             }
-            testMClass tmc = new testMClass(class_id,class_uri, class_label);
-            classes.put(class_id, tmc);
-            classlocalname.put(tmc.getLocalName(), class_id);
-            classlexicons.put(class_id, tlset);
+            if(anntation_flag == 1){
+                testMClass tmc = new testMClass(class_id,class_uri, class_label);
+                if(class_uri.endsWith("owl#Thing")||class_uri.endsWith("owl:Thing"))
+                    tmc.setThing();
+                classes.put(class_id, tmc);
+                classlocalname.put(tmc.getLocalName(), class_id);
+                classlabels.put(class_label,class_id);
+                classlexicons.put(class_id, tlset);
+            }
+
             
         }
     }
      /**
      * Build properties in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildProperties(OWLOntology o){
@@ -242,7 +301,8 @@ public class testMOntology {
     }
     /**
      * Build data properties in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildDataproperties(OWLOntology o){
@@ -282,7 +342,7 @@ public class testMOntology {
                                 OWLNamedIndividual nameindividual = factory.getOWLNamedIndividual((IRI) a.getValue());
                                 for(OWLAnnotation individual_annotation : nameindividual.getAnnotations(o, rdf_label))
                                 {
-                            
+                                    // to be implemented in the future
                                 }
                             }
                             else{
@@ -299,11 +359,12 @@ public class testMOntology {
             }
             i++;
         }
-        System.out.println(i+" data properties");
+        //System.out.println(i+" data properties");
     }
      /**
      * Build object properties in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildObjectproperties(OWLOntology o){
@@ -313,6 +374,8 @@ public class testMOntology {
         for(OWLObjectProperty oproperty : object_properties)
         {
             String property_uri = oproperty.getIRI().toString();
+            if(checkPropertyPrefix(property_uri) == false)
+                continue;
             if(property_uri != null){
                 urit.addURI(property_uri);
                 int property_id = urit.getIndex(property_uri);
@@ -343,7 +406,7 @@ public class testMOntology {
                                 OWLNamedIndividual nameindividual = factory.getOWLNamedIndividual((IRI) a.getValue());
                                 for(OWLAnnotation individual_annotation : nameindividual.getAnnotations(o, rdf_label))
                                 {
-                            
+                                    // to be implemented in the future
                                 }
                             }
                             else{
@@ -358,17 +421,19 @@ public class testMOntology {
             }
             i++;
         }
-        System.out.println(i+" object properties");
+        //System.out.println(i+" object properties");
     }
     /**
      * Build relationships sub and super in ontology.
-     * @OWLOntology o: ontology object in OWL API.
+     * @author huali50
+     * @param o: ontology object in OWL API.
      * 
      */
     public void buildRelationships(OWLOntology o) {
         Set<OWLClass> owlclasses = o.getClassesInSignature(true);
         for(OWLClass c : owlclasses)
         {
+            
             testMClass child_class = getMClass(c.getIRI().toString()); 
             Set<OWLClassExpression> superclasses = c.getSuperClasses(o);
             for(OWLClassExpression oe : superclasses)
@@ -376,29 +441,44 @@ public class testMOntology {
                 ClassExpressionType type = oe.getClassExpressionType();
                 if(type.equals(ClassExpressionType.OWL_CLASS)){
                     OWLClass oc = oe.asOWLClass();
-                    testMClass parent_class = getMClass(oc.getIRI().toString());        
-                    child_class.addSub(urit.getIndex(child_class.getURI()), parent_class);
-                    //System.out.println("class1: "+ parent_class.getclassname()+" class2 uri: "+child_class.getclassname()+" OWL_CLASS.");
+                    if(oc.getIRI().toString().endsWith("owl#Thing")||oc.getIRI().toString().endsWith("owl:Thing"))
+                        continue;
+                    testMClass parent_class = getMClass(oc.getIRI().toString());  
+                    parent_class.addSub(urit.getIndex(child_class.getURI()), child_class);
+                    child_class.addSuper(urit.getIndex(parent_class.getURI()), parent_class);
+                    child_class.setRoot(false);
                 }
                 else if(type.equals(ClassExpressionType.OBJECT_ALL_VALUES_FROM)){
                     Set<OWLClass> allvalueclasses = oe.getClassesInSignature();
                     OWLClass oc_all = allvalueclasses.iterator().next();
-                    testMClass parent_class = getMClass(oc_all.getIRI().toString());        
-                    child_class.addSub(urit.getIndex(child_class.getURI()), parent_class);
-                    //System.out.println("class1: "+ parent_class.getclassname()+" class2 uri: "+child_class.getclassname()+" allvaluefrom.");
+                    if(oc_all.getIRI().toString().endsWith("owl#Thing")||oc_all.getIRI().toString().endsWith("owl:Thing"))
+                        continue;
+                    testMClass parent_class = getMClass(oc_all.getIRI().toString());   
+                    parent_class.addSub(urit.getIndex(child_class.getURI()), child_class);
+                    child_class.addSuper(urit.getIndex(parent_class.getURI()), parent_class);
+                    child_class.setRoot(false);
                 }
                 else if(type.equals(ClassExpressionType.OBJECT_SOME_VALUES_FROM)){
                     Set<OWLClass> somevalueclasses = oe.getClassesInSignature();
                     OWLClass oc_some = somevalueclasses.iterator().next();
-                    testMClass parent_class = getMClass(oc_some.getIRI().toString());        
-                    child_class.addSub(urit.getIndex(child_class.getURI()), parent_class);
-                    //System.out.println("class1: "+ parent_class.getclassname()+" class2 uri: "+child_class.getclassname()+" somevaluefrom.");
+                    if(oc_some.getIRI().toString().endsWith("owl#Thing")||oc_some.getIRI().toString().endsWith("owl:Thing"))
+                        continue;
+                    testMClass parent_class = getMClass(oc_some.getIRI().toString());      
+                    parent_class.addSub(urit.getIndex(child_class.getURI()), child_class);
+                    child_class.addSuper(urit.getIndex(parent_class.getURI()), parent_class);
+                    child_class.setRoot(false);
                 }
                 else{
                 }
             }
         }
     }
+        /**
+     * Build complex relationships in ontology.
+     * @author huali50
+     * @param o: ontology object in OWL API.
+     * 
+     */
     public void buildallrelationships(OWLOntology o, boolean useReasoner){
         OWLReasoner reasoner = null;
         if(useReasoner){
@@ -422,18 +502,21 @@ public class testMOntology {
     }
     /**
      * Get the annotation type based on the URI.
-     * @String uri: the uri of the annotation.
+     * @author huali50
+     * @param uri: the uri of the annotation.
      * @return LABEL: label type.
      */
     public String getAnnotationtype(String uri) {
         String LABEL="label";
+       
         if(uri.endsWith("label"))
             return LABEL;
         return null;
     }
     /**
      * Check the class is Thing or not.
-     * @String uri: the uri of the class.
+     * @author huali50
+     * @param uri: the uri of the class.
      * @return true: not owl Thing.
      */
     public boolean checkClassURI(String uri){
@@ -443,7 +526,8 @@ public class testMOntology {
     }
     /**
      * Get the MClass object based on the URI of the class.
-     * @String uri: the uri of the class.
+     * @author huali50
+     * @param uri: the uri of the class.
      * @return MClass or null.
      */
     public testMClass getMClass(String uri){
@@ -453,39 +537,109 @@ public class testMOntology {
         return null;
     }
     /**
-     * Get the set class in ontology.
+     * Get Property
+     * @author huali50
+     * @param uri
+     * @return property
+     */
+    public testMProperty getProperty(String uri){
+        int index = urit.getIndex(uri);
+        if(dataproperties.containsKey(index)){
+            dataproperties.get(index).setType("DATA");
+            return dataproperties.get(index);
+        }
+        else if(objectproperties.containsKey(index)){
+            objectproperties.get(index).setType("OBJECT");
+            return objectproperties.get(index);
+        }
+        else
+            return null;
+    }
+    public testMProperty getPropertyById(int index){
+        if(dataproperties.containsKey(index))
+            return dataproperties.get(index);
+        else if(objectproperties.containsKey(index))
+            return objectproperties.get(index);
+        else
+            return null;
+    }
+    /**
+     * Get the Index Set of all classes in ontology.
+     * @author huali50
      * @return set of class id in ontology.
      */
     public Set<Integer> getMClasses(){
         return classes.keySet();
     }
+    /**
+    * Get the Index Set of all properties in ontology.
+    * @author huali50
+    * @return set of property id in ontology.
+    */
     public Set<Integer> getProperties(){
         HashSet<Integer> temp = new HashSet<Integer>();
         temp.addAll(dataproperties.keySet());
         temp.addAll(objectproperties.keySet());
         return temp;
     }
+    /**
+    * Get the Index Set of all Data property in ontology.
+    * @author huali50
+    * @return set of data property id in ontology.
+    */
     public Set<Integer> getMDataproperties(){
         return dataproperties.keySet();
     }
+    /**
+    * Get the Index Set of all object property in ontology.
+    * @author huali50
+    * @return set of data property id in ontology.
+    */
     public Set<Integer> getMObjectproperties(){
         return objectproperties.keySet();
     }
+    /**
+    * Get the Index Set of all class with lexicons in ontology.
+    * @author huali50
+    * @return set of class id in ontology.
+    */
     public Set<Integer> getClassLexicons(){
         return classlexicons.keySet();
     }
+    /**
+    * Get the Index Set of all properties with lexicons in ontology.
+    * @author huali50
+    * @return set of property id in ontology.
+    */
     public Set<Integer> getPropertiesLexicons(){
         HashSet<Integer> temp = new HashSet<Integer>();
         temp.addAll(datapropertylexicons.keySet());
         temp.addAll(objectpropertylexicons.keySet());
         return temp;
     }
+    /**
+    * Get the lexicons of classes in ontology.
+    * @author huali50
+    * @return lexicons value.
+    */
     public Collection<HashSet<testLexicon>> getclasslexiconValues(){
         return classlexicons.values();
     }
+    /**
+    * Get the class lexicon value in ontology.
+    * @author huali50
+    * @param index class id
+    * @return classlexicon.
+    */
     public HashSet<testLexicon> getclasslexicons(int index){
         return classlexicons.get(index);
     }
+    /**
+    * Get the lexicon value in ontology.
+    * @author huali50
+    * @param index class or property id
+    * @return lexicon.
+    */
     public HashSet<testLexicon> getlexicons(int index){
         if(classlexicons.containsKey(index)){
             return classlexicons.get(index);
@@ -497,6 +651,13 @@ public class testMOntology {
             return null;
         }
     }
+    /**
+    * Get the class lexicon value based on language type in ontology.
+    * @author huali50
+    * @param index class id
+    * @param typr language type
+    * @return lexicon.
+    */
     public testLexicon getclasslexicon(int index, String type){
         testLexicon classlexicon = null;
         for(testLexicon tl : classlexicons.get(index)){
@@ -510,9 +671,20 @@ public class testMOntology {
         }
         return classlexicon;
     }
+    /**
+    * Get the URITable in ontology.
+    * @author huali50
+    * @return lexicon.
+    */
     public testURITable getURITable(){
         return this.urit;
     }
+    /**
+    * Get the resource type based on uri.
+    * @author huali50
+    * @param uri
+    * @return resource type.
+    */
     public String checkResource(String uri){
         int index = urit.getIndex(uri);
         if(this.classes.containsKey(index)){
@@ -528,6 +700,12 @@ public class testMOntology {
             return null;
         }
     }
+    /**
+    * Get uri based on local name.
+    * @author huali50
+    * @param localname
+    * @return uri.
+    */
     public String getElementURI(String localname){
         if(classlocalname.isEmpty() == false && classlocalname.containsKey(localname)){
             return urit.getURI(classlocalname.get(localname));
@@ -542,6 +720,12 @@ public class testMOntology {
             return null;
         }
     }
+    /**
+    * Get element based on uri.
+    * @author huali50
+    * @param uri
+    * @return MClass, MDataproperty or MObjectproperty.
+    */
     public testMElement getElement(String URI){
         int index = this.urit.getIndex(URI);
         if(classes.containsKey(index))
@@ -553,19 +737,34 @@ public class testMOntology {
         else
             return null;
     }
-    public ArrayList roots() {
-        ArrayList roots = new ArrayList();
+    /**
+    * Get root classes.
+    * @author huali50
+    * @return root classes ArrayList
+    */
+    public HashSet<testMClass> getRoots() {
         for(testMClass mclass : classes.values())
         {
-            if(mclass.getSuperClasses().isEmpty() && mclass.getSubClasses().isEmpty()){
-                roots.add(mclass);
+            if(mclass.getSuperClasses().isEmpty() && (mclass.IsRoot() == true)){
+                this.roots.add(mclass);
             }
         }
         return roots;
     }
+    /**
+    * Get classes set in ontology.
+    * @author huali50
+    * @return classes set
+    */
     public HashMap<Integer, testMClass> getClasses(){
         return this.classes;
     }
+    /**
+    * Get the property type based on uri.
+    * @author huali50
+    * @param uri
+    * @return "DATAPROPERTY" or "OBJECTPROPERTY" or null
+    */
     public String getPropertyType(String URI){
         int index = urit.getIndex(URI);
         if(dataproperties.containsKey(URI))
@@ -574,5 +773,31 @@ public class testMOntology {
             return "OBJECTPROPERTY";
         else
             return null;
+    }
+    /**
+     * Get URI of Ontology
+     * @author huali50
+     * @return 
+     */
+    public String getOntologyURI(){
+        return this.uri;
+    }
+    /**
+     * Get class uri based on label
+     * @authro huali50
+     * @param label
+     * @return URI or null
+     */
+    public String getClassURI(String label){
+        if(this.classlabels.get(label) != null)
+            return this.urit.getURI(this.classlabels.get(label));
+        else
+            return null;
+    }
+    public boolean checkPropertyPrefix(String propertyuri){
+        if(this.getOntologyURI().equals(propertyuri.substring(0, propertyuri.indexOf("#"))))
+            return true;
+        else
+            return false;
     }
 }

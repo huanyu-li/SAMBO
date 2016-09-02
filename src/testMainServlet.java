@@ -123,7 +123,7 @@ public class testMainServlet extends HttpServlet {
                 try {
                     out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
                     String sid = QueryStringHandler.ParseSessionId(req.getQueryString());
-                    out.println(testFormHandler.createSlotForm((testSuggestion) session.getAttribute("sug"), settings, sid));
+                    out.println(testFormHandler.createSlotForm(merge,(testSuggestion) session.getAttribute("sug"), settings, sid));
                     out.println(testPageHandler.createFooter());
 
                 } finally {
@@ -358,8 +358,10 @@ public class testMainServlet extends HttpServlet {
             weight[Constants.Hierarchy] = 1.0;
         }
         if (step == Constants.STEP_CLASS) {
-            merge.generate_tasklist(step);
-            merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
+            if(merge.getIsLarge() == false){
+                merge.generate_tasklist(step);
+                merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
+            }
         } else if (step == Constants.STEP_SLOT) {
             merge.generate_tasklist(step);
             merge.getmatchingalgos().calculateSlotSimValue(merge.getMatcherList());
@@ -431,8 +433,11 @@ public class testMainServlet extends HttpServlet {
             weight[Constants.Hierarchy] = 1.0;
         }
         int step = 0;
-        merge.generate_classtasklist(step);
-        merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
+        //merge.generate_classtasklist(step);
+        if((merge.getIsLarge() == false)&&(merge.getIsDatabase() == true)){
+            merge.generate_tasklist(step);
+            merge.getmatchingalgos().calculateClassSimValue(merge.getMatcherList());
+        }
 
         return weight;
     }
@@ -467,4 +472,5 @@ public class testMainServlet extends HttpServlet {
 
         return conn;
     }
+
 }

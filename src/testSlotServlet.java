@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import se.liu.ida.sambo.MModel.testMProperty;
 import se.liu.ida.sambo.Merger.testMergerManager;
 import se.liu.ida.sambo.dao.UserSessionsDao;
 import se.liu.ida.sambo.dto.UserSessions;
@@ -31,6 +32,7 @@ import se.liu.ida.sambo.ui.web.testFormHandler;
 import se.liu.ida.sambo.ui.web.testPageHandler;
 import se.liu.ida.sambo.util.QueryStringHandler;
 import se.liu.ida.sambo.util.testHistory;
+import se.liu.ida.sambo.util.testPair;
 import se.liu.ida.sambo.util.testSuggestion;
 
 /**
@@ -66,6 +68,34 @@ public class testSlotServlet extends HttpServlet {
             
             //merge a pair of slots manually
         }else if(req.getParameter("manualmerge") != null){
+            //a pair of slot that user select to merge
+            if(req.getParameter("manualslot1") != null && req.getParameter("manualslot2") != null){
+                String manualslot1 = req.getParameter("manualslot1").trim();
+                String manualslot2 = req.getParameter("manualslot2").trim();
+                testMProperty p1 = merge.getOntManager().getontology(Constants.ONTOLOGY_1).getProperty(manualslot1);
+                testMProperty p2 = merge.getOntManager().getontology(Constants.ONTOLOGY_2).getProperty(manualslot2);
+                testPair pair = new testPair(manualslot1,manualslot2);
+                
+                String newname = req.getParameter("newmergename");
+                //handle the selected slot merge pair with different type
+                if(!p1.getType().equalsIgnoreCase(p2.getType())){
+                    
+                    //tempotary manual suggestion :)
+                    sug = new testSuggestion(pair);
+                    sug.reset(true);
+                    
+                    //check whether get a pair of slots
+                }else{
+                    
+                    merge.processSlotSuggestion(new testHistory(pair, req.getParameter("newmergename"),
+                            Constants.ONTOLOGY_NEW, Constants.ALIGN_SLOT, req.getParameter("comment") ));
+                    
+                    //When manual mode, if the suggestion contains one or both of elements accepted by user
+                    if(sug.getPair().contains(pair.getSource()) || sug.getPair().contains(pair.getTarget()))
+                        session.setAttribute("sug", new testSuggestion(merge.getNextSuggestion(), merge.suggestionsRemaining()));
+                }
+            }
+            
             
         }else if(req.getParameter("undo") != null) {
             
@@ -83,7 +113,7 @@ public class testSlotServlet extends HttpServlet {
         if (mode.equals(Constants.MODE_MANUAL)){
             try{
                 out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
-                //out.println(testFormHandler.createManualSlotForm(merge.getOntology(Constants.ONTOLOGY_1),merge.getOntology(Constants.ONTOLOGY_2), sug, settings,sid));
+                out.println(testFormHandler.createManualSlotForm(merge, sug, settings,sid));
                 out.println(testPageHandler.createFooter());
                 
             } finally {
@@ -141,7 +171,7 @@ public class testSlotServlet extends HttpServlet {
             //Print slot suggestion form
             try {
                 out.println(testPageHandler.createHeader(Constants.STEP_SLOT));
-                out.println(testFormHandler.createSlotForm((testSuggestion) session.getAttribute("sug"), settings,sid));
+                out.println(testFormHandler.createSlotForm(merge, (testSuggestion) session.getAttribute("sug"), settings,sid));
                 out.println(testPageHandler.createFooter() );
                 
             } finally {

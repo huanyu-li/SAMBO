@@ -276,6 +276,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <%!
     synchronized String LoadSession(String email, String filePath, HttpServletRequest req){
+        
         String str = new String();
         String mName = new String();
         String mValue = new String();

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -48,8 +49,7 @@ public class testLoadFileServlet extends HttpServlet {
         // Upload max 1Mb
         //MultipartRequest multi = new MultipartRequest(req, Constants.FILEHOME);
 
-        // Upload max 10MB
-        MultipartRequest multi = new MultipartRequest(req, Constants.FILEHOME, 1024*1024*1024);
+        MultipartRequest multi = new MultipartRequest(req, Constants.FILEHOME, 5*1024*1024*1024);
 
         // get the upload type of ontologies
         int type1 = (new Integer(multi.getParameter("type1"))).intValue(),
@@ -86,7 +86,12 @@ public class testLoadFileServlet extends HttpServlet {
                 long t2 = System.currentTimeMillis();
                 System.out.println( "Time Taken to LOAD two FILEs " + (t2-t1) + " ms" );
                 merge.init();
+                if(multi.getParameter("database") != null){
+                    merge.setDatabase();
 
+                }
+                if(multi.getParameter("large_scale") != null)
+                    merge.setLarge_scale();
                 session.setAttribute(session.getId(), merge);
                 settings.setStep(Constants.STEP_SLOT);
                 
@@ -105,6 +110,9 @@ public class testLoadFileServlet extends HttpServlet {
                 
             }
             catch (OWLOntologyCreationException ex) {
+                Logger.getLogger(testLoadFileServlet.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            } catch (SQLException ex) {
                 Logger.getLogger(testLoadFileServlet.class.getName()).log(Level.SEVERE, null, ex);
             }            
             finally

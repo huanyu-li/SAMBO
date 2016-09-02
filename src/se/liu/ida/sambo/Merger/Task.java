@@ -36,12 +36,17 @@ public class Task {
                     if(stl.getlanguage().equals(ttl.getlanguage())){
                         double similarity = matcher.getSimValue(stl.getname(),ttl.getname());
                         if(similarity > max_sim)
+                        {
                             max_sim = similarity;
+                            
+                        }
+                        
                     }
                 }
             }
             
             value = max_sim;
+            //System.out.println("source "+this.source_id+"--target "+this.target_id+"==Similarity "+this.value);
     }
     public double getsimilarity(){
         return value;
